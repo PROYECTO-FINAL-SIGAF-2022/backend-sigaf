@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 // dotenv.config();
 
-const connection = new Sequelize(
+/* const connection = new Sequelize(
   process.env.DATABASENAME || 'sigaf',
   process.env.DATABASEUSER || 'root',
   process.env.DATABASEPASSWORD || '',
@@ -14,5 +14,19 @@ const connection = new Sequelize(
     ssl: true,
     logging: false,
   }
-);
-export default connection;
+); */
+
+export const connection = new Sequelize(
+  process.env.DATABASENAME || 'test',
+  process.env.DATABASEUSER || 'root',
+  process.env.DATABASEPASSWORD || '',
+  {
+    host: process.env.HOSTNAME || 'localhost',
+    dialect: 'mysql',
+    port: process.env.DATABSEPORT || '3306',
+    ssl: true,
+    logging: false,
+  }
+); 
+
+/* export default connection; */
