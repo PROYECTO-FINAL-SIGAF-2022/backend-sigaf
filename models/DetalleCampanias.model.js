@@ -1,24 +1,23 @@
 import { DataTypes } from 'sequelize';
 import { connection } from '../config/connection.js';
-
-export const ProveedoresModelo = connection.define(
-  'proveedores',
+export const DetalleCampanias = connection.define(
+  'detalle_campania',
   {
-    id_proveedor: {
+    id_detalle_campania: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    nombre_proveedor: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    telefono_proveedor: {
+    id_campania: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    direccion_proveedor: {
-      type: DataTypes.STRING,
+    id_unidad_medida: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    cantidad_cosechada: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
   },

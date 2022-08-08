@@ -1,7 +1,8 @@
+import sequelize from 'sequelize';
 import { DataTypes } from 'sequelize';
-import connection from '../config/connection.js';
+import { connection } from '../config/connection.js';
 
-const LogSistema = connection.define(
+export const LogSistema = connection.define(
   'log_sistema',
   {
     id_log_sistema: {
@@ -28,5 +29,3 @@ const LogSistema = connection.define(
     timestamps: false,
   }
 );
-
-// falta agregar las relaciones con la tabla usuario

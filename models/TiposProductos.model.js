@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
-import connection from '../config/connection.js';
+import { connection } from '../config/connection.js';
 
-const TiposProductos = connection.define(
+export const TiposProductosModelo = connection.define(
   'tipos_productos',
   {
     id_tipo_producto: {
@@ -18,4 +18,3 @@ const TiposProductos = connection.define(
     timestamps: false,
   }
 );
-// falta agregar la relacion con la tabla producto

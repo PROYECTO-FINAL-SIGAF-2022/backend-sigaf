@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
-import connection from '../config/connection.js';
+import { connection } from '../config/connection.js';
 
-const AgregoParcelaCultivo = connection.define(
+export const AgregoParcelasCultivosModelo = connection.define(
   'agrego_parcela_cultivo',
   {
     id_agrego_parcela_cultivo: {
@@ -22,5 +22,3 @@ const AgregoParcelaCultivo = connection.define(
     timestamps: false,
   }
 );
-
-// falta agregar las relaciones con la tabla parcela_cultivo

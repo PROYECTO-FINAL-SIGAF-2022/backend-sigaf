@@ -17,7 +17,7 @@ import dotenv from 'dotenv';
 ); */
 
 export const connection = new Sequelize(
-  process.env.DATABASENAME || 'test',
+  process.env.DATABASENAME || 'sigaf',
   process.env.DATABASEUSER || 'root',
   process.env.DATABASEPASSWORD || '',
   {
@@ -27,6 +27,6 @@ export const connection = new Sequelize(
     ssl: true,
     logging: false,
   }
-); 
+);
 
 /* export default connection; */

@@ -1,7 +1,6 @@
 import { DataTypes } from 'sequelize';
-import connection from '../config/connection.js';
-
-const Productos = connection.define(
+import { connection } from '../config/connection.js';
+export const ProductosModelo = connection.define(
   'productos',
   {
     id_producto: {
@@ -26,5 +25,3 @@ const Productos = connection.define(
     timestamps: false,
   }
 );
-
-// falta agregar las relaciones con el id_proveedor, id_tipo_producto, id_usuario, id_unidad_medida

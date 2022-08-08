@@ -1,24 +1,24 @@
 import { DataTypes } from 'sequelize';
 import { connection } from '../config/connection.js';
 
-export const CampaniasModelo = connection.define(
-  'campanias',
+export const ParcelasCultivosModelo = connection.define(
+  'parcelas_cultivos',
   {
-    id_campania: {
+    id_parcelas_cultivos: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    descripcion_campania: {
-      type: DataTypes.STRING,
-    },
-    fecha_inicio: {
-      type: DataTypes.STRING,
-    },
-    fecha_final: {
-      type: DataTypes.STRING,
+    id_parcela: {
+      type: DataTypes.INTEGER,
     },
     id_cultivo: {
+      type: DataTypes.INTEGER,
+    },
+    id_campania: {
+      type: DataTypes.INTEGER,
+    },
+    cantidad_sembrada: {
       type: DataTypes.INTEGER,
     },
     activo: {
