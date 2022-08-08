@@ -1,4 +1,4 @@
-import { CampaniasModelo } from '../models/campanias.model.js';
+import { CampaniasModelo } from '../models/Campanias.model.js';
 
 // Devuelve todos los Campanias de la colección
 export const getCampanias = async (req, res) => {
