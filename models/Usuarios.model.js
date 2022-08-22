@@ -14,6 +14,7 @@ export const UsuariosModelo = connection.define('usuarios', {
   },
   dni_persona: {
     type: DataTypes.STRING,
+    unique: true,
   },
   fecha_nac_persona: {
     type: DataTypes.STRING,
@@ -23,6 +24,7 @@ export const UsuariosModelo = connection.define('usuarios', {
   },
   username_usuario: {
     type: DataTypes.STRING,
+    unique: true,
   },
   password_usuario: {
     type: DataTypes.STRING,

@@ -3,6 +3,9 @@ import express from 'express';
 const app = express();
 
 //Rutas
+
+import authRutas from '../routes/auth.routes.js';
+
 import usuariosRutas from '../routes/usuarios.routes.js';
 import establecimientosRutas from '../routes/establecimientos.routes.js';
 import actividadesRutas from '../routes/actividades.routes.js';
@@ -24,6 +27,7 @@ export const rutas = function () {
     parcelasRutas,
     parcelasCultivosRutas,
     tiposUsuariosRutas,
+    authRutas,
   ];
 };
 // app.use(usuariosRutas);

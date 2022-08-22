@@ -25,6 +25,7 @@ try {
   );
   // sincronizar tablas
   await connection.sync({ alter: true });
+  // await connection.truncate({ cascade: true, force: true });
   console.log('Sincronizacion completa');
 } catch (error) {
   console.error('No se puede conectar con la base de datos:', error);

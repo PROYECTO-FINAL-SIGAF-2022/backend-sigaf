@@ -1,5 +1,7 @@
 // CARGAR DATOS FICTISIOS PARA PRUEBAS
 
+import bcrypt from 'bcryptjs';
+
 import { ActividadesModelo } from '../models/Actividades.model.js';
 import { AgregoParcelasCultivosModelo } from '../models/AgregoParcelasCultivos.model.js';
 import { CampaniasModelo } from '../models/Campanias.model.js';
@@ -29,14 +31,17 @@ export const seedBd = async () => {
 
   // 2
 
+  const salt = bcrypt.genSaltSync(10);
+  const passwordEncriptado = bcrypt.hashSync('123456', salt);
+
   await UsuariosModelo.create({
     nombre_persona: 'Marcos',
     apellido_persona: 'Franco',
     dni_persona: 43711821,
     fecha_nac_persona: '20/10/1996',
     telefono_persona: 3704981212,
-    username_usuario: 'marcosdev',
-    password_usuario: '123456',
+    username_usuario: 'usuariodev',
+    password_usuario: passwordEncriptado,
     id_tipo_usuario: 1,
     activo: true,
   });
