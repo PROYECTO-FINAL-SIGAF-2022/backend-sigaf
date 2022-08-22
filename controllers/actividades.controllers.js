@@ -1,4 +1,4 @@
-import { ActividadesModelo } from '../models/actividades.model.js';
+import { ActividadesModelo } from '../models/Actividades.model.js';
 
 // Devuelve todos los actividadess de la colección
 export const getActividades = async (req, res) => {

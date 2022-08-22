@@ -1,6 +1,6 @@
 // CARGAR DATOS FICTISIOS PARA PRUEBAS
 
-import { ActividadesModelo } from '../models/actividades.model.js';
+import { ActividadesModelo } from '../models/Actividades.model.js';
 import { AgregoParcelasCultivosModelo } from '../models/AgregoParcelasCultivos.model.js';
 import { CampaniasModelo } from '../models/Campanias.model.js';
 import { CultivosModelo } from '../models/Cultivos.model.js';
