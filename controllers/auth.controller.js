@@ -4,10 +4,10 @@ import { generarJwt } from '../helpers/generarJwt.js';
 import { UsuariosModelo } from '../models/Usuarios.model.js';
 
 export const loguearse = async (req, res) => {
-  const { nombreUsuario, passwordUsuario } = req.body;
-  //   console.log(nombreUsuario, passwordUsuario);
+  const { username_usuario, password_usuario } = req.body;
+  //   console.log(username_usuario, password_usuario);
   const usuario = await UsuariosModelo.findOne({
-    where: { username_usuario: nombreUsuario },
+    where: { username_usuario: username_usuario },
   });
   //   console.log(usuario);
   if (!usuario) {
@@ -18,7 +18,7 @@ export const loguearse = async (req, res) => {
   }
 
   const passwordEncriptado = bcrypt.compareSync(
-    passwordUsuario,
+    password_usuario,
     usuario.password_usuario
   );
   if (!passwordEncriptado) {
@@ -57,7 +57,7 @@ export const registrarse = async (req, res) => {
 
   // encriptar el password
   const passwordEncriptado = bcrypt.hashSync(password_usuario, 10);
-  console.log(passwordEncriptado);
+  // console.log(passwordEncriptado);
 
   const nuevoUsuario = await UsuariosModelo.create({
     nombre_persona,
