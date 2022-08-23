@@ -24,8 +24,13 @@ import { UsuariosModelo } from '../models/Usuarios.model.js';
 // console.log('first');
 
 export const seedBd = async () => {
-  await connection.query('SET GLOBAL FOREIGN_KEY_CHECKS = 0;');
-  await connection.truncate({ cascade: true, force: true });
+  await connection.query('DROP DATABASE IF EXISTS sigaf');
+  await connection.query(`CREATE DATABASE sigaf`);
+  await connection.query(`USE sigaf`);
+  // await connection.truncate({ cascade: true, force: true });
+  await connection.authenticate();
+
+  await connection.sync({ alter: true });
 
   // 1
   await TiposUsuariosModelo.create({

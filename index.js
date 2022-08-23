@@ -33,7 +33,6 @@ try {
     'Se ha establecido correctamente la conexion con la base de datos.'
   );
   // sincronizar tablas
-  await connection.sync({ alter: true });
 
   console.log('Sincronizacion completa');
 } catch (error) {
