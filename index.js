@@ -9,6 +9,15 @@ import './models/Associations.model.js';
 
 const app = express();
 
+// CORS
+
+app.use(
+  cors({
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  })
+);
+
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -18,14 +27,6 @@ app.set('port', process.env.PORT || 4000);
 // RUTAS
 
 app.use(rutas());
-
-// CORS
-
-app.use(
-  cors({
-    origin: '*',
-  })
-);
 
 try {
   await connection.authenticate();
