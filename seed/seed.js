@@ -42,7 +42,7 @@ export const seedBd = async () => {
     nombre_persona: 'Marcos',
     apellido_persona: 'Franco',
     dni_persona: 43711821,
-    fecha_nac_persona: '20/10/1996',
+    fecha_nac_persona: '1996/10/10/',
     telefono_persona: 3704981,
     username_usuario: 'usuariodev',
     password_usuario: passwordEncriptado,
@@ -86,7 +86,7 @@ export const seedBd = async () => {
 
   await ProductosModelo.create({
     descripcion_producto: 'Fertilizante',
-    fecha_vencimiento_producto: '2020/20/10',
+    fecha_vencimiento_producto: '2020/10/10',
     cantidad_producto: '10',
     id_proveedor: 1,
     id_tipo_producto: 1,
@@ -98,7 +98,7 @@ export const seedBd = async () => {
 
   LogSistema.create({
     descripcion_log: 'Se cargo el producto fertilizante',
-    fecha_hora: '20/10/2020',
+    fecha_hora: '2020/10/10/',
     id_usuario: 1,
   });
 
