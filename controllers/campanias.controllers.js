@@ -1,4 +1,4 @@
-import { CampaniasModelo } from '../models/Campanias.model.js';
+import { CampaniasModelo } from "../models/Campanias.model.js";
 
 // Devuelve todos los Campanias de la colección
 export const getCampanias = async (req, res) => {
@@ -29,8 +29,9 @@ export const getCampaniaUnico = async (req, res) => {
 
 export const postCampania = async (req, res) => {
   try {
-    const { descripcion_campania, fecha_inicio, fecha_final, id_cultivo } =
-      req.body;
+    const {
+      descripcion_campania, fecha_inicio, fecha_final, id_cultivo,
+    } = req.body;
 
     const nuevaCampania = await CampaniasModelo.create({
       descripcion_campania,
@@ -40,7 +41,7 @@ export const postCampania = async (req, res) => {
     });
 
     res.json({
-      msg: 'El Campania se creo Correctamente',
+      msg: "El Campania se creo Correctamente",
       nuevaCampania,
     });
   } catch (error) {
@@ -53,8 +54,9 @@ export const postCampania = async (req, res) => {
 export const updateCampania = async (req, res) => {
   try {
     const { id } = req.params;
-    const { descripcion_campania, fecha_inicio, fecha_final, id_cultivo } =
-      req.body[0];
+    const {
+      descripcion_campania, fecha_inicio, fecha_final, id_cultivo,
+    } = req.body[0];
     console.log(id);
     const updateCamp = await CampaniasModelo.findOne({
       where: { id_campania: id },
@@ -83,7 +85,7 @@ export const deleteCampania = async (req, res) => {
           id_campania: id,
         },
       },
-      console.log(id)
+      console.log(id),
     );
 
     res.status(200).json({

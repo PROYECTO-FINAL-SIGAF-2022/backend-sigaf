@@ -1,8 +1,8 @@
-import { DataTypes } from 'sequelize';
-import { connection } from '../config/connection.js';
+import { DataTypes } from "sequelize";
+import { connection } from "../config/connection.js";
 
 export const UnidadesMedidasModelo = connection.define(
-  'unidades_medida',
+  "unidades_medida",
   {
     id_unidad_medida: {
       type: DataTypes.INTEGER,
@@ -16,5 +16,5 @@ export const UnidadesMedidasModelo = connection.define(
   },
   {
     timestamps: false,
-  }
+  },
 );

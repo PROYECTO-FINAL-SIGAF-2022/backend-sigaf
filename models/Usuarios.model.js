@@ -1,6 +1,7 @@
-import { DataTypes } from 'sequelize';
-import { connection } from '../config/connection.js';
-export const UsuariosModelo = connection.define('usuarios', {
+import { DataTypes } from "sequelize";
+import { connection } from "../config/connection.js";
+
+export const UsuariosModelo = connection.define("usuarios", {
   id_usuario: {
     type: DataTypes.INTEGER,
     primaryKey: true,

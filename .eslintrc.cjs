@@ -14,5 +14,11 @@ module.exports = {
   rules: {
     "consistent-return": "off",
     quotes: [2, "double", { avoidEscape: true }],
+    "import/extensions": "off",
+    camelcase: "off",
+    "no-console": "off",
+    "import/prefer-default-export": "off",
+    "max-len": "off",
+    "prefer-promise-reject-errors": "off",
   },
 };

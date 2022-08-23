@@ -1,41 +1,40 @@
-import express from 'express';
+import express from "express";
+
+// Rutas
+
+import authRutas from "./auth.routes.js";
+
+import usuariosRutas from "./usuarios.routes.js";
+import establecimientosRutas from "./establecimientos.routes.js";
+import actividadesRutas from "./actividades.routes.js";
+import campaniasRutas from "./campanias.routes.js";
+import cultivoRutas from "./cultivos.routes.js";
+import historialesParcelasCultivosRutas from "./historialesParcelasCultivos.routes.js";
+import parcelasRutas from "./parcelas.routes.js";
+import parcelasCultivosRutas from "./parcelasCultivos.routes.js";
+import tiposUsuariosRutas from "./tiposUsuarios.routes.js";
 
 const app = express();
 
-//Rutas
+export const rutas = () => [
+  usuariosRutas,
+  establecimientosRutas,
+  actividadesRutas,
+  campaniasRutas,
+  cultivoRutas,
+  historialesParcelasCultivosRutas,
+  parcelasRutas,
+  parcelasCultivosRutas,
+  tiposUsuariosRutas,
+  authRutas,
+];
 
-import authRutas from '../routes/auth.routes.js';
-
-import usuariosRutas from '../routes/usuarios.routes.js';
-import establecimientosRutas from '../routes/establecimientos.routes.js';
-import actividadesRutas from '../routes/actividades.routes.js';
-import campaniasRutas from '../routes/campanias.routes.js';
-import cultivoRutas from './cultivos.routes.js';
-import historialesParcelasCultivosRutas from './historialesParcelasCultivos.routes.js';
-import parcelasRutas from './parcelas.routes.js';
-import parcelasCultivosRutas from './parcelasCultivos.routes.js';
-import tiposUsuariosRutas from './tiposUsuarios.routes.js';
-
-export const rutas = function () {
-  return [
-    usuariosRutas,
-    establecimientosRutas,
-    actividadesRutas,
-    campaniasRutas,
-    cultivoRutas,
-    historialesParcelasCultivosRutas,
-    parcelasRutas,
-    parcelasCultivosRutas,
-    tiposUsuariosRutas,
-    authRutas,
-  ];
-};
-// app.use(usuariosRutas);
-// app.use(establecimientosRutas);
-// app.use(actividadesRutas);
-// app.use(campaniasRutas);
-// app.use(cultivoRutas);
-// app.use(historialesParcelasCultivosRutas);
-// app.use(parcelasRutas);
-// app.use(parcelasCultivosRutas);
-// app.use(tiposUsuariosRutas);
+app.use(usuariosRutas);
+app.use(establecimientosRutas);
+app.use(actividadesRutas);
+app.use(campaniasRutas);
+app.use(cultivoRutas);
+app.use(historialesParcelasCultivosRutas);
+app.use(parcelasRutas);
+app.use(parcelasCultivosRutas);
+app.use(tiposUsuariosRutas);

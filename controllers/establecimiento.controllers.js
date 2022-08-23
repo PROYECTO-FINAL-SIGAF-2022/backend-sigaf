@@ -1,4 +1,4 @@
-import { EstablecimientosModelo } from '../models/Establecimientos.model.js';
+import { EstablecimientosModelo } from "../models/Establecimientos.model.js";
 
 // Devuelve todos los Establecimientos de la colección
 export const getEstablecimientos = async (req, res) => {
@@ -44,7 +44,7 @@ export const postEstablecimiento = async (req, res) => {
     });
 
     res.json({
-      msg: 'El Establecimiento se creo Correctamente',
+      msg: "El Establecimiento se creo Correctamente",
       nuevoEstablecimiento,
     });
   } catch (error) {
@@ -57,8 +57,7 @@ export const postEstablecimiento = async (req, res) => {
 export const updateEstablecimiento = async (req, res) => {
   try {
     const { id } = req.params;
-    const { descripcion_establecimiento, georeferencia, superficie } =
-      req.body[0];
+    const { descripcion_establecimiento, georeferencia, superficie } = req.body[0];
     console.log(id);
     const UpdateEstab = await EstablecimientosModelo.findOne({
       where: { id_establecimiento: id },
@@ -86,7 +85,7 @@ export const deleteEstablecimiento = async (req, res) => {
           id_establecimiento: id,
         },
       },
-      console.log(id)
+      console.log(id),
     );
 
     res.status(200).json({

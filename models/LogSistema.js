@@ -1,9 +1,8 @@
-import sequelize from 'sequelize';
-import { DataTypes } from 'sequelize';
-import { connection } from '../config/connection.js';
+import sequelize, { DataTypes } from "sequelize";
+import { connection } from "../config/connection.js";
 
 export const LogSistema = connection.define(
-  'log_sistema',
+  "log_sistema",
   {
     id_log_sistema: {
       type: DataTypes.INTEGER,
@@ -17,8 +16,8 @@ export const LogSistema = connection.define(
     },
     fecha_hora: {
       allowNull: false,
-      type: 'TIMESTAMP',
-      defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+      type: "TIMESTAMP",
+      defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
     },
     descripcion_log: {
       type: DataTypes.STRING,
@@ -27,5 +26,5 @@ export const LogSistema = connection.define(
   },
   {
     timestamps: false,
-  }
+  },
 );

@@ -1,8 +1,8 @@
-import { DataTypes } from 'sequelize';
-import { connection } from '../config/connection.js';
+import { DataTypes } from "sequelize";
+import { connection } from "../config/connection.js";
 
 export const CultivosModelo = connection.define(
-  'cultivos',
+  "cultivos",
   {
     id_cultivo: {
       type: DataTypes.INTEGER,
@@ -19,5 +19,5 @@ export const CultivosModelo = connection.define(
   },
   {
     timestamps: false,
-  }
+  },
 );

@@ -1,4 +1,4 @@
-import { ActividadesModelo } from '../models/Actividades.model.js';
+import { ActividadesModelo } from "../models/Actividades.model.js";
 
 // Devuelve todos los actividadess de la colección
 export const getActividades = async (req, res) => {
@@ -36,7 +36,7 @@ export const postActividad = async (req, res) => {
     });
 
     res.json({
-      msg: 'El actividades se creo Correctamente',
+      msg: "El actividades se creo Correctamente",
       nuevaActividad,
     });
   } catch (error) {
@@ -79,7 +79,7 @@ export const deleteActividad = async (req, res) => {
           id_actividad: id,
         },
       },
-      console.log(id)
+      console.log(id),
     );
 
     res.status(200).json({

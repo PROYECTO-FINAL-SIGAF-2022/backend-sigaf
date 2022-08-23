@@ -1,21 +1,22 @@
-import { Router } from 'express';
+import { Router } from "express";
 import {
   deleteActividad,
   getActividades,
   getActividadUnico,
   postActividad,
   updateActividad,
-} from '../controllers/actividades.controllers.js';
+} from "../controllers/actividades.controllers.js";
+
 const router = Router();
 
-router.get('/api/get-actividades', getActividades);
+router.get("/api/get-actividades", getActividades);
 
-router.get('/api/get-actividad/:id', getActividadUnico);
+router.get("/api/get-actividad/:id", getActividadUnico);
 
-router.post('/api/post-actividad', postActividad);
+router.post("/api/post-actividad", postActividad);
 
-router.put('/api/edit-actividad/:id', updateActividad);
+router.put("/api/edit-actividad/:id", updateActividad);
 
-router.delete('/api/delete-actividad/:id', deleteActividad);
+router.delete("/api/delete-actividad/:id", deleteActividad);
 
 export default router;

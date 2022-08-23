@@ -1,4 +1,4 @@
-import { CultivosModelo } from '../models/Cultivos.model.js';
+import { CultivosModelo } from "../models/Cultivos.model.js";
 
 // Devuelve todos los Cultivos de la colección
 export const getCultivos = async (req, res) => {
@@ -34,7 +34,7 @@ export const postCultivo = async (req, res) => {
     const nuevoCultivo = await CultivosModelo.create({ cultivo });
 
     res.json({
-      msg: 'El Cultivo se creo Correctamente',
+      msg: "El Cultivo se creo Correctamente",
       nuevoCultivo,
     });
   } catch (error) {
@@ -75,7 +75,7 @@ export const deleteCultivo = async (req, res) => {
           id_cultivo: id,
         },
       },
-      console.log(id)
+      console.log(id),
     );
 
     res.status(200).json({

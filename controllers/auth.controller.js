@@ -1,29 +1,29 @@
-import bcrypt from 'bcryptjs';
-import { generarJwt } from '../helpers/generarJwt.js';
+import bcrypt from "bcryptjs";
+import { generarJwt } from "../helpers/generarJwt.js";
 
-import { UsuariosModelo } from '../models/Usuarios.model.js';
+import { UsuariosModelo } from "../models/Usuarios.model.js";
 
 export const loguearse = async (req, res) => {
   const { username_usuario, password_usuario } = req.body;
   //   console.log(username_usuario, password_usuario);
   const usuario = await UsuariosModelo.findOne({
-    where: { username_usuario: username_usuario },
+    where: { username_usuario },
   });
   //   console.log(usuario);
   if (!usuario) {
     res.json({
-      msg: 'El usuario no existe',
+      msg: "El usuario no existe",
     });
     return;
   }
 
   const passwordEncriptado = bcrypt.compareSync(
     password_usuario,
-    usuario.password_usuario
+    usuario.password_usuario,
   );
   if (!passwordEncriptado) {
     res.json({
-      msg: 'El password no es valido',
+      msg: "El password no es valido",
     });
 
     return;
@@ -79,7 +79,7 @@ export const registrarse = async (req, res) => {
   });
 
   res.json({
-    msg: 'El usuario se creo Correctamente',
+    msg: "El usuario se creo Correctamente",
     token,
   });
 };

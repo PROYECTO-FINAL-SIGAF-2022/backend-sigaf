@@ -1,4 +1,4 @@
-import { ParcelasModelo } from '../models/Parcelas.model.js';
+import { ParcelasModelo } from "../models/Parcelas.model.js";
 
 // Devuelve todos los Parcelas de la colección
 export const getParcelas = async (req, res) => {
@@ -38,7 +38,7 @@ export const postParcela = async (req, res) => {
     });
 
     res.json({
-      msg: 'La Parcela se creo Correctamente',
+      msg: "La Parcela se creo Correctamente",
       nuevaParcela,
     });
   } catch (error) {
@@ -81,7 +81,7 @@ export const deleteParcela = async (req, res) => {
           id_parcela: id,
         },
       },
-      console.log(id)
+      console.log(id),
     );
 
     res.status(200).json({

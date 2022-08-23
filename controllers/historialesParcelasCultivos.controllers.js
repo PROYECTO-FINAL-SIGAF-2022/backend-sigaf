@@ -1,6 +1,6 @@
-//Falta agregar cosas al post-put-delete
+// Falta agregar cosas al post-put-delete
 
-import { HistorialesParcelasCultivosModelo } from '../models/HistorialesParcelasCultivos.model.js';
+import { HistorialesParcelasCultivosModelo } from "../models/HistorialesParcelasCultivos.model.js";
 
 // Devuelve todos los Historials de la colección
 export const getHistoriales = async (req, res) => {
@@ -48,7 +48,7 @@ export const postHistorial = async (req, res) => {
     });
 
     res.json({
-      msg: 'El Historial se creo Correctamente',
+      msg: "El Historial se creo Correctamente",
       nuevoHistorial,
     });
   } catch (error) {
@@ -99,7 +99,7 @@ export const deleteHistorial = async (req, res) => {
           id_historial_parcelas_cultivos: id,
         },
       },
-      console.log(id)
+      console.log(id),
     );
 
     res.json({

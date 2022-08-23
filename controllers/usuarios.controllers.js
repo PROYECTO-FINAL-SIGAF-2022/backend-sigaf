@@ -1,5 +1,5 @@
-import { TiposUsuariosModelo } from '../models/TiposUsuarios.model.js';
-import { UsuariosModelo } from '../models/Usuarios.model.js';
+import { TiposUsuariosModelo } from "../models/TiposUsuarios.model.js";
+import { UsuariosModelo } from "../models/Usuarios.model.js";
 
 // Devuelve todos los usuarios de la colección
 export const getUsuarios = async (req, res) => {
@@ -64,7 +64,7 @@ export const postUsuario = async (req, res) => {
     });
 
     res.json({
-      msg: 'El usuario se creo Correctamente',
+      msg: "El usuario se creo Correctamente",
       nuevoUsuario,
     });
   } catch (error) {
@@ -121,7 +121,7 @@ export const deleteUsuario = async (req, res) => {
           id_usuario: id,
         },
       },
-      console.log(id)
+      console.log(id),
     );
 
     res.sendStatus(204);

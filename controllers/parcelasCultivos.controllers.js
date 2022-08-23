@@ -1,4 +1,4 @@
-import { ParcelasCultivosModelo } from '../models/ParcelasCultivos.model.js';
+import { ParcelasCultivosModelo } from "../models/ParcelasCultivos.model.js";
 
 // Devuelve todos los Cultivos de la colección
 export const getParcelasCultivos = async (req, res) => {
@@ -29,7 +29,9 @@ export const getParcelaCultivoUnico = async (req, res) => {
 
 export const postParcelaCultivo = async (req, res) => {
   try {
-    const { id_parcela, id_cultivo, id_campania, cantidad_sembrada } = req.body;
+    const {
+      id_parcela, id_cultivo, id_campania, cantidad_sembrada,
+    } = req.body;
 
     const nuevoParcela_Cultivo = await ParcelasCultivosModelo.create({
       id_parcela,
@@ -39,7 +41,7 @@ export const postParcelaCultivo = async (req, res) => {
     });
 
     res.json({
-      msg: 'El Parcela_Cultivo se creo Correctamente',
+      msg: "El Parcela_Cultivo se creo Correctamente",
       nuevoParcela_Cultivo,
     });
   } catch (error) {
@@ -52,8 +54,9 @@ export const postParcelaCultivo = async (req, res) => {
 export const updateParcelaCultivo = async (req, res) => {
   try {
     const { id } = req.params;
-    const { id_parcela, id_cultivo, id_campania, cantidad_sembrada } =
-      req.body[0];
+    const {
+      id_parcela, id_cultivo, id_campania, cantidad_sembrada,
+    } = req.body[0];
 
     console.log(id);
 
@@ -84,7 +87,7 @@ export const deleteParcelaCultivo = async (req, res) => {
           id_parcelas_cultivos: id,
         },
       },
-      console.log(id)
+      console.log(id),
     );
 
     res.status(200).json({
