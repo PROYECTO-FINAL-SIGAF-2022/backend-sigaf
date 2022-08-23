@@ -14,7 +14,7 @@ export const ProveedoresModelo = connection.define(
       allowNull: false,
     },
     telefono_proveedor: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     direccion_proveedor: {

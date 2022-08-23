@@ -24,6 +24,7 @@ import { UsuariosModelo } from '../models/Usuarios.model.js';
 // console.log('first');
 
 export const seedBd = async () => {
+  await connection.query('SET GLOBAL FOREIGN_KEY_CHECKS = 0');
   await connection.truncate({ cascade: true, force: true });
 
   // 1
@@ -85,7 +86,7 @@ export const seedBd = async () => {
 
   await ProductosModelo.create({
     descripcion_producto: 'Fertilizante',
-    fecha_vencimiento_producto: '20/10/2020',
+    fecha_vencimiento_producto: '2020/20/10',
     cantidad_producto: '10',
     id_proveedor: 1,
     id_tipo_producto: 1,
@@ -168,5 +169,7 @@ export const seedBd = async () => {
     id_parcela_cultivo: '1',
     cantidad_perdida: '10',
   });
+
+  await connection.query('SET GLOBAL FOREIGN_KEY_CHECKS = 1');
 };
 seedBd();
