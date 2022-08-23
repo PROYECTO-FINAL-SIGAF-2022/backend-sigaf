@@ -1,6 +1,7 @@
 // CARGAR DATOS FICTISIOS PARA PRUEBAS
 
 import bcrypt from 'bcryptjs';
+import { connection } from '../config/connection.js';
 
 import { ActividadesModelo } from '../models/Actividades.model.js';
 import { AgregoParcelasCultivosModelo } from '../models/AgregoParcelasCultivos.model.js';
@@ -23,6 +24,8 @@ import { UsuariosModelo } from '../models/Usuarios.model.js';
 // console.log('first');
 
 export const seedBd = async () => {
+  await connection.truncate({ cascade: true, force: true });
+
   // 1
   await TiposUsuariosModelo.create({
     descripcion_tipo_usuario: 'Administrador',
@@ -39,7 +42,7 @@ export const seedBd = async () => {
     apellido_persona: 'Franco',
     dni_persona: 43711821,
     fecha_nac_persona: '20/10/1996',
-    telefono_persona: 3704981212,
+    telefono_persona: 3704981,
     username_usuario: 'usuariodev',
     password_usuario: passwordEncriptado,
     id_tipo_usuario: 1,
