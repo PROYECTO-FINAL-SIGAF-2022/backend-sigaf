@@ -1,4 +1,4 @@
-import { ActividadesModelo } from './actividades.model.js';
+import { ActividadesModelo } from './Actividades.model.js';
 import { AgregoParcelasCultivosModelo } from './AgregoParcelasCultivos.model.js';
 import { CampaniasModelo } from './Campanias.model.js';
 import { CultivosModelo } from './Cultivos.model.js';
