@@ -1,5 +1,6 @@
 import express from 'express';
 import morgan from 'morgan';
+import cors from 'cors';
 import { connection } from './config/connection.js';
 import { rutas } from './routes/index.routes.js';
 
@@ -17,6 +18,14 @@ app.set('port', process.env.PORT || 4000);
 // RUTAS
 
 app.use(rutas());
+
+// CORS
+
+app.use(
+  cors({
+    origin: '*',
+  })
+);
 
 try {
   await connection.authenticate();

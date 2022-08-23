@@ -44,6 +44,7 @@ export const postUsuario = async (req, res) => {
       apellido_persona,
       dni_persona,
       fecha_nac_persona,
+      email_persona,
       telefono_persona,
       username_usuario,
       password_usuario,
@@ -55,6 +56,7 @@ export const postUsuario = async (req, res) => {
       apellido_persona,
       dni_persona,
       fecha_nac_persona,
+      email_persona,
       telefono_persona,
       username_usuario,
       password_usuario,
@@ -81,6 +83,7 @@ export const updateUsuario = async (req, res) => {
       dni_persona,
       fecha_nac_persona,
       telefono_persona,
+      email_persona,
       username_usuario,
       password_usuario,
       id_tipo_usuario,
@@ -93,6 +96,7 @@ export const updateUsuario = async (req, res) => {
     updateUser.apellido_persona = apellido_persona;
     updateUser.dni_persona = dni_persona;
     updateUser.fecha_nac_persona = fecha_nac_persona;
+    updateUser.email_persona = email_persona;
     updateUser.telefono_persona = telefono_persona;
     updateUser.username_usuario = username_usuario;
     updateUser.password_usuario = password_usuario;

@@ -24,7 +24,7 @@ import { UsuariosModelo } from '../models/Usuarios.model.js';
 // console.log('first');
 
 export const seedBd = async () => {
-  await connection.query('SET GLOBAL FOREIGN_KEY_CHECKS = 0');
+  await connection.query('SET GLOBAL FOREIGN_KEY_CHECKS = 0;');
   await connection.truncate({ cascade: true, force: true });
 
   // 1
@@ -42,8 +42,9 @@ export const seedBd = async () => {
     nombre_persona: 'Marcos',
     apellido_persona: 'Franco',
     dni_persona: 43711821,
-    fecha_nac_persona: '1996/10/10/',
+    fecha_nac_persona: '1996/10/10',
     telefono_persona: 3704981,
+    email_persona: 'correo@gmail.com',
     username_usuario: 'usuariodev',
     password_usuario: passwordEncriptado,
     id_tipo_usuario: 1,
@@ -98,7 +99,7 @@ export const seedBd = async () => {
 
   LogSistema.create({
     descripcion_log: 'Se cargo el producto fertilizante',
-    fecha_hora: '2020/10/10/',
+    fecha_hora: '2020/10/10',
     id_usuario: 1,
   });
 
@@ -114,7 +115,7 @@ export const seedBd = async () => {
   // 11
   await CampaniasModelo.create({
     descripcion_campania: 'La super campaña de maiz',
-    fecha_inicio: '2020/10/10/',
+    fecha_inicio: '2020/10/10',
     fecha_final: '2021/10/21',
     id_cultivo: 1,
     activo: true,
@@ -170,6 +171,6 @@ export const seedBd = async () => {
     cantidad_perdida: '10',
   });
 
-  await connection.query('SET GLOBAL FOREIGN_KEY_CHECKS = 1');
+  await connection.query('SET GLOBAL FOREIGN_KEY_CHECKS = 1;');
 };
 seedBd();

@@ -19,6 +19,9 @@ export const UsuariosModelo = connection.define('usuarios', {
   fecha_nac_persona: {
     type: DataTypes.STRING,
   },
+  email_persona: {
+    type: DataTypes.STRING,
+  },
   telefono_persona: {
     type: DataTypes.STRING,
   },
