@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const connection = new Sequelize(
+export const connection = new Sequelize(
   process.env.DATABASENAME || 'sigaf',
   process.env.DATABASEUSER || 'root',
   process.env.DATABASEPASSWORD || '',
