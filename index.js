@@ -24,7 +24,7 @@ try {
     'Se ha establecido correctamente la conexion con la base de datos.'
   );
   // sincronizar tablas
-  await connection.sync({ alter: true });
+  await connection.sync({ alter: true, force: true });
 
   console.log('Sincronizacion completa');
 } catch (error) {

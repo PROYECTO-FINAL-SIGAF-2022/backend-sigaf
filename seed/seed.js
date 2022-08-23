@@ -114,8 +114,8 @@ export const seedBd = async () => {
   // 11
   await CampaniasModelo.create({
     descripcion_campania: 'La super campaña de maiz',
-    fecha_inicio: '20/10/2020',
-    fecha_final: '20/10/2021',
+    fecha_inicio: '2020/10/10/',
+    fecha_final: '2021/10/21',
     id_cultivo: 1,
     activo: true,
   });
