@@ -20,5 +20,6 @@ module.exports = {
     "import/prefer-default-export": "off",
     "max-len": "off",
     "prefer-promise-reject-errors": "off",
+    "linebreak-style": "off",
   },
 };
