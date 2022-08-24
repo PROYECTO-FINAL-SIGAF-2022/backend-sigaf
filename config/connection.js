@@ -1,12 +1,15 @@
 import { Sequelize } from "sequelize";
 import dotenv from "dotenv";
+import getConnectionData from "../helpers/getConnectionData.js";
 
 dotenv.config();
 
+const { database, username, password } = getConnectionData();
+
 export const connection = new Sequelize(
-  process.env.DATABASENAME || "sigaf",
-  process.env.DATABASEUSER || "root",
-  process.env.DATABASEPASSWORD || "",
+  database,
+  username,
+  password,
   {
     host: process.env.HOSTNAME || "localhost",
     dialect: "mariadb",

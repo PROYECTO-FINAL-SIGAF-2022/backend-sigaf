@@ -21,5 +21,6 @@ module.exports = {
     "max-len": "off",
     "prefer-promise-reject-errors": "off",
     "linebreak-style": "off",
+    "no-undef": "off",
   },
 };

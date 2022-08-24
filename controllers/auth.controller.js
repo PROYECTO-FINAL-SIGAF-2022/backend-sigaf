@@ -30,12 +30,8 @@ export const loguearse = async (req, res) => {
   }
 
   // generar el token
-  const { id_usuario, nombre_persona, apellido_persona } = usuario;
-  const token = await generarJwt({
-    id_usuario,
-    nombre_persona,
-    apellido_persona,
-  });
+  const { id_usuario } = usuario;
+  const token = await generarJwt({ id_usuario });
 
   res.json({
     // msg: 'El usuario se logueo correctamente',
@@ -72,11 +68,7 @@ export const registrarse = async (req, res) => {
 
   // generar el token
   const { id_usuario } = nuevoUsuario;
-  const token = await generarJwt({
-    id_usuario,
-    nombre_persona,
-    apellido_persona,
-  });
+  const token = await generarJwt({ id_usuario });
 
   res.json({
     msg: "El usuario se creo Correctamente",
