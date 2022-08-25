@@ -37,9 +37,11 @@ try {
 
   console.log("Sincronizacion completa");
 } catch (error) {
-  console.error("No se puede conectar con la base de datos:", error);
+  console.error("No se puede conectar con la base de datos:", error.message);
 }
 
-app.listen(app.get("port"), () => {
+const server = app.listen(app.get("port"), () => {
   console.log("Server is running on port 4000");
 });
+
+export { app, server };
