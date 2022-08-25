@@ -9,14 +9,14 @@ import {
 
 const router = Router();
 
-router.get("/api/get-historiales", getHistoriales);
+router.get("/historiales", getHistoriales);
 
-router.get("/api/get-historial/:id", getHistorialUnico);
+router.get("/historial/:id", getHistorialUnico);
 
-router.post("/api/post-historial", postHistorial);
+router.post("/historial", postHistorial);
 
-router.put("/api/edit-historial/:id", updateHistorial);
+router.put("/historial/:id", updateHistorial);
 
-router.delete("/api/delete-historial/:id", deleteHistorial);
+router.delete("/historial/:id", deleteHistorial);
 
 export default router;

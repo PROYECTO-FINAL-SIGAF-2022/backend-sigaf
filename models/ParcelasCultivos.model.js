@@ -4,7 +4,7 @@ import { connection } from "../config/connection.js";
 export const ParcelasCultivosModelo = connection.define(
   "parcelas_cultivos",
   {
-    id_parcelas_cultivos: {
+    id_parcela_cultivo: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,

@@ -9,14 +9,14 @@ import {
 
 const router = Router();
 
-router.get("/api/get-actividades", getActividades);
+router.get("/actividades", getActividades);
 
-router.get("/api/get-actividad/:id", getActividadUnico);
+router.get("/actividad/:id", getActividadUnico);
 
-router.post("/api/post-actividad", postActividad);
+router.post("/actividad", postActividad);
 
-router.put("/api/edit-actividad/:id", updateActividad);
+router.put("/actividad/:id", updateActividad);
 
-router.delete("/api/delete-actividad/:id", deleteActividad);
+router.delete("/actividad/:id", deleteActividad);
 
 export default router;

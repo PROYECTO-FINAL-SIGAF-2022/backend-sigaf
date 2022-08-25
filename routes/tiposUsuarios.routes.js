@@ -9,14 +9,14 @@ import {
 
 const router = Router();
 
-router.get("/api/get-tipo-user", getTiposUsuarios);
+router.get("/tipos-usuarios", getTiposUsuarios);
 
-router.get("/api/get-tipo-user/:id", getTipoUsuarioUnico);
+router.get("/tipo-usuario/:id", getTipoUsuarioUnico);
 
-router.post("/api/post-tipo-user", postTipoUsuario);
+router.post("/tipo-usuario", postTipoUsuario);
 
-router.put("/api/edit-tipo-user/:id", updateTipoUsuario);
+router.put("/tipo-usuario/:id", updateTipoUsuario);
 
-router.delete("/api/delete-tipo-user/:id", deleteTipoUsuario);
+router.delete("/tipo-usuario/:id", deleteTipoUsuario);
 
 export default router;

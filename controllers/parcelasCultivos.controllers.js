@@ -3,9 +3,9 @@ import { ParcelasCultivosModelo } from "../models/ParcelasCultivos.model.js";
 // Devuelve todos los Cultivos de la colección
 export const getParcelasCultivos = async (req, res) => {
   try {
-    const Datos = await ParcelasCultivosModelo.findAll(); // consulta para todos los documentos
+    const datosParcCultivo = await ParcelasCultivosModelo.findAll(); // consulta para todos los documentos
     // Respuesta del servidor
-    res.json(Datos);
+    res.json(datosParcCultivo);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -16,10 +16,10 @@ export const getParcelasCultivos = async (req, res) => {
 export const getParcelaCultivoUnico = async (req, res) => {
   try {
     const { id } = req.params;
-    const Datos = await ParcelasCultivosModelo.findByPk(id); // consulta para todos los documentos
+    const datosParcCultivo = await ParcelasCultivosModelo.findByPk(id); // consulta para todos los documentos
 
     // Respuesta del servidor
-    res.json(Datos);
+    res.json(datosParcCultivo);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -33,7 +33,7 @@ export const postParcelaCultivo = async (req, res) => {
       id_parcela, id_cultivo, id_campania, cantidad_sembrada,
     } = req.body;
 
-    const nuevoParcela_Cultivo = await ParcelasCultivosModelo.create({
+    const nuevoParcelaCultivo = await ParcelasCultivosModelo.create({
       id_parcela,
       id_cultivo,
       id_campania,
@@ -42,7 +42,7 @@ export const postParcelaCultivo = async (req, res) => {
 
     res.json({
       msg: "El Parcela_Cultivo se creo Correctamente",
-      nuevoParcela_Cultivo,
+      nuevoParcelaCultivo,
     });
   } catch (error) {
     return res.status(500).json({
@@ -60,16 +60,16 @@ export const updateParcelaCultivo = async (req, res) => {
 
     console.log(id);
 
-    const updateParc_Cult = await ParcelasCultivosModelo.findOne({
-      where: { id_parcelas_cultivos: id },
+    const updateParcCult = await ParcelasCultivosModelo.findOne({
+      where: { id_parcela_cultivo: id },
     });
-    updateParc_Cult.id_parcela = id_parcela;
-    updateParc_Cult.id_cultivo = id_cultivo;
-    updateParc_Cult.id_campania = id_campania;
-    updateParc_Cult.cantidad_sembrada = cantidad_sembrada;
-    await updateParc_Cult.save();
+    updateParcCult.id_parcela = id_parcela;
+    updateParcCult.id_cultivo = id_cultivo;
+    updateParcCult.id_campania = id_campania;
+    updateParcCult.cantidad_sembrada = cantidad_sembrada;
+    await updateParcCult.save();
 
-    res.json(updateParc_Cult);
+    res.json(updateParcCult);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -84,7 +84,7 @@ export const deleteParcelaCultivo = async (req, res) => {
     await ParcelasCultivosModelo.destroy(
       {
         where: {
-          id_parcelas_cultivos: id,
+          id_parcela_cultivo: id,
         },
       },
       console.log(id),

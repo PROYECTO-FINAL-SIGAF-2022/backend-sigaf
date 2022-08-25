@@ -1,4 +1,4 @@
-import express from "express";
+// import express from "express";
 
 // Rutas
 
@@ -14,7 +14,7 @@ import parcelasRutas from "./parcelas.routes.js";
 import parcelasCultivosRutas from "./parcelasCultivos.routes.js";
 import tiposUsuariosRutas from "./tiposUsuarios.routes.js";
 
-const app = express();
+// const app = express();
 
 export const rutas = () => [
   usuariosRutas,
@@ -29,12 +29,12 @@ export const rutas = () => [
   authRutas,
 ];
 
-app.use(usuariosRutas);
-app.use(establecimientosRutas);
-app.use(actividadesRutas);
-app.use(campaniasRutas);
-app.use(cultivoRutas);
-app.use(historialesParcelasCultivosRutas);
-app.use(parcelasRutas);
-app.use(parcelasCultivosRutas);
-app.use(tiposUsuariosRutas);
+// app.use("/api", usuariosRutas);
+// app.use("/api", establecimientosRutas);
+// app.use("/api", actividadesRutas);
+// app.use("/api", campaniasRutas);
+// app.use("/api", cultivoRutas);
+// app.use("/api", historialesParcelasCultivosRutas);
+// app.use("/api", parcelasRutas);
+// app.use("/api", parcelasCultivosRutas);
+// app.use("/api", tiposUsuariosRutas);

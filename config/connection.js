@@ -6,15 +6,17 @@ dotenv.config();
 
 const { database, username, password } = getConnectionData();
 
+// console.log(process.env.HOSTNAME);
+
 export const connection = new Sequelize(
   database,
   username,
   password,
   {
-    host: process.env.HOSTNAME || "localhost",
+    host: process.env.HOSTNAME,
     dialect: "mariadb",
-    port: process.env.DATABSEPORT || "3306",
-    ssl: true,
+    port: process.env.DATABSEPORT,
+    ssl: false,
     logging: false,
   },
 );

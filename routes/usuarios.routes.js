@@ -1,20 +1,24 @@
 import { Router } from "express";
 
 import {
-  getUsuarios, getUsuarioUnico, postUsuario, updateUsuario, deleteUsuario,
+  getUsuarios,
+  getUsuarioUnico,
+  postUsuario,
+  updateUsuario,
+  deleteUsuario,
 } from "../controllers/usuarios.controllers.js";
 
 const router = Router();
 
 //  Ruta que devuelve todos los usuarios
-router.get("/api/get-user", getUsuarios);
+router.get("/usuarios", getUsuarios);
 
-router.get("/api/get-user/:id", getUsuarioUnico);
+router.get("/usuario/:id", getUsuarioUnico);
 
-router.post("/api/post-user", postUsuario);
+router.post("/usuario", postUsuario);
 
-router.put("/api/edit-user/:id", updateUsuario);
+router.put("/usuario/:id", updateUsuario);
 
-router.delete("/api/delete-user/:id", deleteUsuario);
+router.delete("/usuario/:id", deleteUsuario);
 
 export default router;

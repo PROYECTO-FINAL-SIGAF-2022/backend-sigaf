@@ -26,7 +26,7 @@ app.set("port", process.env.PORT || 4000);
 
 // RUTAS
 
-app.use(rutas());
+app.use("/api", rutas());
 
 try {
   await connection.authenticate();

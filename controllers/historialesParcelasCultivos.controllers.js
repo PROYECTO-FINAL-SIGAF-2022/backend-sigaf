@@ -69,11 +69,12 @@ export const updateHistorial = async (req, res) => {
       id_producto,
     } = req.body[0];
 
-    console.log(id);
+    // console.log(id_parcela_cultivo);
 
     const updateHist = await HistorialesParcelasCultivosModelo.findOne({
       where: { id_historial_parcelas_cultivos: id },
     });
+    // console.log(updateHist.id_parcela_cultivo);
     updateHist.id_parcela_cultivo = id_parcela_cultivo;
     updateHist.id_actividad = id_actividad;
     updateHist.id_usuario = id_usuario;
@@ -99,7 +100,7 @@ export const deleteHistorial = async (req, res) => {
           id_historial_parcelas_cultivos: id,
         },
       },
-      console.log(id),
+      // console.log(id),
     );
 
     res.json({

@@ -9,14 +9,14 @@ import {
 
 const router = Router();
 
-router.get("/api/get-cultivos", getCultivos);
+router.get("/cultivos", getCultivos);
 
-router.get("/api/get-cultivo/:id", getCultivoUnico);
+router.get("/cultivo/:id", getCultivoUnico);
 
-router.post("/api/post-cultivo", postCultivo);
+router.post("/cultivo", postCultivo);
 
-router.put("/api/edit-cultivo/:id", updateCultivo);
+router.put("/cultivo/:id", updateCultivo);
 
-router.delete("/api/delete-cultivo/:id", deleteCultivo);
+router.delete("/cultivo/:id", deleteCultivo);
 
 export default router;

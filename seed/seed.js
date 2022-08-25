@@ -24,9 +24,9 @@ import { UsuariosModelo } from "../models/Usuarios.model.js";
 // console.log('first');
 
 export const seedBd = async () => {
-  await connection.query("DROP DATABASE IF EXISTS sigaf");
-  await connection.query("CREATE DATABASE sigaf");
-  await connection.query("USE sigaf");
+  await connection.query("DROP DATABASE IF EXISTS sigaf_dev");
+  await connection.query("CREATE DATABASE sigaf_dev");
+  await connection.query("USE sigaf_dev");
   // await connection.truncate({ cascade: true, force: true });
   await connection.authenticate();
 

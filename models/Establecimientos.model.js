@@ -19,9 +19,9 @@ export const EstablecimientosModelo = connection.define(
     superficie: {
       type: DataTypes.STRING,
     },
-    // id_usuario: {
-    //   type: DataTypes.INTEGER,
-    // },
+    id_usuario: {
+      type: DataTypes.INTEGER,
+    },
     activo: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
