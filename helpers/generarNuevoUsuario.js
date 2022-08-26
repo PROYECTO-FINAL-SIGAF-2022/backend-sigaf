@@ -7,7 +7,7 @@ export default function generarNuevoUsuario() {
     nombre_persona: uuidv4(),
     apellido_persona: uuidv4(),
     dni_persona: generarNumero(),
-    fecha_nac_persona: new Date(),
+    fecha_nac_persona: "20002/01/09",
     email_persona: `${uuidv4()}@gmail.com`,
     telefono_persona: generarNumero(),
     username_usuario: uuidv4(),

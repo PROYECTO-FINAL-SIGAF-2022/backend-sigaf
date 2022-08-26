@@ -1,38 +1,37 @@
 import supertest from "supertest";
-import jest from "jest";
+// import jest from "jest";
 import generarNuevoUsuario from "../helpers/generarNuevoUsuario.js";
 import { app, server } from "../index.js";
-import { UsuariosModelo } from "../models/Usuarios.model.js";
+// import { UsuariosModelo } from "../models/Usuarios.model.js";
 
 const API = supertest(app);
 
 const URL = "/api/usuarios";
 
-describe("Crear un nuevo usuario", async () => {
-const usuariosIniciales = {
-  usuarios1: generarNuevoUsuario(),
-  usuarios2: generarNuevoUsuario(),
-};
+// const usuariosIniciales = {
+//   usuarios1: generarNuevoUsuario(),
+//   usuarios2: generarNuevoUsuario(),
+// };
 
-beforeAll(async () => {
-  await UsuariosModelo.destroy({ where: {} });
+// beforeAll(async () => {
+//   await UsuariosModelo.destroy({ where: {} });
 
-  await UsuariosModelo.create(usuariosIniciales[1]);
-  await UsuariosModelo.create(usuariosIniciales[1]);
-});
+//   await UsuariosModelo.create(usuariosIniciales.usuarios1);
+//   await UsuariosModelo.create(usuariosIniciales.usuarios2);
+// });
 
 describe("Crear un nuevo usuario", () => {
-  it("Crear un usuario", async (done) => {
+  it("Crear un usuario", async () => {
     const request = await API.post(URL)
       .set("Content-Type", "application/json")
       .send(generarNuevoUsuario());
-    expect(request.statusCode).toEqual(200);
-    end((err) => {
-      if (err) {
-        return done(err);
-      }
-      return done();
-    });
+    expect(request.statusCode).toEqual(201);
+    // end((err) => {
+    //   if (err) {
+    //     return done(err);
+    //   }
+    //   return done();
+    // });
   });
 
   it.skip("Crear un usuario con datos ya existentes", (done) => {
