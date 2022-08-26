@@ -30,9 +30,7 @@ app.use("/api", rutas());
 
 try {
   await connection.authenticate();
-  console.log(
-    "Se ha establecido correctamente la conexion con la base de datos.",
-  );
+  console.log("Se ha establecido correctamente la conexion con la base de datos.");
   // sincronizar tablas
 
   console.log("Sincronizacion completa");
