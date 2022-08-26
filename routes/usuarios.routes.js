@@ -13,12 +13,12 @@ const router = Router();
 //  Ruta que devuelve todos los usuarios
 router.get("/usuarios", getUsuarios);
 
-router.get("/usuario/:id", getUsuarioUnico);
+router.get("/usuarios/:id", getUsuarioUnico);
 
-router.post("/usuario", postUsuario);
+router.post("/usuarios", postUsuario);
 
-router.put("/usuario/:id", updateUsuario);
+router.put("/usuarios/:id", updateUsuario);
 
-router.delete("/usuario/:id", deleteUsuario);
+router.delete("/usuarios/:id", deleteUsuario);
 
 export default router;

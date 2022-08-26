@@ -10,8 +10,11 @@ export const getUsuarios = async (req, res) => {
       },
     }); // consulta para todos los documentos
 
-    // Respuesta del servidor
-    res.json(usuarios);
+    if (usuarios.length) {
+      res.status(200).json(usuarios);
+    } else {
+      res.sendStatus(404);
+    }
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -63,9 +66,9 @@ export const postUsuario = async (req, res) => {
       id_tipo_usuario,
     });
 
-    res.json({
+    res.status(201).json({
       msg: "El usuario se creo Correctamente",
-      nuevoUsuario,
+      nuevo_usuario: nuevoUsuario,
     });
   } catch (error) {
     return res.status(500).json({

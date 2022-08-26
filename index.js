@@ -40,6 +40,8 @@ try {
   console.error("No se puede conectar con la base de datos:", error);
 }
 
-app.listen(app.get("port"), () => {
+const server = app.listen(app.get("port"), () => {
   console.log("Server is running on port 4000");
 });
+
+export { server, app };
