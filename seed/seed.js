@@ -23,10 +23,12 @@ import { UsuariosModelo } from "../models/Usuarios.model.js";
 
 // console.log('first');
 
-export const seedBd = async () => {
-  await connection.query("DROP DATABASE IF EXISTS sigaf_dev");
-  await connection.query("CREATE DATABASE sigaf_dev");
-  await connection.query("USE sigaf_dev");
+const seedBd = async () => {
+  const nombreBD = process.env.NODE_ENV === "test" ? "test" : "dev";
+
+  await connection.query(`DROP DATABASE IF EXISTS sigaf_${nombreBD}`);
+  await connection.query(`CREATE DATABASE sigaf_${nombreBD}`);
+  await connection.query(`USE sigaf_${nombreBD}`);
   // await connection.truncate({ cascade: true, force: true });
   await connection.authenticate();
 

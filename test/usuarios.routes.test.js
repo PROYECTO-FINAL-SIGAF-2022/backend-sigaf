@@ -6,7 +6,7 @@ const API = supertest(app);
 
 const URL = "/api/usuarios";
 
-describe("Crear un nuevo usuario", () => {
+describe("Crear un nuevo usuario", async () => {
   const testUser = generarNuevoUsuario();
 
   it("Crear un usuario", (done) => {
