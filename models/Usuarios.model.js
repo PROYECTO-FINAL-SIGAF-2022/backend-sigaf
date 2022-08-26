@@ -22,6 +22,7 @@ export const UsuariosModelo = connection.define("usuarios", {
   },
   email_persona: {
     type: DataTypes.STRING,
+    unique: true,
   },
   telefono_persona: {
     type: DataTypes.STRING,

@@ -54,6 +54,8 @@ export const postUsuario = async (req, res) => {
       id_tipo_usuario,
     } = req.body;
 
+    const idTipoUsuario = id_tipo_usuario || 1;
+
     const nuevoUsuario = await UsuariosModelo.create({
       nombre_persona,
       apellido_persona,
@@ -63,7 +65,7 @@ export const postUsuario = async (req, res) => {
       telefono_persona,
       username_usuario,
       password_usuario,
-      id_tipo_usuario,
+      id_tipo_usuario: idTipoUsuario,
     });
 
     res.status(201).json({
@@ -71,6 +73,7 @@ export const postUsuario = async (req, res) => {
       nuevo_usuario: nuevoUsuario,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: error.message,
     });
