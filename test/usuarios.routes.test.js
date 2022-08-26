@@ -6,23 +6,44 @@ const API = supertest(app);
 const URL = "/api/usuarios";
 
 const testUser = {
-  nombre_persona: "test2",
-  apellido_persona: "test2",
-  dni_persona: "441017902",
+  nombre_persona: "test10",
+  apellido_persona: "test10",
+  dni_persona: "101010179010",
   fecha_nac_persona: new Date(),
-  email_persona: "test2@gmail.com",
-  telefono_persona: "3704234234",
-  username_usuario: "tester2",
-  password_usuario: "tester2",
+  email_persona: "test10@gmail.com",
+  telefono_persona: "670666610",
+  username_usuario: "tester10",
+  password_usuario: "tester10",
+  id_tipo_usuario: 1,
 };
 
 describe("Crear un nuevo usuario", () => {
-  test("Debe retornar el nuevo usuario", async (done) => {
-    const response = await API.post(URL)
-      .set("Content-Type", "application/json")
-      .send(testUser);
-    expect(response.statusCode).toEqual(201);
-    await done();
+  // test("Debe retornar el nuevo usuario", async () => {
+  //   const response = await API.post(URL)
+  //     .set("Content-Type", "application/json")
+  //     .send(testUser)
+  //     .expect(201)
+  //     .end((err, res) => {
+  //       if (err) {
+  //         console.log(err);
+  //       } else {
+  //         console.log(res);
+  //       }
+  //     });
+  //   expect(response.statusCode).toEqual(201);
+  // });
+  it("responds with json", (done) => {
+    API
+      .post(URL)
+      .send(testUser)
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(201)
+      .end((err, res) => {
+        if (err) return done(err);
+        console.log(res);
+        return done();
+      });
   });
 });
 
