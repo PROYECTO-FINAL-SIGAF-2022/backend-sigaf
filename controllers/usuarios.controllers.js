@@ -10,11 +10,7 @@ export const getUsuarios = async (req, res) => {
       },
     }); // consulta para todos los documentos
 
-    if (usuarios.length) {
-      res.status(200).json(usuarios);
-    } else {
-      res.sendStatus(404);
-    }
+    res.status(200).json(usuarios);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
