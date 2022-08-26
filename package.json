@@ -5,9 +5,11 @@
   "main": "index.js",
   "jest": {
     "verbose": true,
-    "extensionsToTreatAsEsm": [".test.js"]
-  }
-,  "scripts": {
+    "extensionsToTreatAsEsm": [
+      ".test.js"
+    ]
+  },
+  "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon index.js",
     "dev-test": "cross-env NODE_ENV=test nodemon index.js",
     "start": "cross-env NODE_ENV=production node index.js",
@@ -28,7 +30,8 @@
     "mariadb": "3.0.0",
     "morgan": "1.10.0",
     "mysql2": "^2.3.3",
-    "sequelize": "6.21.3"
+    "sequelize": "6.21.3",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "eslint": "^8.22.0",
