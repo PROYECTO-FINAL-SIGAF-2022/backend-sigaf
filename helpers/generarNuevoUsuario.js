@@ -1,13 +1,13 @@
 import { v4 as uuidv4 } from "uuid";
 
-const generarNumero = () => Math.random() * (99999999 - 10000000) + 10000000;
+const generarNumero = () => Math.ceil(Math.random() * (99999999 - 10000000) + 10000000);
 
 export default function generarNuevoUsuario() {
   return ({
     nombre_persona: uuidv4(),
     apellido_persona: uuidv4(),
     dni_persona: generarNumero(),
-    fecha_nac_persona: "20002/01/09",
+    fecha_nac_persona: Date.now(),
     email_persona: `${uuidv4()}@gmail.com`,
     telefono_persona: generarNumero(),
     username_usuario: uuidv4(),

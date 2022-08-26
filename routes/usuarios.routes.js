@@ -7,6 +7,7 @@ import {
   updateUsuario,
   deleteUsuario,
 } from "../controllers/usuarios.controllers.js";
+import { validadorDeCampos, existUser } from "../middlewares/usuarios.middlewares.js";
 
 const router = Router();
 
@@ -15,7 +16,7 @@ router.get("/usuarios", getUsuarios);
 
 router.get("/usuarios/:id", getUsuarioUnico);
 
-router.post("/usuarios", postUsuario);
+router.post("/usuarios", validadorDeCampos, existUser, postUsuario);
 
 router.put("/usuarios/:id", updateUsuario);
 

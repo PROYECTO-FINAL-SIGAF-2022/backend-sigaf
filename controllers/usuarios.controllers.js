@@ -28,7 +28,11 @@ export const getUsuarioUnico = async (req, res) => {
     }); // consulta para todos los documentos
 
     // Respuesta del servidor
-    res.json(usuario);
+    if (usuario) {
+      res.json(usuario);
+    } else {
+      res.sendStatus(404);
+    }
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -89,7 +93,7 @@ export const updateUsuario = async (req, res) => {
       username_usuario,
       password_usuario,
       id_tipo_usuario,
-    } = req.body[0];
+    } = req.body;
     console.log(id);
     const updateUser = await UsuariosModelo.findOne({
       where: { id_usuario: id },
@@ -107,6 +111,7 @@ export const updateUsuario = async (req, res) => {
 
     res.json(updateUser);
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: error.message,
     });
