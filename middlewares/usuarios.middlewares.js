@@ -1,7 +1,7 @@
 // validar datos de usuario con express-validator
 
 import { check, validationResult } from "express-validator";
-import { UsuariosModelo } from "../models/Usuarios.model";
+import { UsuariosModelo } from "../models/Usuarios.model.js";
 
 const validadorDeCampos = [
   check("nombre_persona")
@@ -20,7 +20,7 @@ const validadorDeCampos = [
     .isEmpty()
     .withMessage("El dni es requerido"),
   check("fecha_nac_persona")
-  // TODO: validar que sea una fecha
+    // TODO: validar que sea una fecha
     .exists()
     .withMessage("La fecha de nacimiento es requerida"),
   check("telefono_persona")

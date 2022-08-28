@@ -1,5 +1,6 @@
 import supertest from "supertest";
 import generarNuevoUsuario from "../helpers/generarNuevoUsuario.js";
+import { vaciarTablas } from "../helpers/vaciarTablas.js";
 import { app, server } from "../index.js";
 import { UsuariosModelo } from "../models/Usuarios.model.js";
 
@@ -13,10 +14,12 @@ const usuariosIniciales = {
 };
 
 beforeAll(async () => {
-  await UsuariosModelo.destroy({
-    where: {},
-    truncate: true,
-  });
+  await vaciarTablas();
+
+  // await UsuariosModelo.destroy({
+  //   where: {},
+  //   truncate: true,
+  // });
   await UsuariosModelo.create(usuariosIniciales.usuarios1);
   await UsuariosModelo.create(usuariosIniciales.usuarios2);
 });
@@ -123,5 +126,6 @@ describe("PUT /api/usuarios/:id", () => {
 });
 
 afterAll(async () => {
+  await vaciarTablas();
   server.close();
 });

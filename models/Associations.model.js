@@ -20,86 +20,101 @@ import { UsuariosModelo } from "./Usuarios.model.js";
 
 ActividadesModelo.hasMany(HistorialesParcelasCultivosModelo, {
   foreignKey: "id_actividad",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 // TABLA AGREGO_PARCELAS_CULTIVOS
 
 AgregoParcelasCultivosModelo.belongsTo(ParcelasCultivosModelo, {
   foreignKey: "id_parcela_cultivo",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 // TABLA CAMPANIAS
 CampaniasModelo.belongsTo(CultivosModelo, {
   foreignKey: "id_cultivo",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 CampaniasModelo.hasMany(DetalleCampanias, {
   foreignKey: "id_campania",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 CampaniasModelo.hasMany(ParcelasCultivosModelo, {
   foreignKey: "id_campania",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 // TABLA CULTIVOS
 
 CultivosModelo.hasMany(CampaniasModelo, {
   foreignKey: "id_cultivo",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 CultivosModelo.hasMany(ParcelasCultivosModelo, {
   foreignKey: "id_cultivo",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 // TABLA DETALLE CAMPAÑAS
 DetalleCampanias.belongsTo(CampaniasModelo, {
   foreignKey: "id_campania",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 DetalleCampanias.belongsTo(UnidadesMedidasModelo, {
   foreignKey: "id_unidad_medida",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 // TABLA ESTABLECIMIENTOS
 
 EstablecimientosModelo.belongsTo(UsuariosModelo, {
   foreignKey: "id_usuario",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 EstablecimientosModelo.hasMany(ParcelasModelo, {
   foreignKey: "id_establecimiento",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 // TABLA HISTORIALES_PARCELAS_CULTIVOS
 
 HistorialesParcelasCultivosModelo.belongsTo(ParcelasCultivosModelo, {
   foreignKey: "id_parcela_cultivo",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 HistorialesParcelasCultivosModelo.belongsTo(ActividadesModelo, {
   foreignKey: "id_actividad",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 HistorialesParcelasCultivosModelo.belongsTo(UsuariosModelo, {
   foreignKey: "id_usuario",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 HistorialesParcelasCultivosModelo.belongsTo(ProductosModelo, {
   foreignKey: "id_producto",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 // TABLA LOG_SISTEMA
@@ -111,109 +126,129 @@ LogSistema.belongsTo(UsuariosModelo, {
 // TABLA PARCELAS
 ParcelasModelo.belongsTo(EstablecimientosModelo, {
   foreignKey: "id_establecimiento",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 ParcelasModelo.hasMany(ParcelasCultivosModelo, {
   foreignKey: "id_parcela",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 // TABLA PARCELAS_CULTIVOS
 ParcelasCultivosModelo.belongsTo(ParcelasModelo, {
   foreignKey: "id_parcela",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 ParcelasCultivosModelo.belongsTo(CultivosModelo, {
   foreignKey: "id_cultivo",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 ParcelasCultivosModelo.belongsTo(CampaniasModelo, {
   foreignKey: "id_campania",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 ParcelasCultivosModelo.hasMany(AgregoParcelasCultivosModelo, {
   foreignKey: "id_parcela_cultivo",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 ParcelasCultivosModelo.hasMany(PerdidasParcelasCultivosModelo, {
   foreignKey: "id_parcela_cultivo",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 // TABLA PERDIDAS_PARCELAS_CULTIVOS
 PerdidasParcelasCultivosModelo.belongsTo(ParcelasCultivosModelo, {
   foreignKey: "id_parcela_cultivo",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 // TABLA PRODUCTOS
 ProductosModelo.belongsTo(ProveedoresModelo, {
   foreignKey: "id_proveedor",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 ProductosModelo.belongsTo(TiposProductosModelo, {
   foreignKey: "id_tipo_producto",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 ProductosModelo.belongsTo(UsuariosModelo, {
   foreignKey: "id_usuario",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 ProductosModelo.belongsTo(UnidadesMedidasModelo, {
   foreignKey: "id_unidad_medida",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 ProductosModelo.hasMany(HistorialesParcelasCultivosModelo, {
   foreignKey: "id_producto",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 // TABLA PROVEEDORES
 ProveedoresModelo.hasMany(ProductosModelo, {
   foreignKey: "id_proveedor",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 // TABLA TIPOS PRODUCTOS
 
 TiposProductosModelo.belongsTo(UnidadesMedidasModelo, {
   foreignKey: "id_unidad_medida",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 TiposProductosModelo.hasMany(ProductosModelo, {
   foreignKey: "id_tipo_producto",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 // TABLA TIPOS USUARIOS
 TiposUsuariosModelo.hasMany(UsuariosModelo, {
   foreignKey: "id_tipo_usuario",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 // TABLA UNIDADES_MEDIDAS
 UnidadesMedidasModelo.hasMany(ProductosModelo, {
   foreignKey: "id_unidad_medida",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 UnidadesMedidasModelo.hasMany(DetalleCampanias, {
   foreignKey: "id_unidad_medida",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 UnidadesMedidasModelo.hasMany(TiposProductosModelo, {
   foreignKey: "id_unidad_medida",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 // TABLA USUARIOS
@@ -223,19 +258,23 @@ UsuariosModelo.belongsTo(TiposUsuariosModelo, {
 
 UsuariosModelo.hasMany(HistorialesParcelasCultivosModelo, {
   foreignKey: "id_usuario",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 UsuariosModelo.hasMany(ProductosModelo, {
   foreignKey: "id_usuario",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 
 UsuariosModelo.hasMany(EstablecimientosModelo, {
   foreignKey: "id_usuario",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });
 UsuariosModelo.hasMany(LogSistema, {
   foreignKey: "id_usuario",
-  onDelete: "cascade",
+  onDelete: "restrict",
+  onUpdate: "restrict",
 });

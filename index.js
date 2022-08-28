@@ -33,7 +33,7 @@ try {
   console.log("Se ha establecido correctamente la conexion con la base de datos.");
   // sincronizar tablas
 
-  console.log("Sincronizacion completa");
+  // console.log("Sincronizacion completa");
 } catch (error) {
   console.error("No se puede conectar con la base de datos:", error);
 }
