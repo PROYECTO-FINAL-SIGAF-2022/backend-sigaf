@@ -1,4 +1,4 @@
-import { ProductosModelo  } from "../models/Productos.model";
+import { ProductosModelo  } from "../models/Productos.model.js";
 
 // Devuelve todos los productos de la colección
 export const getProductos = async (req, res) => {
@@ -36,13 +36,21 @@ export const postPoducto = async (req, res) => {
     const {
         descripcion_producto,
         fecha_vencimiento_producto,
-        cantidad_producto
+        cantidad_producto,
+        id_proveedor,
+        id_tipo_producto,
+        id_usuario,
+        id_unidad_medida
     } = req.body;
 
     const nuevoProducto = await ProductosModelo.create({
         descripcion_producto,
         fecha_vencimiento_producto,
-        cantidad_producto
+        cantidad_producto,
+        id_proveedor,
+        id_tipo_producto,
+        id_usuario,
+        id_unidad_medida
     });
 
     res.status(201).json({

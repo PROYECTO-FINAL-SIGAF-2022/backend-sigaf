@@ -1,4 +1,4 @@
-import { ProveedoresModelo  } from "../models/Proveedores.model";
+import { ProveedoresModelo  } from "../models/Proveedores.model.js";
 
 // Devuelve todos los proveedores de la colección
 export const getProveedores = async (req, res) => {

@@ -22,6 +22,22 @@ export const ProductosModelo = connection.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    id_proveedor: {
+      type: DataTypes.INTEGER,
+      
+    },
+    id_tipo_producto: {
+      type: DataTypes.INTEGER,
+      
+    },
+    id_usuario: {
+      type: DataTypes.INTEGER,
+      
+    },
+    id_unidad_medida: {
+      type: DataTypes.INTEGER,
+      
+    },
   },
   {
     timestamps: false,

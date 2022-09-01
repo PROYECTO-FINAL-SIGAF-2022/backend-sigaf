@@ -6,7 +6,7 @@ import {
   postProveedor,
   updateProveedor,
   deleteProveedor,
-} from "../controllers/proveedores.controller";
+} from "../controllers/proveedores.controller.js";
 
 import { validadorDeCampos } from '../middlewares/proveedores.middleware.js'
 

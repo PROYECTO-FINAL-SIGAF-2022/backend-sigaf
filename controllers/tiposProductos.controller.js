@@ -35,10 +35,12 @@ export const postTipoPoducto = async (req, res) => {
   try {
     const {
         descripcion_tipo_producto,
+        id_unidad_medida,
     } = req.body;
 
     const nuevotipoProducto = await TiposProductosModelo.create({
         descripcion_tipo_producto,
+        id_unidad_medida,
     });
 
     res.status(201).json({
@@ -58,6 +60,7 @@ export const updateTipoProducto = async (req, res) => {
     const { id } = req.params;
     const {
         descripcion_tipo_producto,
+        id_unidad_medida,
     } = req.body;
     //console.log(id);
 
@@ -65,6 +68,7 @@ export const updateTipoProducto = async (req, res) => {
       where: { id_tipo_producto: id },
     });
     updateTipoProd.descripcion_tipo_producto = descripcion_tipo_producto;
+    updateTipoProd.id_unidad_medida = id_unidad_medida;
     await updateTipoProd.save();
 
     res.json(updateTipoProd);

@@ -13,7 +13,9 @@ import historialesParcelasCultivosRutas from "./historialesParcelasCultivos.rout
 import parcelasRutas from "./parcelas.routes.js";
 import parcelasCultivosRutas from "./parcelasCultivos.routes.js";
 import tiposUsuariosRutas from "./tiposUsuarios.routes.js";
-
+import productosRutas from "./productos.routes.js"
+import proveedorRutas from "./proveedores.routes.js"
+import tiposProducosRutas from "./tiposProductos.routes.js"
 // const app = express();
 
 export const rutas = () => [
@@ -27,6 +29,10 @@ export const rutas = () => [
   parcelasCultivosRutas,
   tiposUsuariosRutas,
   authRutas,
+  campaniasRutas,
+  productosRutas, //! Falta Terminar la ruta de productos
+  proveedorRutas,
+  tiposProducosRutas, // ! Falta Terminar la ruta de Tipos productos
 ];
 
 // app.use("/api", usuariosRutas);
