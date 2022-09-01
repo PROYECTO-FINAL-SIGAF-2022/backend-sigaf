@@ -7,13 +7,15 @@ import {
   updateCultivo,
 } from "../controllers/cultivos.controllers.js";
 
+import { validadorDeCampos, existCultivo } from '../middlewares/cultivos.middlewares.js'
+
 const router = Router();
 
-router.get("/cultivos", getCultivos);
+router.get("/cultivo", getCultivos);
 
 router.get("/cultivo/:id", getCultivoUnico);
 
-router.post("/cultivo", postCultivo);
+router.post("/cultivo", validadorDeCampos, existCultivo, postCultivo);
 
 router.put("/cultivo/:id", updateCultivo);
 

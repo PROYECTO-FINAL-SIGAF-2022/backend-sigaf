@@ -25,7 +25,6 @@ app.use(express.urlencoded({ extended: false }));
 app.set("port", process.env.PORT || 4000);
 
 // RUTAS
-
 app.use("/api", rutas());
 
 try {

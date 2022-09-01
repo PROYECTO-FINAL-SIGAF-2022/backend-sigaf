@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import { connection } from "../config/connection.js";
+// Falta completar
 
 export const ProductosModelo = connection.define(
   "productos",

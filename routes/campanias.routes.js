@@ -7,13 +7,15 @@ import {
   updateCampania,
 } from "../controllers/campanias.controllers.js";
 
+import {validadorDeCampos} from '../middlewares/campanias.middlewares.js'
+
 const router = Router();
 
-router.get("/campanias", getCampanias);
+router.get("/campania", getCampanias);
 
 router.get("/campania/:id", getCampaniaUnico);
 
-router.post("/campania", postCampania);
+router.post("/campania",validadorDeCampos, postCampania);
 
 router.put("/campania/:id", updateCampania);
 
