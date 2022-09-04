@@ -24,7 +24,7 @@ import { UsuariosModelo } from "../models/Usuarios.model.js";
 // console.log('first');
 
 const seedBd = async () => {
-  const nombreBD = process.env.NODE_ENV === "test" ? "test" : "test";
+  const nombreBD = process.env.NODE_ENV === "test" ? "test" : "dev";
   await connection.query(`DROP DATABASE IF EXISTS sigaf_${nombreBD}`);
   await connection.query(`CREATE DATABASE sigaf_${nombreBD}`);
   await connection.query(`USE sigaf_${nombreBD}`);

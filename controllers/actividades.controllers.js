@@ -51,7 +51,7 @@ export const updateActividad = async (req, res) => {
   try {
     const { id } = req.params;
     // console.log(req.body);
-    const { descripcion_actividad } = req.body[0];
+    const { descripcion_actividad } = req.body;
     // console.log(id);
     const updateActiv = await ActividadesModelo.findOne({
       where: { id_actividad: id },

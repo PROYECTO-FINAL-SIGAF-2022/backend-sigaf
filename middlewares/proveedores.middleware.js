@@ -1,7 +1,6 @@
 // validar datos del proveedor con express-validator
 
 import { check, validationResult } from "express-validator";
-;
 
 const validadorDeCampos = [
   check("nombre_proveedor")
@@ -32,7 +31,4 @@ const validadorDeCampos = [
   },
 ];
 
-
-
-
-export { validadorDeCampos  };
+export { validadorDeCampos };
