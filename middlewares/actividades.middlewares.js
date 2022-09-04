@@ -68,6 +68,7 @@ const putActividadesMidd = [
       },
 
     ),
+  verificarCampos,
 ];
 const deleteActividadesMidd = [
   param("id").custom(
