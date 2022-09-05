@@ -6,9 +6,17 @@ dotenv.config();
 
 const { database, username, password } = getConnectionData();
 
-// console.log(process.env.HOSTNAME);
+// ! borrar al lanzar a producccion
+const args = process.argv.slice(2);
+let nombreBD = "";
+if (args.length > 0) {
+  const [, dbNameArgs] = args[0].split("=");
+  nombreBD = `sigaf_${dbNameArgs}`;
+} else {
+  nombreBD = database;
+}
 
-export const connection = new Sequelize(database, username, password, {
+export const connection = new Sequelize(nombreBD, username, password, {
   host: process.env.HOSTNAME,
   dialect: "mariadb",
   port: process.env.DATABSEPORT,
