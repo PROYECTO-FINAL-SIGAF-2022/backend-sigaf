@@ -35,7 +35,7 @@ export const postActividad = async (req, res) => {
       descripcion_actividad,
     });
 
-    res.json({
+    res.status(201).json({
       msg: "El actividades se creo Correctamente",
       nuevaActividad,
     });
@@ -51,7 +51,7 @@ export const updateActividad = async (req, res) => {
   try {
     const { id } = req.params;
     // console.log(req.body);
-    const { descripcion_actividad } = req.body[0];
+    const { descripcion_actividad } = req.body;
     // console.log(id);
     const updateActiv = await ActividadesModelo.findOne({
       where: { id_actividad: id },
@@ -73,14 +73,22 @@ export const deleteActividad = async (req, res) => {
   try {
     const { id } = req.params;
 
-    await ActividadesModelo.destroy(
-      {
-        where: {
-          id_actividad: id,
-        },
-      },
-      console.log(id),
-    );
+    // await ActividadesModelo.destroy(
+    //   {
+    //     where: {
+    //       id_actividad: id,
+    //     },
+    //   },
+    //   console.log(id),
+    // );
+
+    const delleteActiv = await ActividadesModelo.findOne({
+      where: { id_actividad: id },
+    });
+
+    // console.log(descripcion_actividad);
+    delleteActiv.activo = false;
+    await delleteActiv.save();
 
     res.status(200).json({
       message: `Se elimino la actividad con el ID: ${id}`,

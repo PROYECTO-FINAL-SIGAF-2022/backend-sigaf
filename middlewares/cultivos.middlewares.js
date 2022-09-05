@@ -2,7 +2,7 @@
 
 import { check, validationResult } from "express-validator";
 
-import {CultivosModelo} from '../models/Cultivos.model.js'
+import { CultivosModelo } from "../models/Cultivos.model.js";
 
 const validadorDeCampos = [
   check("cultivo")
@@ -24,17 +24,17 @@ const validadorDeCampos = [
 ];
 
 const existCultivo = async (req, res, next) => {
-    const { cultivo } = req.body;
-    const cult = await CultivosModelo.findOne({
-      where: { cultivo },
+  const { cultivo } = req.body;
+  const cult = await CultivosModelo.findOne({
+    where: { cultivo },
+  });
+  if (cult) {
+    res.status(406).json({
+      msg: "El cultivo ya existe",
     });
-    if (cult) {
-      res.status(406).json({
-        msg: "El cultivo ya existe",
-      });
-      return;
-    }
-    next();
-  };
+    return;
+  }
+  next();
+};
 
 export { validadorDeCampos, existCultivo };

@@ -12,6 +12,11 @@ export const ActividadesModelo = connection.define(
     descripcion_actividad: {
       type: DataTypes.STRING,
     },
+
+    activo: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
   },
   {
     timestamps: false,
