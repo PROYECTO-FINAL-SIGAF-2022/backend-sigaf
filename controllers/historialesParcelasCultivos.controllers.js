@@ -82,7 +82,10 @@ export const updateHistorial = async (req, res) => {
     updateHist.id_producto = id_producto;
     await updateHist.save();
 
-    res.json(updateHist);
+    res.json({
+      msg: "El Historial se actualizo Correctamente",
+      updateHist,
+    });
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -94,14 +97,11 @@ export const deleteHistorial = async (req, res) => {
   try {
     const { id } = req.params;
 
-    await HistorialesParcelasCultivosModelo.destroy(
-      {
-        where: {
-          id_historial_parcelas_cultivos: id,
-        },
-      },
-      // console.log(id),
-    );
+    const eliminarHistorial = await HistorialesParcelasCultivosModelo.findOne({ where: { id_historial_parcelas_cultivos: id } });
+
+    eliminarHistorial.activo = false;
+
+    await eliminarHistorial.save();
 
     res.json({
       message: `El Historial con el id ${id} se elimino correctamente`,

@@ -1,4 +1,4 @@
-import { TiposProductosModelo  } from "../models/TiposProductos.model.js";
+import { TiposProductosModelo } from "../models/TiposProductos.model.js";
 
 // Devuelve todos los tipos de productos de la colección
 export const getTiposProductos = async (req, res) => {
@@ -34,11 +34,11 @@ export const getTipoProductoUnico = async (req, res) => {
 export const postTipoPoducto = async (req, res) => {
   try {
     const {
-        descripcion_tipo_producto,
+      descripcion_tipo_producto,
     } = req.body;
 
     const nuevotipoProducto = await TiposProductosModelo.create({
-        descripcion_tipo_producto,
+      descripcion_tipo_producto,
     });
 
     res.status(201).json({
@@ -57,9 +57,9 @@ export const updateTipoProducto = async (req, res) => {
   try {
     const { id } = req.params;
     const {
-        descripcion_tipo_producto,
+      descripcion_tipo_producto,
     } = req.body;
-    //console.log(id);
+    // console.log(id);
 
     const updateTipoProd = await TiposProductosModelo.findOne({
       where: { id_tipo_producto: id },
@@ -67,7 +67,10 @@ export const updateTipoProducto = async (req, res) => {
     updateTipoProd.descripcion_tipo_producto = descripcion_tipo_producto;
     await updateTipoProd.save();
 
-    res.json(updateTipoProd);
+    res.status(201).json({
+      msg: "El tipo de producto se actualizo Correctamente",
+      updateTipoProd,
+    });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -80,16 +83,16 @@ export const deleteTipoProducto = async (req, res) => {
   try {
     const { id } = req.params;
 
-    await TiposProductosModelo.destroy(
-      {
-        where: {
-          id_tipo_producto: id,
-        },
-      },
-      //console.log(id),
-    );
+    const eliminarTipoProdcuto = await TiposProductosModelo.findOne({ where: { id_tipo_producto: id } });
 
-    res.sendStatus(204);
+    eliminarTipoProdcuto.activo = false;
+
+    await eliminarTipoProdcuto.save();
+
+    res.status(200).json({
+      msg: `El tipo de procuto con id ${id} se elimino correctamente`,
+
+    });
   } catch (error) {
     return res.status(500).json({
       message: error.message,

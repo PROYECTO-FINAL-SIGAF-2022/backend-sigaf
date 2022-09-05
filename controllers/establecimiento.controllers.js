@@ -67,7 +67,10 @@ export const updateEstablecimiento = async (req, res) => {
     UpdateEstab.superficie = superficie;
     await UpdateEstab.save();
 
-    res.json(UpdateEstab);
+    res.json({
+      msg: "El Establecimiento se actualizo Correctamente",
+      UpdateEstab,
+    });
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -79,14 +82,11 @@ export const deleteEstablecimiento = async (req, res) => {
   try {
     const { id } = req.params;
 
-    await EstablecimientosModelo.destroy(
-      {
-        where: {
-          id_establecimiento: id,
-        },
-      },
-      console.log(id),
-    );
+    const eliminarEstablecimiento = await EstablecimientosModelo.findOne({ where: { id_establecimiento: id } });
+
+    eliminarEstablecimiento.activo = false;
+
+    await eliminarEstablecimiento.save();
 
     res.status(200).json({
       msg: `El establecimiento con el ID: ${id} se elimino correctamente`,

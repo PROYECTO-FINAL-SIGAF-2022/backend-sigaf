@@ -1,4 +1,4 @@
-import { ProveedoresModelo  } from "../models/Proveedores.model";
+import { ProveedoresModelo } from "../models/Proveedores.model";
 
 // Devuelve todos los proveedores de la colección
 export const getProveedores = async (req, res) => {
@@ -34,15 +34,15 @@ export const getProveedorUnico = async (req, res) => {
 export const postProveedor = async (req, res) => {
   try {
     const {
-        nombre_proveedor,
-        telefono_proveedor,
-        direccion_proveedor,
+      nombre_proveedor,
+      telefono_proveedor,
+      direccion_proveedor,
     } = req.body;
 
     const nuevoProveedor = await ProveedoresModelo.create({
-        nombre_proveedor,
-        telefono_proveedor,
-        direccion_proveedor,
+      nombre_proveedor,
+      telefono_proveedor,
+      direccion_proveedor,
     });
 
     res.status(201).json({
@@ -61,11 +61,11 @@ export const updateProveedor = async (req, res) => {
   try {
     const { id } = req.params;
     const {
-        nombre_proveedor,
-        telefono_proveedor,
-        direccion_proveedor,
+      nombre_proveedor,
+      telefono_proveedor,
+      direccion_proveedor,
     } = req.body;
-    //console.log(id);
+    // console.log(id);
 
     const updateProvee = await ProveedoresModelo.findOne({
       where: { id_proveedor: id },
@@ -75,7 +75,10 @@ export const updateProveedor = async (req, res) => {
     updateProvee.direccion_proveedor = direccion_proveedor;
     await updateProvee.save();
 
-    res.json(updateProvee);
+    res.status(201).json({
+      msg: "El proveedor se actualizo Correctamente",
+      updateProvee,
+    });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -88,16 +91,15 @@ export const deleteProveedor = async (req, res) => {
   try {
     const { id } = req.params;
 
-    await ProveedoresModelo.destroy(
-      {
-        where: {
-          id_proveedor: id,
-        },
-      },
-      //console.log(id),
-    );
+    const eliminarProveedor = await ProveedoresModelo.finOne({ where: { id_proveedor: id } });
 
-    res.sendStatus(204);
+    eliminarProveedor.activo = false;
+
+    await eliminarProveedor.save();
+
+    res.status(200).json({
+      message: `El proveedor con id ${id} fue eliminado`,
+    });
   } catch (error) {
     return res.status(500).json({
       message: error.message,

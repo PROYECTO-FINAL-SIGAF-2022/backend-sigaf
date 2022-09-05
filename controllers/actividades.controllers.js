@@ -36,7 +36,7 @@ export const postActividad = async (req, res) => {
     });
 
     res.status(201).json({
-      msg: "El actividades se creo Correctamente",
+      msg: "La actividad se creo Correctamente",
       nuevaActividad,
     });
   } catch (error) {
@@ -61,7 +61,10 @@ export const updateActividad = async (req, res) => {
     updateActiv.descripcion_actividad = descripcion_actividad;
     await updateActiv.save();
 
-    res.json(updateActiv);
+    res.status(201).json({
+      msg: "La actividad se actualizo Correctamente",
+      updateActiv,
+    });
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -73,20 +76,10 @@ export const deleteActividad = async (req, res) => {
   try {
     const { id } = req.params;
 
-    // await ActividadesModelo.destroy(
-    //   {
-    //     where: {
-    //       id_actividad: id,
-    //     },
-    //   },
-    //   console.log(id),
-    // );
-
     const delleteActiv = await ActividadesModelo.findOne({
       where: { id_actividad: id },
     });
 
-    // console.log(descripcion_actividad);
     delleteActiv.activo = false;
     await delleteActiv.save();
 

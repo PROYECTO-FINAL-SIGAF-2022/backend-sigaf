@@ -41,7 +41,7 @@ export const postCampania = async (req, res) => {
     });
 
     res.json({
-      msg: "El Campania se creo Correctamente",
+      msg: "La Campania se creo Correctamente",
       nuevaCampania,
     });
   } catch (error) {
@@ -66,8 +66,10 @@ export const updateCampania = async (req, res) => {
     updateCamp.fecha_final = fecha_final;
     updateCamp.id_cultivo = id_cultivo;
     await updateCamp.save();
-
-    res.json(updateCamp);
+    res.json({
+      msg: "La Compania se creo Correctamente",
+      updateCamp,
+    });
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -79,17 +81,17 @@ export const deleteCampania = async (req, res) => {
   try {
     const { id } = req.params;
 
-    await CampaniasModelo.destroy(
-      {
-        where: {
-          id_campania: id,
-        },
-      },
-      console.log(id),
+    const eleiminarCompania = await CampaniasModelo.findOne(
+      { where: { id_campania: id } },
+
     );
 
+    eleiminarCompania.activo = false;
+
+    await eleiminarCompania.save();
+
     res.status(200).json({
-      message: `El Campania ${id} se elimino correctamente`,
+      message: `La Compania con ID  ${id} se elimino correctamente`,
     });
   } catch (error) {
     return res.status(500).json({
