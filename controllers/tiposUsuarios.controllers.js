@@ -59,7 +59,10 @@ export const updateTipoUsuario = async (req, res) => {
     updateTipoUser.descripcion_tipo_usuario = descripcion_tipo_usuario;
     await updateTipoUser.save();
 
-    res.json(updateTipoUser);
+    res.json({
+      msg: "El Tipo_Usuario se actualizo Correctamente",
+      updateTipoUser,
+    });
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -71,14 +74,14 @@ export const deleteTipoUsuario = async (req, res) => {
   try {
     const { id } = req.params;
 
-    await TiposUsuariosModelo.destroy(
-      {
-        where: {
-          id_tipo_usuario: id,
-        },
-      },
-      console.log(id),
+    const eliminarTipoUsuario = await TiposUsuariosModelo.findOne(
+      { where: { id_tipo_usuario: id } },
+
     );
+
+    eliminarTipoUsuario.activo = false;
+
+    await eliminarTipoUsuario.save();
 
     res.status(200).json({
       message: `El Tipo_Usuario con id ${id} se elimino correctamente`,

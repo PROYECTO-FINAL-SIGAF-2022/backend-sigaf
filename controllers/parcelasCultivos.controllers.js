@@ -41,7 +41,7 @@ export const postParcelaCultivo = async (req, res) => {
     });
 
     res.json({
-      msg: "El Parcela_Cultivo se creo Correctamente",
+      msg: "La Parcela_Cultivo se creo Correctamente",
       nuevoParcelaCultivo,
     });
   } catch (error) {
@@ -69,7 +69,10 @@ export const updateParcelaCultivo = async (req, res) => {
     updateParcCult.cantidad_sembrada = cantidad_sembrada;
     await updateParcCult.save();
 
-    res.json(updateParcCult);
+    res.json({
+      msg: "La Parcela_Cultivo se actualizo Correctamente",
+      updateParcCult,
+    });
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -81,17 +84,17 @@ export const deleteParcelaCultivo = async (req, res) => {
   try {
     const { id } = req.params;
 
-    await ParcelasCultivosModelo.destroy(
-      {
-        where: {
-          id_parcela_cultivo: id,
-        },
-      },
-      console.log(id),
+    const eliminarParcelaCultivo = await ParcelasCultivosModelo.findOne(
+      { where: { id_parcela_cultivo: id } },
+
     );
 
+    eliminarParcelaCultivo.activo = false;
+
+    await eliminarParcelaCultivo.save();
+
     res.status(200).json({
-      message: `El Parcela_Cultivo con id ${id} fue eliminado`,
+      message: `La Parcela_Cultivo con id ${id} fue eliminado`,
     });
   } catch (error) {
     return res.status(500).json({

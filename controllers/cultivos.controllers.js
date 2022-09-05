@@ -69,14 +69,11 @@ export const deleteCultivo = async (req, res) => {
   try {
     const { id } = req.params;
 
-    await CultivosModelo.destroy(
-      {
-        where: {
-          id_cultivo: id,
-        },
-      },
-      console.log(id),
-    );
+    const eliminarCultivo = await CultivosModelo.findOne({ where: { id_cultivo: id } });
+
+    eliminarCultivo.activo = false;
+
+    await eliminarCultivo.save();
 
     res.status(200).json({
       message: `El Cultivo con id ${id} se elimino correctamente`,

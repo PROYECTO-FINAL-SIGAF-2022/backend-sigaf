@@ -17,6 +17,10 @@ export const AgregoParcelasCultivosModelo = connection.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    activo: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
   },
   {
     timestamps: false,
