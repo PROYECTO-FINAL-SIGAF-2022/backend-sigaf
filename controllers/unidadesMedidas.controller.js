@@ -54,6 +54,15 @@ export const updateUnidadMedida = async (req, res) => {
       where: { id_unidad_medida: id },
     });
 
+    actualizarUnidadMedida.descripcion_unidad_medida =
+      descripcion_unidad_medida;
+
+    await actualizarUnidadMedida.save();
+
     actualizarUnidadMedida.descripcion_unidad_medida = actualizarUnidadMedida;
-  } catch (error) {}
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
 };
