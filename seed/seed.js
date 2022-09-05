@@ -21,17 +21,21 @@ import { TiposUsuariosModelo } from "../models/TiposUsuarios.model.js";
 import { UnidadesMedidasModelo } from "../models/UnidadesMedidas.model.js";
 import { UsuariosModelo } from "../models/Usuarios.model.js";
 
-// console.log('first');
+// ! resetar bd => npm run dev bd=dev o bd=test
 
+const args = process.argv.slice(2);
+
+const nombreBD = args[0].split("=")[1];
+// console.log(nombreBD);
 const seedBd = async () => {
-  const nombreBD = process.env.NODE_ENV === "test" ? "test" : "test";
+  // const nombreBD = process.env.NODE_ENV === "test" ? "test" : "test";
   await connection.query(`DROP DATABASE IF EXISTS sigaf_${nombreBD}`);
   await connection.query(`CREATE DATABASE sigaf_${nombreBD}`);
   await connection.query(`USE sigaf_${nombreBD}`);
   // await connection.truncate({ cascade: true, force: true });
   await connection.authenticate();
 
-  await connection.sync({ alter: true });
+  await connection.sync({ alter: true, force: true });
 
   // 1
   await TiposUsuariosModelo.create({

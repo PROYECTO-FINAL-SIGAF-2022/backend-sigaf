@@ -8,6 +8,9 @@ export const getUsuarios = async (req, res) => {
       include: {
         model: TiposUsuariosModelo,
       },
+      where: { 
+        activo: true 
+      },
     }); // consulta para todos los documentos
 
     res.status(200).json(usuarios);
@@ -109,7 +112,10 @@ export const updateUsuario = async (req, res) => {
     updateUser.id_tipo_usuario = id_tipo_usuario;
     await updateUser.save();
 
-    res.json(updateUser);
+    res.status(201).json({
+      msg: "El usuario se actualizo Correctamente",
+      updateUser,
+    });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -122,16 +128,18 @@ export const deleteUsuario = async (req, res) => {
   try {
     const { id } = req.params;
 
-    await UsuariosModelo.destroy(
-      {
-        where: {
-          id_usuario: id,
-        },
-      },
-      console.log(id),
+    const eliminarUsuario = await UsuariosModelo.findOne(
+      { where: { id_usuario: id } },
+
     );
 
-    res.sendStatus(204);
+    eliminarUsuario.activo = false;
+
+    await eliminarUsuario.save();
+
+    res.status(200).json({
+      msg: `El usuario con id ${id} se ha eliminado correctamente`,
+    });
   } catch (error) {
     return res.status(500).json({
       message: error.message,

@@ -3,7 +3,7 @@ import { ParcelasModelo } from "../models/Parcelas.model.js";
 // Devuelve todos los Parcelas de la colección
 export const getParcelas = async (req, res) => {
   try {
-    const Datos = await ParcelasModelo.findAll(); // consulta para todos los documentos
+    const Datos = await ParcelasModelo.findAll({where: { activo: true }}); // consulta para todos los documentos
     // Respuesta del servidor
     res.json(Datos);
   } catch (error) {
@@ -63,6 +63,11 @@ export const updateParcela = async (req, res) => {
     updateParc.id_establecimiento = id_establecimiento;
     await updateParc.save();
 
+    res.json({
+      msg: "La Parcela se actualizo Correctamente",
+      updateParc,
+    });
+
     res.json(updateParc);
   } catch (error) {
     return res.status(500).json({
@@ -75,14 +80,13 @@ export const deleteParcela = async (req, res) => {
   try {
     const { id } = req.params;
 
-    await ParcelasModelo.destroy(
-      {
-        where: {
-          id_parcela: id,
-        },
-      },
-      console.log(id),
+    const eliminarParcela = await ParcelasModelo.findOne(
+      { where: { id_parcela: id } },
+
     );
+
+    eliminarParcela.activo = false;
+    await eliminarParcela.save();
 
     res.status(200).json({
       message: `La Parcela ${id} se elimino correctamente`,

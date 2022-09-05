@@ -1,7 +1,6 @@
 // validar datos de las campañas con express-validator
 
 import { check, validationResult } from "express-validator";
-;
 
 const validadorDeCampos = [
   check("descripcion_campania")
@@ -26,7 +25,7 @@ const validadorDeCampos = [
     .not()
     .isEmpty()
     .withMessage("el cultivo es requerido"),
-        
+
   (req, res, next) => {
     try {
       validationResult(req).throw();
@@ -39,7 +38,5 @@ const validadorDeCampos = [
     }
   },
 ];
-
-
 
 export { validadorDeCampos };

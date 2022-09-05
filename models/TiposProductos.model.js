@@ -13,9 +13,9 @@ export const TiposProductosModelo = connection.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    id_unidad_medida: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+    activo: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
     },
   },
   {

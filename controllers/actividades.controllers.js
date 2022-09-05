@@ -3,7 +3,7 @@ import { ActividadesModelo } from "../models/Actividades.model.js";
 // Devuelve todos los actividadess de la colección
 export const getActividades = async (req, res) => {
   try {
-    const Datos = await ActividadesModelo.findAll(); // consulta para todos los documentos
+    const Datos = await ActividadesModelo.findAll({where: { activo: true }}); // consulta para todos los documentos
     // Respuesta del servidor
     res.json(Datos);
   } catch (error) {
@@ -35,8 +35,8 @@ export const postActividad = async (req, res) => {
       descripcion_actividad,
     });
 
-    res.json({
-      msg: "El actividades se creo Correctamente",
+    res.status(201).json({
+      msg: "La actividad se creo Correctamente",
       nuevaActividad,
     });
   } catch (error) {
@@ -51,7 +51,7 @@ export const updateActividad = async (req, res) => {
   try {
     const { id } = req.params;
     // console.log(req.body);
-    const { descripcion_actividad } = req.body[0];
+    const { descripcion_actividad } = req.body;
     // console.log(id);
     const updateActiv = await ActividadesModelo.findOne({
       where: { id_actividad: id },
@@ -61,7 +61,10 @@ export const updateActividad = async (req, res) => {
     updateActiv.descripcion_actividad = descripcion_actividad;
     await updateActiv.save();
 
-    res.json(updateActiv);
+    res.status(201).json({
+      msg: "La actividad se actualizo Correctamente",
+      updateActiv,
+    });
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -73,14 +76,12 @@ export const deleteActividad = async (req, res) => {
   try {
     const { id } = req.params;
 
-    await ActividadesModelo.destroy(
-      {
-        where: {
-          id_actividad: id,
-        },
-      },
-      console.log(id),
-    );
+    const delleteActiv = await ActividadesModelo.findOne({
+      where: { id_actividad: id },
+    });
+
+    delleteActiv.activo = false;
+    await delleteActiv.save();
 
     res.status(200).json({
       message: `Se elimino la actividad con el ID: ${id}`,

@@ -1,7 +1,6 @@
 // validar datos de los productos con express-validator
-import { ProductosModelo } from '../models/Productos.model.js'
 import { check, validationResult } from "express-validator";
-;
+import { ProductosModelo } from "../models/Productos.model.js";
 
 const validadorDeCampos = [
   check("descripcion_producto")
@@ -33,19 +32,17 @@ const validadorDeCampos = [
 ];
 
 const existeProducto = async (req, res, next) => {
-    const { descripcion_producto } = req.body;
-    const producto = await ProductosModelo.findOne({
-      where: { descripcion_producto },
+  const { descripcion_producto } = req.body;
+  const producto = await ProductosModelo.findOne({
+    where: { descripcion_producto },
+  });
+  if (producto) {
+    res.status(406).json({
+      msg: "El producto ya existe",
     });
-    if (producto) {
-      res.status(406).json({
-        msg: "El producto ya existe",
-      });
-      return;
-    }
-    next();
-  };
-
-
+    return;
+  }
+  next();
+};
 
 export { validadorDeCampos, existeProducto };

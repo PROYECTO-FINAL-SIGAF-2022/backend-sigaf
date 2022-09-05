@@ -21,6 +21,10 @@ export const ProveedoresModelo = connection.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    activo: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
   },
   {
     timestamps: false,

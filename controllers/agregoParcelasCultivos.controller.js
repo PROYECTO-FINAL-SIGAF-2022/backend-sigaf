@@ -5,7 +5,7 @@ import { AgregoParcelasCultivosModelo } from "../models/AgregoParcelasCultivos.m
 // Devuelve todos los datos de la colección
 export const getAggParcelasCultivos = async (req, res) => {
   try {
-    const Datos = await AgregoParcelasCultivosModelo.findAll(); // consulta para todos los documentos
+    const Datos = await AgregoParcelasCultivosModelo.findAll({where: { activo: true }}); // consulta para todos los documentos
     // Respuesta del servidor
     res.json(Datos);
   } catch (error) {
@@ -36,7 +36,7 @@ export const postAggParcelaCultivo = async (req, res) => {
     const { cantidad_agregada } = req.body;
 
     const nuevaAggParcelaCultivo = await AgregoParcelasCultivosModelo.create({
-        cantidad_agregada
+      cantidad_agregada,
     });
 
     res.json({
@@ -63,7 +63,10 @@ export const updateAggParcCultela = async (req, res) => {
     updateAggParcCult.cantidad_agregada = cantidad_agregada;
     await updateAggParcCult.save();
 
-    res.json(updateAggParcCult);
+    res.json({
+      msg: "La ParcelaCultivo se actualizo Correctamente",
+      updateAggParcCult,
+    });
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -75,17 +78,18 @@ export const deleteAggParcelaCultivo = async (req, res) => {
   try {
     const { id } = req.params;
 
-    await AgregoParcelasCultivosModelo.destroy(
-      {
-        where: {
-          id_agrego_parcela_cultivo: id,
-        },
-      },
-      console.log(id),
+    const eliminarAgregoParcCultivo = await AgregoParcelasCultivosModelo.findOne(
+      { where: { id_agrego_parcela_cultivo: id } },
+
     );
+
+    eliminarAgregoParcCultivo.activo = false;
+
+    await eliminarAgregoParcCultivo.save();
 
     res.status(200).json({
       message: `La Parcela Cultivo ${id} se elimino correctamente`,
+
     });
   } catch (error) {
     return res.status(500).json({

@@ -3,7 +3,7 @@ import { CultivosModelo } from "../models/Cultivos.model.js";
 // Devuelve todos los Cultivos de la colección
 export const getCultivos = async (req, res) => {
   try {
-    const Datos = await CultivosModelo.findAll(); // consulta para todos los documentos
+    const Datos = await CultivosModelo.findAll({where: { activo: true }}); // consulta para todos los documentos
     // Respuesta del servidor
     res.json(Datos);
   } catch (error) {
@@ -69,14 +69,11 @@ export const deleteCultivo = async (req, res) => {
   try {
     const { id } = req.params;
 
-    await CultivosModelo.destroy(
-      {
-        where: {
-          id_cultivo: id,
-        },
-      },
-      console.log(id),
-    );
+    const eliminarCultivo = await CultivosModelo.findOne({ where: { id_cultivo: id } });
+
+    eliminarCultivo.activo = false;
+
+    await eliminarCultivo.save();
 
     res.status(200).json({
       message: `El Cultivo con id ${id} se elimino correctamente`,
