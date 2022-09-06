@@ -1,7 +1,6 @@
-import { DESCRIBE } from "sequelize/types/query-types";
 import supertest from "supertest";
 import { vaciarTablas } from "../helpers/vaciarTablas";
-import { app, server } from "../index";
+import { app } from "../index";
 import { CampaniasModelo } from "../models/Campanias.model";
 
 const API = supertest(app);
@@ -70,24 +69,38 @@ describe("GET /api/campanias/:id", () => {
   });
 });
 
-describe("POST /api/campanias", () => {
+describe("POST /api/campania", () => {
   test("Debe retornar un error al no enviar el token", async () => {
     const response = await API.get(URL);
     expect(response.status).toEqual(401);
   });
-    
-    test("Debe Retornar un JSON al crear una nueva Campania", async () => {
-        const response = await API.post(URL).set(HEADERS);
-        set("constent-type", "aplication/json");
-        send({
-             descripcion_campania: "tercera Campaña",
-    fehca_inicio: "2022/09/9",
-    fecha_final: "2023/04/25",
-    id_cultivo: "3",
-        })
+
+  test("Debe Retornar un JSON al crear una nueva Campania", async () => {
+    const response = await API.post("/api/campania").set(HEADERS);
+    set("constent-type", "aplication/json");
+    send({
+      descripcion_campania: "tercera Campaña",
+      fehca_inicio: "2022/09/9",
+      fecha_final: "2023/04/25",
+      id_cultivo: "3",
+    });
+
+    expect(response.statusCode).toEqual(200);
+    expect(response.type).toEqual("application/json");
+  });
+
+  test("Debe retornar un mensaje de error si los datos cargados ya coinciden con un registro de la base de datos", async () => {
+    const response = await API.post("/api/campania").set(HEADERS);
+    set("Content-Type", "application/json");
+    send({
+      descripcion_campania: "tercera Campaña",
+      fehca_inicio: "2022/09/9",
+      fecha_final: "2023/04/25",
+      id_cultivo: "3",
     })
-    
-    test("Debe retornar un mensaje de erro si los datos cargados ya coinciden con un registro de la base de datos", async () => {
-        const 
-    })
+      .set(HEADERS);
+
+    expect(response.statusCode).toEqual(401);
+    expect(response.type).toEqual("aplication/json");
+  });
 });

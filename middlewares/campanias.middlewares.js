@@ -1,6 +1,6 @@
 // validar datos de las campañas con express-validator
 
-import { check, validationResult } from "express-validator";
+import { check, validationResult, param } from "express-validator";
 
 import { CampaniasModelo } from "../models/Campanias.model";
 
