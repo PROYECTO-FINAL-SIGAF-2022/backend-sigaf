@@ -4,13 +4,17 @@ import { app } from "../index";
 import { CampaniasModelo } from "../models/Campanias.model";
 
 const API = supertest(app);
-const URL = "/api/campanias";
+const URL = "/api/campania";
 
 const HEADERS = {
   Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbVVzdWFyaW8iOnsiaWRfdXN1YXJpbyI6MX0sImlhdCI6MTY2MjMyNjcwNn0.5UXnRCxAz1AiTDQ3gvHOF4XahMw20Dn2gEDTsKhsd1U",
 };
 
 beforeAll(async () => {
+
+  try {
+
+    
   await vaciarTablas();
 
   await CampaniasModelo.create({
@@ -28,9 +32,15 @@ beforeAll(async () => {
     id_cultivo: "2",
 
   });
+
+
+  } catch (error) {
+    return  error;
+    
+  }
 });
 
-describe("GET /api/campanias", () => {
+describe("GET /api/campania", () => {
   test("debe retornar un error al no enviar el token", async () => {
     const response = await API.get(URL);
     expect(response.status).toEqual(401);
@@ -47,7 +57,7 @@ describe("GET /api/campanias", () => {
   });
 });
 
-describe("GET /api/campanias/:id", () => {
+describe("GET /api/campania/:id", () => {
   test("Debe retornar un error al no enviar el token", async () => {
     const response = await API.get(URL);
     expect(response.status).toEqual(401);
