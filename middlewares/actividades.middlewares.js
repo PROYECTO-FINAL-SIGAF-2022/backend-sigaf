@@ -30,7 +30,7 @@ const postActividadesMidd = [
         const actividad = await ActividadesModelo.count({
           where: { descripcion_actividad },
         });
-        console.log(actividad);
+        // console.log(actividad);
         if (actividad > 0) {
           return Promise.reject("La actividad ingresada ya se encuentra en la bd");
         }
@@ -61,7 +61,7 @@ const putActividadesMidd = [
         const actividad = await ActividadesModelo.count({
           where: { descripcion_actividad },
         });
-        console.log(actividad);
+        // console.log(actividad);
         if (actividad > 0) {
           return Promise.reject("La actividad ingresada ya se encuentra en la bd");
         }

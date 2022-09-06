@@ -2,6 +2,7 @@ import supertest from "supertest";
 import generarNuevoUsuario from "../helpers/generarNuevoUsuario.js";
 import { vaciarTablas } from "../helpers/vaciarTablas.js";
 import { app, server } from "../index.js";
+import { TiposUsuariosModelo } from "../models/TiposUsuarios.model.js";
 import { UsuariosModelo } from "../models/Usuarios.model.js";
 
 const API = supertest(app);
@@ -14,14 +15,20 @@ const usuariosIniciales = {
 };
 
 beforeAll(async () => {
-  await vaciarTablas();
+  try {
+    // console.log(usuariosIniciales);
+    await vaciarTablas();
 
-  // await UsuariosModelo.destroy({
-  //   where: {},
-  //   truncate: true,
-  // });
-  await UsuariosModelo.create(usuariosIniciales.usuarios1);
-  await UsuariosModelo.create(usuariosIniciales.usuarios2);
+    // await UsuariosModelo.destroy({
+    //   where: {},
+    //   truncate: true,
+    // });
+    await TiposUsuariosModelo.create({ descripcion_tipo_usuario: "Administrador" });
+    await UsuariosModelo.create(usuariosIniciales.usuarios1);
+    await UsuariosModelo.create(usuariosIniciales.usuarios2);
+  } catch (error) {
+    // console.log(error);
+  }
 });
 
 describe("GET /api/usuarios", () => {
@@ -32,6 +39,7 @@ describe("GET /api/usuarios", () => {
 
   test("Debe retornar un array de 2 usuarios", async () => {
     const response = await API.get(URL);
+    // console.log(response.body);
     expect(response.body).toHaveLength(2);
   });
 
@@ -44,6 +52,7 @@ describe("GET /api/usuarios", () => {
 describe("GET /api/usuarios/:id", () => {
   test("Debe retornar un json", async () => {
     const response = await API.get(`${URL}/1`);
+    // console.log(response.body);
     expect(response.type).toEqual("application/json");
   });
 

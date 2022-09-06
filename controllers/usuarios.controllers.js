@@ -73,7 +73,7 @@ export const postUsuario = async (req, res) => {
       nuevo_usuario: nuevoUsuario,
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res.status(500).json({
       message: error.message,
     });
@@ -94,7 +94,7 @@ export const updateUsuario = async (req, res) => {
       password_usuario,
       id_tipo_usuario,
     } = req.body;
-    console.log(id);
+    // console.log(id);
     const updateUser = await UsuariosModelo.findOne({
       where: { id_usuario: id },
     });
@@ -109,12 +109,12 @@ export const updateUsuario = async (req, res) => {
     updateUser.id_tipo_usuario = id_tipo_usuario;
     await updateUser.save();
 
-    res.status(201).json({
+    res.status(200).json({
       msg: "El usuario se actualizo Correctamente",
       updateUser,
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res.status(500).json({
       message: error.message,
     });
