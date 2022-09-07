@@ -174,7 +174,8 @@ describe(`PUT ${URL}/:id`, () => {
 
 describe(`DELETE ${URL}/:id`, () => {
   test("Debe retornar un error al no enviar el token", async () => {
-    const response = await API.delete(URL);
+    const response = await API.delete(`${URL}/1`);
+    // console.log(response.body);
     expect(response.statusCode).toEqual(401);
   });
 
