@@ -11,32 +11,26 @@ const HEADERS = {
 };
 
 beforeAll(async () => {
-
   try {
+    await vaciarTablas();
 
-    
-  await vaciarTablas();
+    await CampaniasModelo.create({
+      descripcion_campania: "primer Campaña",
+      fehca_inicio: "2022/09/5",
+      fecha_final: "2023/04/15",
+      id_cultivo: "1",
 
-  await CampaniasModelo.create({
-    descripcion_campania: "primer Campaña",
-    fehca_inicio: "2022/09/5",
-    fecha_final: "2023/04/15",
-    id_cultivo: "1",
+    });
 
-  });
+    await CampaniasModelo.create({
+      descripcion_campania: "segunda Campaña",
+      fehca_inicio: "2022/09/7",
+      fecha_final: "2023/04/20",
+      id_cultivo: "2",
 
-  await CampaniasModelo.create({
-    descripcion_campania: "segunda Campaña",
-    fehca_inicio: "2022/09/7",
-    fecha_final: "2023/04/20",
-    id_cultivo: "2",
-
-  });
-
-
+    });
   } catch (error) {
-    return  error;
-    
+    return error;
   }
 });
 
@@ -87,31 +81,29 @@ describe("POST /api/campania", () => {
 
   test("Debe Retornar un JSON al crear una nueva Campania", async () => {
     const response = await API.post("/api/campania").set(HEADERS)
-    .set("constent-type", "application/json")
-    .send({
-      descripcion_campania: "tercera Campaña",
-      fehca_inicio: "2022/09/9",
-      fecha_final: "2023/04/25",
-      id_cultivo: "3",
-    })
-    
+      .set("constent-type", "application/json")
+      .send({
+        descripcion_campania: "tercera Campaña",
+        fehca_inicio: "2022/09/9",
+        fecha_final: "2023/04/25",
+        id_cultivo: "3",
+      });
 
-    // expect(response.statusCode).toEqual(200);
+    expect(response.statusCode).toEqual(200);
     expect(response.type).toEqual("application/json");
   });
 
   test("Debe retornar un mensaje de error si los datos cargados ya coinciden con un registro de la base de datos", async () => {
     const response = await API.post("/api/campania").set(HEADERS)
-    .set("Content-Type", "application/json")
-    .send({
-      descripcion_campania: "tercera Campaña",
-      fehca_inicio: "2022/09/9",
-      fecha_final: "2023/04/25",
-      id_cultivo: "3",
-    })
- 
+      .set("Content-Type", "application/json")
+      .send({
+        descripcion_campania: "tercera Campaña",
+        fehca_inicio: "2022/09/9",
+        fecha_final: "2023/04/25",
+        id_cultivo: "3",
+      });
 
-    // expect(response.statusCode).toEqual(401);
+    expect(response.statusCode).toEqual(401);
     expect(response.type).toEqual("application/json");
   });
 });
