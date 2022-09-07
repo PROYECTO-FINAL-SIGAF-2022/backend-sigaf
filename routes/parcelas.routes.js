@@ -11,12 +11,12 @@ const router = Router();
 
 router.get("/parcelas", getParcelas);
 
-router.get("/parcela/:id", getParcelaUnico);
+router.get("/parcelas/:id", getParcelaUnico);
 
-router.post("/parcela", postParcela);
+router.post("/parcelas", postParcela);
 
-router.put("/parcela/:id", updateParcela);
+router.put("/parcelas/:id", updateParcela);
 
-router.delete("/parcela/:id", deleteParcela);
+router.delete("/parcelas/:id", deleteParcela);
 
 export default router;

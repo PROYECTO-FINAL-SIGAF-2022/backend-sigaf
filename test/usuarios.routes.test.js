@@ -31,7 +31,7 @@ beforeAll(async () => {
   }
 });
 
-describe("GET /api/usuarios", () => {
+describe(`GET ${URL}`, () => {
   test("Debe retornar un json", async () => {
     const response = await API.get(URL);
     expect(response.type).toEqual("application/json");
@@ -49,7 +49,7 @@ describe("GET /api/usuarios", () => {
   });
 });
 
-describe("GET /api/usuarios/:id", () => {
+describe(`GET ${URL}/:id`, () => {
   test("Debe retornar un json", async () => {
     const response = await API.get(`${URL}/1`);
     // console.log(response.body);
@@ -72,7 +72,7 @@ describe("GET /api/usuarios/:id", () => {
   });
 });
 
-describe("POST /api/usuarios", () => {
+describe(`POST ${URL}`, () => {
   test("Crear un usuario", async () => {
     const response = await API.post(URL)
       .set("Content-Type", "application/json")
@@ -106,7 +106,7 @@ describe("POST /api/usuarios", () => {
   });
 });
 
-describe("PUT /api/usuarios/:id", () => {
+describe(`PUT ${URL}/:id`, () => {
   test("Actualizar un usuario", async () => {
     const response = await API.put(`${URL}/1`)
       .set("Content-Type", "application/json")

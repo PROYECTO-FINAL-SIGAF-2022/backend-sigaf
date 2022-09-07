@@ -4,21 +4,21 @@ import {
   getAggParcelaCultivoUnico,
   postAggParcelaCultivo,
   updateAggParcCultela,
-  deleteAggParcelaCultivo
+  deleteAggParcelaCultivo,
 } from "../controllers/agregoParcelasCultivos.controller";
 
-//TODO : Faltan los middlewares
+// TODO : Faltan los middlewares
 
 const router = Router();
 
-router.get("/agregarParcelaCultivo", getAggParcelasCultivos);
+router.get("/agregar-parcela-cultivos", getAggParcelasCultivos);
 
-router.get("/agregarParcelaCultivo/:id", getAggParcelaCultivoUnico);
+router.get("/agregar-parcela-cultivos/:id", getAggParcelaCultivoUnico);
 
-router.post("/agregarParcelaCultivo", postAggParcelaCultivo);
+router.post("/agregar-parcela-cultivos", postAggParcelaCultivo);
 
-router.put("/agregarParcelaCultivo/:id", updateAggParcCultela);
+router.put("/agregar-parcela-cultivos/:id", updateAggParcCultela);
 
-router.delete("/agregarParcelaCultivo/:id", deleteAggParcelaCultivo);
+router.delete("/agregar-parcela-cultivos/:id", deleteAggParcelaCultivo);
 
 export default router;
