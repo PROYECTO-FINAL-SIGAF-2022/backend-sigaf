@@ -2,7 +2,7 @@
 
 import { check, validationResult, param } from "express-validator";
 
-import { CampaniasModelo } from "../models/Campanias.model";
+import { CampaniasModelo } from "../models/Campanias.model.js";
 
 const validadorDeCampos = [
   param("id").custom(
