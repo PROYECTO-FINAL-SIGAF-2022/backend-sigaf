@@ -93,22 +93,3 @@ export {
   putActividadesMidd,
   deleteActividadesMidd,
 };
-
-// const validadorDeCampos = [
-//   check("descripcion_actividad")
-//     .exists()
-//     .not()
-//     .isEmpty()
-//     .withMessage("La actividad es requerida"),
-//   (req, res, next) => {
-//     try {
-//       validationResult(req).throw();
-//       return next();
-//     } catch (error) {
-//       res.status(406).json({
-//         msg: "Error en los datos",
-//         errores: error.mapped(),
-//       });
-//     }
-//   },
-// ];

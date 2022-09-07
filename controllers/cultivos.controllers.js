@@ -3,9 +3,8 @@ import { CultivosModelo } from "../models/Cultivos.model.js";
 // Devuelve todos los Cultivos de la colección
 export const getCultivos = async (req, res) => {
   try {
-    const Datos = await CultivosModelo.findAll(); // consulta para todos los documentos
-    // Respuesta del servidor
-    res.json(Datos);
+    const cultivos = await CultivosModelo.findAll();
+    res.status(200).json(cultivos);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -16,10 +15,9 @@ export const getCultivos = async (req, res) => {
 export const getCultivoUnico = async (req, res) => {
   try {
     const { id } = req.params;
-    const Datos = await CultivosModelo.findByPk(id); // consulta para todos los documentos
+    const cultivos = await CultivosModelo.findByPk(id);
 
-    // Respuesta del servidor
-    res.json(Datos);
+    res.status(200).json(cultivos);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -29,11 +27,11 @@ export const getCultivoUnico = async (req, res) => {
 
 export const postCultivo = async (req, res) => {
   try {
-    const { cultivo } = req.body;
+    const { descripcion_cultivo } = req.body;
 
-    const nuevoCultivo = await CultivosModelo.create({ cultivo });
+    const nuevoCultivo = await CultivosModelo.create({ descripcion_cultivo });
 
-    res.json({
+    res.status(201).json({
       msg: "El Cultivo se creo Correctamente",
       nuevoCultivo,
     });
@@ -47,14 +45,12 @@ export const postCultivo = async (req, res) => {
 export const updateCultivo = async (req, res) => {
   try {
     const { id } = req.params;
-    const { cultivo } = req.body[0];
-
-    console.log(id);
+    const { descripcion_cultivo } = req.body;
 
     const updateCult = await CultivosModelo.findOne({
       where: { id_cultivo: id },
     });
-    updateCult.cultivo = cultivo;
+    updateCult.descripcion_cultivo = descripcion_cultivo;
     await updateCult.save();
 
     res.json(updateCult);
