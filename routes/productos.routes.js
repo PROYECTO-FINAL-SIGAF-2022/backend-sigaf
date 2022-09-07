@@ -5,11 +5,10 @@ import {
   getProductoUnico,
   postPoducto,
   updateProducto,
-  deleteProducto
+  deleteProducto,
 } from "../controllers/productos.controller.js";
 
 import { validadorDeCampos, existeProducto } from "../middlewares/productos.middleware.js";
-
 
 const router = Router();
 
@@ -20,7 +19,7 @@ router.get("/productos", getProductos);
 router.get("/productos/:id", getProductoUnico);
 
 // Ruta que almacena nuevos productos
-router.post("/productos", validadorDeCampos, existeProducto,  postPoducto);
+router.post("/productos", validadorDeCampos, existeProducto, postPoducto);
 
 // Ruta que actualiza los datos de un producto
 router.put("/productos/:id", updateProducto);

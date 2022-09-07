@@ -11,14 +11,14 @@ import { validadorDeCampos, existEstablecimiento } from "../middlewares/establec
 
 const router = Router();
 
-router.get("/establecimiento", getEstablecimientos);
+router.get("/establecimientos", getEstablecimientos);
 
-router.get("/establecimiento/:id", getEstablecimientoUnico);
+router.get("/establecimientos/:id", getEstablecimientoUnico);
 
-router.post("/establecimiento",validadorDeCampos, existEstablecimiento, postEstablecimiento);
+router.post("/establecimientos", validadorDeCampos, existEstablecimiento, postEstablecimiento);
 
-router.put("/establecimiento/:id", updateEstablecimiento);
+router.put("/establecimientos/:id", updateEstablecimiento);
 
-router.delete("/establecimiento/:id", deleteEstablecimiento);
+router.delete("/establecimientos/:id", deleteEstablecimiento);
 
 export default router;

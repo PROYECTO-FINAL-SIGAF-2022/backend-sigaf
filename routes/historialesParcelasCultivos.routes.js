@@ -11,12 +11,12 @@ const router = Router();
 
 router.get("/historiales", getHistoriales);
 
-router.get("/historial/:id", getHistorialUnico);
+router.get("/historiales/:id", getHistorialUnico);
 
-router.post("/historial", postHistorial);
+router.post("/historiales", postHistorial);
 
-router.put("/historial/:id", updateHistorial);
+router.put("/historiales/:id", updateHistorial);
 
-router.delete("/historial/:id", deleteHistorial);
+router.delete("/historiales/:id", deleteHistorial);
 
 export default router;
