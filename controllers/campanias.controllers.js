@@ -56,7 +56,7 @@ export const updateCampania = async (req, res) => {
     const { id } = req.params;
     const {
       descripcion_campania, fecha_inicio, fecha_final, id_cultivo,
-    } = req.body[0];
+    } = req.body;
     console.log(id);
     const updateCamp = await CampaniasModelo.findOne({
       where: { id_campania: id },
@@ -67,7 +67,7 @@ export const updateCampania = async (req, res) => {
     updateCamp.id_cultivo = id_cultivo;
     await updateCamp.save();
     res.json({
-      msg: "La Compania se creo Correctamente",
+      msg: "La Compania se actualizo  Correctamente",
       updateCamp,
     });
   } catch (error) {
