@@ -3,9 +3,9 @@ import { EstablecimientosModelo } from "../models/Establecimientos.model.js";
 // Devuelve todos los Establecimientos de la colección
 export const getEstablecimientos = async (req, res) => {
   try {
-    const Datos = await EstablecimientosModelo.findAll(); // consulta para todos los documentos
+    const establecimientos = await EstablecimientosModelo.findAll(); // consulta para todos los documentos
     // Respuesta del servidor
-    res.json(Datos);
+    res.status(200).json(establecimientos);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -16,10 +16,10 @@ export const getEstablecimientos = async (req, res) => {
 export const getEstablecimientoUnico = async (req, res) => {
   try {
     const { id } = req.params;
-    const Datos = await EstablecimientosModelo.findByPk(id); // consulta para todos los documentos
+    const establecimiento = await EstablecimientosModelo.findByPk(id); // consulta para todos los documentos
 
     // Respuesta del servidor
-    res.json(Datos);
+    res.status(200).json(establecimiento);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -43,7 +43,7 @@ export const postEstablecimiento = async (req, res) => {
       id_usuario,
     });
 
-    res.json({
+    res.status(201).json({
       msg: "El Establecimiento se creo Correctamente",
       nuevoEstablecimiento,
     });
@@ -57,19 +57,19 @@ export const postEstablecimiento = async (req, res) => {
 export const updateEstablecimiento = async (req, res) => {
   try {
     const { id } = req.params;
-    const { descripcion_establecimiento, georeferencia, superficie } = req.body[0];
-    console.log(id);
-    const UpdateEstab = await EstablecimientosModelo.findOne({
+    const { descripcion_establecimiento, georeferencia, superficie } = req.body;
+    // console.log(id);
+    const updateEstab = await EstablecimientosModelo.findOne({
       where: { id_establecimiento: id },
     });
-    UpdateEstab.descripcion_establecimiento = descripcion_establecimiento;
-    UpdateEstab.georeferencia = georeferencia;
-    UpdateEstab.superficie = superficie;
-    await UpdateEstab.save();
+    updateEstab.descripcion_establecimiento = descripcion_establecimiento;
+    updateEstab.georeferencia = georeferencia;
+    updateEstab.superficie = superficie;
+    await updateEstab.save();
 
     res.json({
       msg: "El Establecimiento se actualizo Correctamente",
-      UpdateEstab,
+      updateEstab,
     });
   } catch (error) {
     return res.status(500).json({

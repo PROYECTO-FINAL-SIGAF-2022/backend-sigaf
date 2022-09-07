@@ -33,11 +33,6 @@ describe(`GET ${URL}`, () => {
     expect(response.type).toEqual("application/json");
   });
 
-  // test("Debe retornar un array de actividades", async () => {
-  //   const response = await API.get(URL).set(HEADERS);
-  //   expect(response.body).toHaveLength(2);
-  // });
-
   test("Debe retornar un status-code 200", async () => {
     const response = await API.get(URL).set(HEADERS);
     expect(response.statusCode).toEqual(200);
@@ -63,6 +58,10 @@ describe(`GET ${URL}/:id`, () => {
   test("Si no existe debe retornar un json con un mensaje de id no existe en la bd", async () => {
     const response = await API.get(`${URL}/12`).set(HEADERS);
     expect(response.type).toEqual("application/json");
+
+    const mensajeRespuesta = response.body?.errors[0]?.msg;
+
+    expect(mensajeRespuesta).toEqual("El id enviado no se coincide con ningun registro de la base de datos");
   });
 });
 
@@ -175,19 +174,19 @@ describe(`PUT ${URL}/:id`, () => {
 
 describe(`DELETE ${URL}/:id`, () => {
   test("Debe retornar un error al no enviar el token", async () => {
-    const response = await API.get(URL);
+    const response = await API.delete(URL);
     expect(response.statusCode).toEqual(401);
   });
 
-  test("Actualizar una actividad", async () => {
-    const response = await API.delete(`${URL}/1`)
-      .set("Content-Type", "application/json")
-      .set(HEADERS);
-    // console.log(response.body);
+  // test("Actualizar una actividad", async () => {
+  //   const response = await API.put(`${URL}/1`)
+  //     .set("Content-Type", "application/json")
+  //     .set(HEADERS);
+  //   // console.log(response.body);
 
-    expect(response.statusCode).toEqual(200);
-    expect(response.type).toEqual("application/json");
-  });
+  //   expect(response.statusCode).toEqual(200);
+  //   expect(response.type).toEqual("application/json");
+  // });
 
   test("Eliminar una actividad con un id inexistente", async () => {
     const response = await API.delete(`${URL}/5`)

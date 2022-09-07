@@ -1,40 +1,89 @@
-// validar datos de los cultivos con express-validator
-
-import { check, validationResult } from "express-validator";
+import { check, param } from "express-validator";
+import { verificarCampos } from "../helpers/verificarCampos.js";
 
 import { CultivosModelo } from "../models/Cultivos.model.js";
 
-const validadorDeCampos = [
-  check("cultivo")
+export const getCultivosMidd = [verificarCampos];
+
+export const getCultivoMidd = [
+  param("id").custom(
+    async (id_cultivo) => {
+      const cultivo = await CultivosModelo.count({
+        where: { id_cultivo },
+      });
+
+      if (cultivo === 0) {
+        return Promise.reject("El id enviado no se coincide con ningun registro de la base de datos");
+      }
+    },
+  ),
+  verificarCampos,
+];
+
+export const postCultivoMidd = [
+  check("descripcion_cultivo")
     .exists()
     .not()
     .isEmpty()
-    .withMessage("El cultivo es requerido"),
-  (req, res, next) => {
-    try {
-      validationResult(req).throw();
-      return next();
-    } catch (error) {
-      res.status(406).json({
-        msg: "Error en los datos",
-        errores: error.mapped(),
-      });
-    }
-  },
+    .withMessage("El cultivo es requerido")
+    .custom(
+      async (descripcion_cultivo) => {
+        const cultivo = await CultivosModelo.count({
+          where: { descripcion_cultivo },
+        });
+        // console.log(cultivo);
+        if (cultivo > 0) {
+          return Promise.reject("El cultivo ingresado ya se encuentra en la bd");
+        }
+      },
+
+    ),
+  verificarCampos,
 ];
 
-const existCultivo = async (req, res, next) => {
-  const { cultivo } = req.body;
-  const cult = await CultivosModelo.findOne({
-    where: { cultivo },
-  });
-  if (cult) {
-    res.status(406).json({
-      msg: "El cultivo ya existe",
-    });
-    return;
-  }
-  next();
-};
+export const putCultivoMidd = [
+  param("id").custom(
+    async (id_cultivo) => {
+      const cultivo = await CultivosModelo.count({
+        where: { id_cultivo },
+      });
 
-export { validadorDeCampos, existCultivo };
+      if (cultivo === 0) {
+        return Promise.reject("El id enviado no se coincide con ningun registro de la base de datos");
+      }
+    },
+  ),
+  check("descripcion_cultivo")
+    .exists()
+    .not()
+    .isEmpty()
+    .withMessage("El cultivo es requerido")
+    .custom(
+      async (descripcion_cultivo) => {
+        const cultivo = await CultivosModelo.count({
+          where: { descripcion_cultivo },
+        });
+        // console.log(cultivo);
+        if (cultivo > 0) {
+          return Promise.reject("El cultivo ingresado ya se encuentra en la bd");
+        }
+      },
+
+    ),
+  verificarCampos,
+];
+export const deleteCultivoMidd = [
+  param("id").custom(
+    async (id_cultivo) => {
+      const cultivo = await CultivosModelo.count({
+        where: { id_cultivo },
+      });
+
+      if (cultivo === 0) {
+        return Promise.reject();
+      }
+    },
+
+  ).withMessage("El id enviado no se coincide con ningun registro de la base de datos"),
+  verificarCampos,
+];

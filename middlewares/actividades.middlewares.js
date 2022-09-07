@@ -2,9 +2,9 @@ import { check, param } from "express-validator";
 import { verificarCampos } from "../helpers/verificarCampos.js";
 import { ActividadesModelo } from "../models/Actividades.model.js";
 
-const getActividadesMidd = [verificarCampos];
+export const getActividadesMidd = [verificarCampos];
 
-const getActividadMidd = [
+export const getActividadMidd = [
   param("id").custom(
     async (id_actividad) => {
       const actividad = await ActividadesModelo.count({
@@ -19,7 +19,7 @@ const getActividadMidd = [
   verificarCampos,
 ];
 
-const postActividadesMidd = [
+export const postActividadesMidd = [
   check("descripcion_actividad")
     .exists()
     .not()
@@ -39,7 +39,7 @@ const postActividadesMidd = [
     ),
   verificarCampos,
 ];
-const putActividadesMidd = [
+export const putActividadesMidd = [
   param("id").custom(
     async (id_actividad) => {
       const actividad = await ActividadesModelo.count({
@@ -70,7 +70,7 @@ const putActividadesMidd = [
     ),
   verificarCampos,
 ];
-const deleteActividadesMidd = [
+export const deleteActividadesMidd = [
   param("id").custom(
     async (id_actividad) => {
       const actividad = await ActividadesModelo.count({
@@ -85,30 +85,3 @@ const deleteActividadesMidd = [
   ).withMessage("El id enviado no se coincide con ningun registro de la base de datos"),
   verificarCampos,
 ];
-
-export {
-  getActividadesMidd,
-  getActividadMidd,
-  postActividadesMidd,
-  putActividadesMidd,
-  deleteActividadesMidd,
-};
-
-// const validadorDeCampos = [
-//   check("descripcion_actividad")
-//     .exists()
-//     .not()
-//     .isEmpty()
-//     .withMessage("La actividad es requerida"),
-//   (req, res, next) => {
-//     try {
-//       validationResult(req).throw();
-//       return next();
-//     } catch (error) {
-//       res.status(406).json({
-//         msg: "Error en los datos",
-//         errores: error.mapped(),
-//       });
-//     }
-//   },
-// ];
