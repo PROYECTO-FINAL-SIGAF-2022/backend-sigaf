@@ -3,9 +3,9 @@ import { verificarCampos } from "../helpers/verificarCampos.js";
 
 import { CultivosModelo } from "../models/Cultivos.model.js";
 
-const getCultivosMidd = [verificarCampos];
+export const getCultivosMidd = [verificarCampos];
 
-const getCultivoMidd = [
+export const getCultivoMidd = [
   param("id").custom(
     async (id_cultivo) => {
       const cultivo = await CultivosModelo.count({
@@ -20,7 +20,7 @@ const getCultivoMidd = [
   verificarCampos,
 ];
 
-const postCultivoMidd = [
+export const postCultivoMidd = [
   check("descripcion_cultivo")
     .exists()
     .not()
@@ -41,7 +41,7 @@ const postCultivoMidd = [
   verificarCampos,
 ];
 
-const putCultivoMidd = [
+export const putCultivoMidd = [
   param("id").custom(
     async (id_cultivo) => {
       const cultivo = await CultivosModelo.count({
@@ -72,7 +72,7 @@ const putCultivoMidd = [
     ),
   verificarCampos,
 ];
-const deleteCultivoMidd = [
+export const deleteCultivoMidd = [
   param("id").custom(
     async (id_cultivo) => {
       const cultivo = await CultivosModelo.count({
@@ -87,10 +87,3 @@ const deleteCultivoMidd = [
   ).withMessage("El id enviado no se coincide con ningun registro de la base de datos"),
   verificarCampos,
 ];
-export {
-  getCultivosMidd,
-  getCultivoMidd,
-  postCultivoMidd,
-  putCultivoMidd,
-  deleteCultivoMidd,
-};

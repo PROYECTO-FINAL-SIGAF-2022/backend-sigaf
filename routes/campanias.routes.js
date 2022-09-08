@@ -8,18 +8,24 @@ import {
 } from "../controllers/campanias.controllers.js";
 import validateToken from "../middlewares/validateToken.middleware.js";
 
-import { validadorDeCampos } from "../middlewares/campanias.middlewares.js";
+import {
+  getCampaniasMidd,
+  getCampaniaMidd,
+  postCampaniasMidd,
+  putCampaniasMidd,
+  deleteCampaniasMidd,
+} from "../middlewares/campanias.middlewares.js";
 
 const router = Router();
 
-router.get("/campanias", validateToken, getCampanias);
+router.get("/campanias", validateToken, getCampaniasMidd, getCampanias);
 
-router.get("/campanias/:id", validateToken, getCampaniaUnico);
+router.get("/campanias/:id", validateToken, getCampaniaMidd, getCampaniaUnico);
 
-router.post("/campanias", validateToken, validadorDeCampos, postCampania);
+router.post("/campanias", validateToken, postCampaniasMidd, postCampania);
 
-router.put("/campanias/:id", validateToken, updateCampania);
+router.put("/campanias/:id", validateToken, putCampaniasMidd, updateCampania);
 
-router.delete("/campanias/:id", validateToken, deleteCampania);
+router.delete("/campanias/:id", validateToken, deleteCampaniasMidd, deleteCampania);
 
 export default router;

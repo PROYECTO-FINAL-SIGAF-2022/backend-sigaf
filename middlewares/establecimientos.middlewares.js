@@ -1,54 +1,154 @@
-// validar datos de los establecimientos con express-validator
-import { check, validationResult } from "express-validator";
+import { check, param } from "express-validator";
+import { verificarCampos } from "../helpers/verificarCampos.js";
 import { EstablecimientosModelo } from "../models/Establecimientos.model.js";
+import { UsuariosModelo } from "../models/Usuarios.model.js";
 
-const validadorDeCampos = [
+export const getEstablecimientosMidd = [verificarCampos];
+
+export const getEstablecimientoMidd = [
+  param("id").custom(
+    async (id_establecimiento) => {
+      const establecimiento = await EstablecimientosModelo.count({
+        where: { id_establecimiento },
+      });
+
+      if (establecimiento === 0) {
+        return Promise.reject("El id enviado no se coincide con ningun registro de la base de datos");
+      }
+    },
+  ),
+  verificarCampos,
+];
+
+export const postEstablecimientoMidd = [
   check("descripcion_establecimiento")
     .exists()
     .not()
+    .escape()
     .isEmpty()
-    .withMessage("La descripcion del establecimiento es requerido"),
+    .withMessage("La descripcion del establecimiento es requerido")
+    .custom(
+      async (descripcion_establecimiento) => {
+        const establecimiento = await EstablecimientosModelo.count({
+          where: { descripcion_establecimiento },
+        });
+        if (establecimiento > 0) {
+          return Promise.reject("El establecimiento ingresado ya se encuentra en la bd");
+        }
+      },
+
+    ),
   check("georeferencia")
     .exists()
     .not()
+    .escape()
     .isEmpty()
-    .withMessage("La georeferencia es requerida"),
+    .withMessage("La georeferencia del establecimiento es requerido"),
   check("superficie")
     .exists()
     .not()
+    .escape()
     .isEmpty()
-    .withMessage("La superficie es requerida"),
+    .withMessage("La superficie del establecimiento es requerido"),
   check("id_usuario")
     .exists()
     .not()
     .isEmpty()
-    .withMessage("El usuario es requerido"),
+    .withMessage("El id usuario no puede estar vacio")
+    .custom(
+      async (id_usuario) => {
+        const usuario = await UsuariosModelo.count({
+          where: { id_usuario },
+        });
 
-  (req, res, next) => {
-    try {
-      validationResult(req).throw();
-      return next();
-    } catch (error) {
-      res.status(406).json({
-        msg: "Error en los datos",
-        errores: error.mapped(),
-      });
-    }
-  },
+        if (usuario === 0) {
+          return Promise.reject("El id de usuario enviado no se encuentra en la bd");
+        }
+      },
+
+    ),
+  verificarCampos,
 ];
 
-const existEstablecimiento = async (req, res, next) => {
-  const { descripcion_establecimiento } = req.body;
-  const establecimiento = await EstablecimientosModelo.findOne({
-    where: { descripcion_establecimiento },
-  });
-  if (establecimiento) {
-    res.status(406).json({
-      msg: "El establecimiento ya existe",
-    });
-    return;
-  }
-  next();
-};
+export const putEstablecimientoMidd = [
+  param("id").custom(
+    async (id_establecimiento) => {
+      const establecimiento = await EstablecimientosModelo.count({
+        where: { id_establecimiento },
+      });
 
-export { validadorDeCampos, existEstablecimiento };
+      if (establecimiento === 0) {
+        return Promise.reject("El id enviado no se coincide con ningun registro de la base de datos");
+      }
+    },
+  ),
+  check("descripcion_establecimiento")
+    .exists()
+    .not()
+    .escape()
+    .isEmpty()
+    .withMessage("La descripcion del establecimiento es requerido")
+    .custom(
+      async (descripcion_establecimiento) => {
+        const establecimiento = await EstablecimientosModelo.count({
+          where: { descripcion_establecimiento },
+        });
+        if (establecimiento > 0) {
+          return Promise.reject("El establecimiento ingresado ya se encuentra en la bd");
+        }
+      },
+
+    ),
+  check("georeferencia")
+    .exists()
+    .not()
+    .escape()
+    .isEmpty()
+    .withMessage("La georeferencia del establecimiento es requerido"),
+  check("superficie")
+    .exists()
+    .not()
+    .escape()
+    .isEmpty()
+    .withMessage("La superficie del establecimiento es requerido"),
+  check("id_usuario")
+    .exists()
+    .not()
+    .isEmpty()
+    .withMessage("El id usuario no puede estar vacio")
+    .custom(
+      async (id_usuario) => {
+        const usuario = await UsuariosModelo.count({
+          where: { id_usuario },
+        });
+
+        if (usuario === 0) {
+          return Promise.reject("El id de usuario enviado no se encuentra en la bd");
+        }
+      },
+
+    ),
+  verificarCampos,
+];
+
+export const deleteEstablecimientoMidd = [
+  param("id")
+    .exists()
+    .not()
+    .isEmpty()
+    .withMessage("El id establecimiento no puede estar vacio")
+    .custom(
+      async (id_establecimiento) => {
+        const establecimiento = await EstablecimientosModelo.count({
+          where: { id_establecimiento },
+        });
+
+        if (establecimiento === 0) {
+          return Promise.reject("El id ingresado no pertenece a ningun registro de la bd");
+        }
+      },
+
+    )
+    .withMessage("El id enviado no se coincide con ningun registro de la base de datos"),
+  verificarCampos,
+];
