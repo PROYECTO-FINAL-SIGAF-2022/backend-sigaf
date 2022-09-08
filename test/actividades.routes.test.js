@@ -4,6 +4,10 @@ import { vaciarTablas } from "../helpers/vaciarTablas.js";
 import { app, server } from "../index.js";
 import { ActividadesModelo } from "../models/Actividades.model.js";
 
+import {
+  testFunctionGet, testFunctionPost, testFunctionPut, testFunctionDelete,
+} from "../helpers/tests/testFunctions";
+
 const API = supertest(app);
 const URL = "/api/actividades";
 
@@ -11,192 +15,63 @@ const HEADERS = getTokenTest();
 
 beforeAll(async () => {
   await vaciarTablas();
-
-  // await UsuariosModelo.destroy({
-  //   where: {},
-  //   truncate: true,
-  // });
-
   await ActividadesModelo.create({ descripcion_actividad: "Cultivar" });
   await ActividadesModelo.create({ descripcion_actividad: "Regar" });
 });
 
 describe(`GET ${URL}`, () => {
-  test("Debe retornar un error al no enviar el token", async () => {
-    const response = await API.get(URL);
-    expect(response.statusCode).toEqual(401);
-  });
+  testFunctionGet(URL, "Debe retornar un error al no enviar el token", 401, API);
 
-  test("Debe retornar un json con los registros de actividades", async () => {
-    const response = await API.get(URL).set(HEADERS);
-    // console.log(response.body);
-    expect(response.type).toEqual("application/json");
-  });
+  testFunctionGet(URL, "Debe retornar un json con los registros de actividades", 200, API, HEADERS);
 
-  test("Debe retornar un status-code 200", async () => {
-    const response = await API.get(URL).set(HEADERS);
-    expect(response.statusCode).toEqual(200);
-  });
+  testFunctionGet(URL, "Debe retornar un status-code 200", 200, API, HEADERS);
 });
 
 describe(`GET ${URL}/:id`, () => {
-  test("Debe retornar un error al no enviar el token", async () => {
-    const response = await API.get(URL);
-    expect(response.statusCode).toEqual(401);
-  });
+  testFunctionGet(`${URL}/1`, "Debe retornar un error al no enviar el token", 401, API);
 
-  test("Debe retornar un json", async () => {
-    const response = await API.get(`${URL}/1`).set(HEADERS);
-    expect(response.type).toEqual("application/json");
-  });
+  testFunctionGet(`${URL}/1`, "Debe retornar un json con el registro encontrado", 200, API, HEADERS);
 
-  test("Debe retornar un status-code 200", async () => {
-    const response = await API.get(`${URL}/1`).set(HEADERS);
-    expect(response.statusCode).toEqual(200);
-  });
+  testFunctionGet(`${URL}/1`, "Debe retornar un status-code 200", 200, API, HEADERS);
 
-  test("Si no existe debe retornar un json con un mensaje de id no existe en la bd", async () => {
-    const response = await API.get(`${URL}/12`).set(HEADERS);
-    expect(response.type).toEqual("application/json");
-
-    const mensajeRespuesta = response.body?.errors[0]?.msg;
-
-    expect(mensajeRespuesta).toEqual("El id enviado no se coincide con ningun registro de la base de datos");
-  });
+  testFunctionGet(`${URL}/12`, "Si no existe debe retornar un json con un mensaje de id no existe en la bd", 400, API, HEADERS);
 });
 
 describe(`POST ${URL}`, () => {
-  test("Debe retornar un error al no enviar el token", async () => {
-    const response = await API.get(URL);
-    expect(response.statusCode).toEqual(401);
-  });
+  testFunctionPost(URL, "Debe retornar un error al no enviar el token", 401, API);
 
-  test("Crear una actividad", async () => {
-    const response = await API.post(`${URL}`)
-      .set("Content-Type", "application/json")
-      .send({
-        descripcion_actividad: "Plantar",
-      })
-      .set(HEADERS);
+  testFunctionPost(URL, "Crear una actividad", {
+    descripcion_actividad: "Plantar",
+  }, 201, API, HEADERS);
 
-    // console.log(response.body);
+  testFunctionPost(URL, "Crear una actividad", {
+    descripcion_actividad: "Plantar",
+  }, 400, API, HEADERS);
 
-    expect(response.statusCode).toEqual(201);
-    expect(response.type).toEqual("application/json");
-  });
-
-  test("Crear una actividad con datos ya existentes", async () => {
-    const response = await API.post(`${URL}`)
-      .set("Content-Type", "application/json")
-      .send({
-        descripcion_actividad: "Plantar",
-      })
-      .set(HEADERS);
-
-    // console.log(response.body);
-
-    expect(response.statusCode).toEqual(400);
-    expect(response.type).toEqual("application/json");
-  });
-
-  test("Crear una actividad con la descripcion vacia", async () => {
-    const response = await API.post(`${URL}`)
-      .set("Content-Type", "application/json")
-      .send({
-        descripcion_actividad: "",
-      })
-      .set(HEADERS);
-    // console.log(response.body);
-
-    expect(response.statusCode).toEqual(400);
-    expect(response.type).toEqual("application/json");
-  });
-
-  // test("Crear una actividad con la descripcion en numeros y letras", async () => {
-  //   const response = await API.post("/api/actividad")
-  //     .set("Content-Type", "application/json")
-  //     .send({
-  //       descripcion_actividad: "Regar 12",
-  //     })
-  //     .set(HEADERS);
-  //   console.log(response.body);
-
-  //   expect(response.statusCode).toEqual(400);
-  //   expect(response.type).toEqual("application/json");
-  // });
+  testFunctionPost(URL, "Crear una actividad", {
+    descripcion_actividad: "",
+  }, 400, API, HEADERS);
 });
 
 describe(`PUT ${URL}/:id`, () => {
-  test("Debe retornar un error al no enviar el token", async () => {
-    const response = await API.get(URL);
-    expect(response.statusCode).toEqual(401);
-  });
+  testFunctionPut(`${URL}/1`, "Debe retornar un error al no enviar el token", 401, API);
 
-  test("Actualizar una actividad", async () => {
-    const response = await API.put(`${URL}/1`)
-      .set("Content-Type", "application/json")
-      .send({
-        descripcion_actividad: "sembrarrr",
-      })
-      .set(HEADERS);
-    // console.log(response.body);
+  testFunctionPut(`${URL}/1`, "Actualizar una actividad", {
+    descripcion_actividad: "sembrarrr",
+  }, 200, API, HEADERS);
 
-    expect(response.statusCode).toEqual(200);
-    expect(response.type).toEqual("application/json");
-  });
+  testFunctionPut(`${URL}/5`, "Actualizar una actividad con un id inexistente", {
+    descripcion_actividad: "sembrarrr",
+  }, 400, API, HEADERS);
 
-  test("Actualizar una actividad con un id inexistente", async () => {
-    const response = await API.put(`${URL}/5`)
-      .set("Content-Type", "application/json")
-      .send({
-        descripcion_actividad: "sembrarrr",
-      })
-      .set(HEADERS);
-    // console.log(response.body);
-
-    expect(response.statusCode).toEqual(400);
-    expect(response.type).toEqual("application/json");
-  });
-
-  test("Actualizar una actividad con una descripcion ya existente", async () => {
-    const response = await API.put(`${URL}/5`)
-      .set("Content-Type", "application/json")
-      .send({
-        descripcion_actividad: "Cultivar",
-      })
-      .set(HEADERS);
-    // console.log(response.body);
-
-    expect(response.statusCode).toEqual(400);
-    expect(response.type).toEqual("application/json");
-  });
+  testFunctionPut(`${URL}/5`, "Actualizar una actividad con una descripcion ya existente", {
+    descripcion_actividad: "Cultivar",
+  }, 400, API, HEADERS);
 });
-
 describe(`DELETE ${URL}/:id`, () => {
-  test("Debe retornar un error al no enviar el token", async () => {
-    const response = await API.delete(URL);
-    expect(response.statusCode).toEqual(401);
-  });
+  testFunctionDelete(`${URL}/1`, "Debe retornar un error al no enviar el token", 401, API);
 
-  // test("Actualizar una actividad", async () => {
-  //   const response = await API.put(`${URL}/1`)
-  //     .set("Content-Type", "application/json")
-  //     .set(HEADERS);
-  //   // console.log(response.body);
-
-  //   expect(response.statusCode).toEqual(200);
-  //   expect(response.type).toEqual("application/json");
-  // });
-
-  test("Eliminar una actividad con un id inexistente", async () => {
-    const response = await API.delete(`${URL}/5`)
-      .set("Content-Type", "application/json")
-      .set(HEADERS);
-    // console.log(response.body);
-
-    expect(response.statusCode).toEqual(400);
-    expect(response.type).toEqual("application/json");
-  });
+  testFunctionDelete(`${URL}/5`, "Eliminar una actividad con un id inexistente", 400, API, HEADERS);
 });
 
 afterAll(async () => {

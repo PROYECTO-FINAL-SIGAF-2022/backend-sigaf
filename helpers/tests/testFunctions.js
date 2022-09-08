@@ -15,7 +15,7 @@ export const testFunctionGet = async (paramUrl, paramMensaje, paramStatus, param
 export const testFunctionPost = async (paramUrl, paramMensaje, paramSend, paramStatus, paramApi, paramHeaders) => {
   await test(paramMensaje, async () => {
     if (!paramHeaders) {
-      const response = await paramApi.get(paramUrl);
+      const response = await paramApi.post(paramUrl);
       expect(response.statusCode).toEqual(paramStatus);
       expect(response.type).toEqual("application/json");
     } else {
