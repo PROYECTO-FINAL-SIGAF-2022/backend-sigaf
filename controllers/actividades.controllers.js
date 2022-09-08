@@ -3,9 +3,9 @@ import { ActividadesModelo } from "../models/Actividades.model.js";
 // Devuelve todos los actividadess de la colección
 export const getActividades = async (req, res) => {
   try {
-    const Datos = await ActividadesModelo.findAll({where: { activo: true }}); // consulta para todos los documentos
+    const actividades = await ActividadesModelo.findAll({where: { activo: true }}); // consulta para todos los documentos
     // Respuesta del servidor
-    res.json(Datos);
+    res.json(actividades);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -16,10 +16,10 @@ export const getActividades = async (req, res) => {
 export const getActividadUnico = async (req, res) => {
   try {
     const { id } = req.params;
-    const Datos = await ActividadesModelo.findByPk(id); // consulta para todos los documentos
+    const actividad = await ActividadesModelo.findByPk(id); // consulta para todos los documentos
 
     // Respuesta del servidor
-    res.json(Datos);
+    res.json(actividad);
   } catch (error) {
     return res.status(500).json({
       message: error.message,

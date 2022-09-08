@@ -16,6 +16,7 @@ import tiposUsuariosRutas from "./tiposUsuarios.routes.js";
 import productosRutas from "./productos.routes.js"
 import proveedorRutas from "./proveedores.routes.js"
 import tiposProducosRutas from "./tiposProductos.routes.js"
+import perdidaParcelaCultivoRutas from "./perdidasParcelasCultivos.routes.js"
 // const app = express();
 
 export const rutas = () => [
@@ -30,9 +31,10 @@ export const rutas = () => [
   tiposUsuariosRutas,
   authRutas,
   campaniasRutas,
-  productosRutas, //! Falta Terminar la ruta de productos
+  productosRutas, 
   proveedorRutas,
-  tiposProducosRutas, // ! Falta Terminar la ruta de Tipos productos
+  tiposProducosRutas, 
+  perdidaParcelaCultivoRutas,
 ];
 
 // app.use("/api", usuariosRutas);
