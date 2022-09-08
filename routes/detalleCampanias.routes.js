@@ -1,18 +1,27 @@
 import { Router } from "express";
 import {
   getDetalleCampanias, getDetalleCampaniaUnico, postDetalleCampania, updateDetalleCampania, deleteDetalleCampania,
-} from "../controllers/detalleCampanias.controller";
+} from "../controllers/detalleCampanias.controller.js";
 
-import validateToken from "../middlewares/validateToken.middleware";
+import { getDetalleCampaniasMidd,
+  getDetalleCampaniaMidd,
+  postDetalleCampaniasMidd,
+  putDetalleCampaniasMidd,
+  deleteCampaniasMidd} from "../middlewares/detalleCampanias.middleware.js"
+
+import validateToken from "../middlewares/validateToken.middleware.js";
 
 const router = Router();
 
-router.get("/detalle-campanias", validateToken, getDetalleCampanias);
+router.get("/detalle-campanias", validateToken,getDetalleCampaniasMidd, getDetalleCampanias);
 
-router.get("/detalle-campanias/:id", validateToken, getDetalleCampaniaUnico);
+router.get("/detalle-campanias/:id", validateToken,getDetalleCampaniaMidd, getDetalleCampaniaUnico);
 
-router.post("/detalle-campanias", validateToken, postDetalleCampania);
+router.post("/detalle-campanias", validateToken,postDetalleCampaniasMidd, postDetalleCampania);
 
-router.put("/detalle-campanias/:id", validateToken, updateDetalleCampania);
+router.put("/detalle-campanias/:id", validateToken,putDetalleCampaniasMidd, updateDetalleCampania);
 
-router.delete("/detalle-campanias/:id", validateToken, deleteDetalleCampania);
+router.delete("/detalle-campanias/:id", validateToken,deleteCampaniasMidd, deleteDetalleCampania);
+
+
+export default router;

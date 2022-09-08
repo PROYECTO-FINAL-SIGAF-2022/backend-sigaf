@@ -3,16 +3,18 @@
 import { check, param } from "express-validator";
 import { verificarCampos } from "../helpers/verificarCampos.js";
 
-import { DetalleCampanias } from "../models/DetalleCampanias.model";
+import { DetalleCampanias } from "../models/DetalleCampanias.model.js";
+import {CampaniasModelo} from "../models/Campanias.model.js"
+import {UnidadesMedidasModelo} from "../models/UnidadesMedidas.model.js"
 
 const getDetalleCampaniasMidd = [verificarCampos];
 
 const getDetalleCampaniaMidd = [
   param("id").custom(
-    async (id_campania) => {
+    async (id_detalle_campania) => {
       // console.log(id_campania);
       const detalle = await DetalleCampanias.count({
-        where: { id_campania },
+        where: { id_detalle_campania },
       });
 
       if (detalle === 0) {
@@ -24,107 +26,118 @@ const getDetalleCampaniaMidd = [
 ];
 
 const postDetalleCampaniasMidd = [
-  check("descripcion_campania")
+  check("id_campania")
     .exists()
     .not()
     .isEmpty()
-    .withMessage("La Campania es requerida")
+    .withMessage("El id de campania es requerida")
     .custom(
-      async (descripcion_campania) => {
-        const actividad = await CampaniasModelo.count({
-          where: { descripcion_campania },
+      async (id_campania) => {
+        const campania = await CampaniasModelo.count({
+          where: { id_campania },
         });
         // console.log(actividad);
-        if (actividad > 0) {
-          return Promise.reject("La actividad ingresada ya se encuentra en la bd");
+        if (campania <= 0) {
+          return Promise.reject("La campania ingresada no se encuentra en la bd");
         }
       },
     ),
-  check("fecha_inicio")
+  check("id_unidad_medida")
     .exists()
     .not()
     .isEmpty()
-    .withMessage("La fecha de inicio es requerida"),
-  check("fecha_final")
+    .withMessage("La fecha de inicio es requerida")
+    .custom(
+      async (id_unidad_medida) => {
+        const campania = await UnidadesMedidasModelo.count({
+          where: { id_unidad_medida },
+        });
+        // console.log(actividad);
+        if (campania <= 0) {
+          return Promise.reject("La Unidad de medida ingresada no se encuentra en la bd");
+        }
+      }),
+  check("cantidad_cosechada")
     .exists()
+    .isNumeric()
     .not()
     .isEmpty()
-    .withMessage("La fecha final  es requerida"),
-  check("id_cultivo")
-    .exists()
-    .not()
-    .isEmpty()
-    .withMessage("El id  de cultivo es requerida"),
+    .withMessage("La cantidad cosechada  es requerida"),
+    verificarCampos,
+  ];
 
-  verificarCampos,
-];
-const putCampaniasMidd = [
-  param("id").custom(
-    async (id_campania) => {
-      const campania = await CampaniasModelo.count({
-        where: { id_campania },
+const putDetalleCampaniasMidd = [
+ param("id").custom(
+    async (id_detalle_campania) => {
+      // console.log(id_campania);
+      const detalle = await DetalleCampanias.count({
+        where: { id_detalle_campania },
       });
 
-      if (campania === 0) {
+      if (detalle === 0) {
         return Promise.reject("El id enviado no se coincide con ningun registro de la base de datos");
       }
     },
+
   ),
-  check("descripcion_campania")
+  check("id_campania")
     .exists()
     .not()
     .isEmpty()
-    .withMessage("La campania es requerida")
+    .withMessage("El id de campania es requerida")
     .custom(
-      async (descripcion_campania) => {
+      async (id_campania) => {
         const campania = await CampaniasModelo.count({
-          where: { descripcion_campania },
+          where: { id_campania },
         });
         // console.log(actividad);
-        if (campania > 0) {
-          return Promise.reject("La campania ingresada ya se encuentra en la bd");
+        if (campania <= 0) {
+          return Promise.reject("La campania ingresada no se encuentra en la bd");
         }
       },
-
     ),
-  check("fecha_inicio")
+  check("id_unidad_medida")
     .exists()
     .not()
     .isEmpty()
-    .withMessage("La fecha de inicio es requerida"),
-  check("fecha_final")
+    .withMessage("La fecha de inicio es requerida")
+    .custom(
+      async (id_unidad_medida) => {
+        const campania = await UnidadesMedidasModelo.count({
+          where: { id_unidad_medida },
+        });
+        // console.log(actividad);
+        if (campania <= 0) {
+          return Promise.reject("La Unidad de medida ingresada no se encuentra en la bd");
+        }
+      }),
+  check("cantidad_cosechada")
     .exists()
+    .isNumeric()
     .not()
     .isEmpty()
-    .withMessage("La fecha final  es requerida"),
-  check("id_cultivo")
-    .exists()
-    .not()
-    .isEmpty()
-    .withMessage("El id  de cultivo es requerida"),
-
-  verificarCampos,
+    .withMessage("La cantidad cosechada  es requerida"),
+    verificarCampos,
 ];
 const deleteCampaniasMidd = [
   param("id").custom(
-    async (id_campania) => {
+    async (id_detalle_campania) => {
       const campania = await CampaniasModelo.count({
-        where: { id_campania },
+        where: { id_detalle_campania },
       });
-
-      if (campania === 0) {
-        return Promise.reject();
+      // console.log(actividad);
+      if (campania <= 0) {
+        return Promise.reject("La campania ingresada no se encuentra en la bd");
       }
     },
-
   ).withMessage("El id enviado no se coincide con ningun registro de la base de datos"),
   verificarCampos,
 ];
 
 export {
-  getCampaniasMidd,
-  getCampaniaMidd,
-  postCampaniasMidd,
-  putCampaniasMidd,
+  getDetalleCampaniasMidd,
+  getDetalleCampaniaMidd,
+  postDetalleCampaniasMidd,
+  putDetalleCampaniasMidd,
   deleteCampaniasMidd,
 };

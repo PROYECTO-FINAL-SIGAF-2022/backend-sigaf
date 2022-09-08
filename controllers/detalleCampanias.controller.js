@@ -1,4 +1,4 @@
-import { DetalleCampanias } from "../models/DetalleCampanias.model";
+import { DetalleCampanias } from "../models/DetalleCampanias.model.js";
 
 // Devuelve todos los Campanias de la colección
 export const getDetalleCampanias = async (req, res) => {
@@ -30,14 +30,14 @@ export const getDetalleCampaniaUnico = async (req, res) => {
 export const postDetalleCampania = async (req, res) => {
   try {
     const {
-      descripcion_campania, fecha_inicio, fecha_final, id_cultivo,
+      id_campania, id_unidad_medida, cantidad_cosechada
     } = req.body;
 
     const nuevoDetalleCampania = await DetalleCampanias.create({
-      descripcion_campania,
-      fecha_inicio,
-      fecha_final,
-      id_cultivo,
+      id_campania,
+      id_unidad_medida,
+      cantidad_cosechada,
+ 
     });
 
     res.json({
@@ -55,16 +55,16 @@ export const updateDetalleCampania = async (req, res) => {
   try {
     const { id } = req.params;
     const {
-      descripcion_campania, fecha_inicio, fecha_final, id_cultivo,
+      id_campania, id_unidad_medida, cantidad_cosechada
     } = req.body;
     console.log(id);
     const updateDetalleCamp = await DetalleCampanias.findOne({
-      where: { id_campania: id },
+      where: { id_detalle_campania: id },
     });
-    updateDetalleCamp.descripcion_campania = descripcion_campania;
-    updateDetalleCamp.fecha_inicio = fecha_inicio;
-    updateDetalleCamp.fecha_final = fecha_final;
-    updateDetalleCamp.id_cultivo = id_cultivo;
+    updateDetalleCamp.id_campania = id_campania;
+    updateDetalleCamp.id_unidad_medida = id_unidad_medida;
+    updateDetalleCamp.cantidad_cosechada = cantidad_cosechada;
+
     await updateDetalleCamp.save();
     res.json({
       msg: "El detalle de Campaña se actualizo  Correctamente",
