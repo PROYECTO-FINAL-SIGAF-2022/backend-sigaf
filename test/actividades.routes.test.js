@@ -38,7 +38,9 @@ describe(`GET ${URL}/:id`, () => {
 });
 
 describe(`POST ${URL}`, () => {
-  testFunctionPost(URL, "Debe retornar un error al no enviar el token", 401, API);
+  testFunctionPost(URL, "Debe retornar un error al no enviar el token", {
+    descripcion_actividad: "Plantar",
+  }, 401, API);
 
   testFunctionPost(URL, "Crear una actividad", {
     descripcion_actividad: "Plantar",
@@ -54,7 +56,9 @@ describe(`POST ${URL}`, () => {
 });
 
 describe(`PUT ${URL}/:id`, () => {
-  testFunctionPut(`${URL}/1`, "Debe retornar un error al no enviar el token", 401, API);
+  testFunctionPut(`${URL}/1`, "Debe retornar un error al no enviar el token", {
+    descripcion_actividad: "Plantar",
+  }, 401, API);
 
   testFunctionPut(`${URL}/1`, "Actualizar una actividad", {
     descripcion_actividad: "sembrarrr",
