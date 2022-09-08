@@ -2,23 +2,19 @@ import supertest from "supertest";
 import { getTokenTest } from "../helpers/getToken.js";
 import { vaciarTablas } from "../helpers/vaciarTablas.js";
 import { app, server } from "../index.js";
-import { ActividadesModelo } from "../models/Actividades.model.js";
+import { CultivosModelo } from "../models/Cultivos.model.js";
+// import { ActividadesModelo } from "../models/Actividades.model.js";
 
 const API = supertest(app);
-const URL = "/api/actividades";
 
 const HEADERS = getTokenTest();
+const URL = "/api/cultivos";
 
 beforeAll(async () => {
   await vaciarTablas();
 
-  // await UsuariosModelo.destroy({
-  //   where: {},
-  //   truncate: true,
-  // });
-
-  await ActividadesModelo.create({ descripcion_actividad: "Cultivar" });
-  await ActividadesModelo.create({ descripcion_actividad: "Regar" });
+  await CultivosModelo.create({ descripcion_cultivo: "Maiz" });
+  await CultivosModelo.create({ descripcion_cultivo: "Soja" });
 });
 
 describe(`GET ${URL}`, () => {
@@ -27,7 +23,7 @@ describe(`GET ${URL}`, () => {
     expect(response.statusCode).toEqual(401);
   });
 
-  test("Debe retornar un json con los registros de actividades", async () => {
+  test("Debe retornar un json con los registros de cultivos", async () => {
     const response = await API.get(URL).set(HEADERS);
     // console.log(response.body);
     expect(response.type).toEqual("application/json");
@@ -71,11 +67,11 @@ describe(`POST ${URL}`, () => {
     expect(response.statusCode).toEqual(401);
   });
 
-  test("Crear una actividad", async () => {
+  test("Crear un cultivo", async () => {
     const response = await API.post(`${URL}`)
       .set("Content-Type", "application/json")
       .send({
-        descripcion_actividad: "Plantar",
+        descripcion_cultivo: "Frutilla",
       })
       .set(HEADERS);
 
@@ -85,11 +81,11 @@ describe(`POST ${URL}`, () => {
     expect(response.type).toEqual("application/json");
   });
 
-  test("Crear una actividad con datos ya existentes", async () => {
+  test("Crear un cultivo con datos ya existentes", async () => {
     const response = await API.post(`${URL}`)
       .set("Content-Type", "application/json")
       .send({
-        descripcion_actividad: "Plantar",
+        descripcion_cultivo: "Frutilla",
       })
       .set(HEADERS);
 
@@ -97,33 +93,25 @@ describe(`POST ${URL}`, () => {
 
     expect(response.statusCode).toEqual(400);
     expect(response.type).toEqual("application/json");
+    const mensajeRespuesta = response.body?.errors[0]?.msg;
+
+    expect(mensajeRespuesta).toEqual("El cultivo ingresado ya se encuentra en la bd");
   });
 
-  test("Crear una actividad con la descripcion vacia", async () => {
+  test("Crear un cultivo con la descripcion vacia", async () => {
     const response = await API.post(`${URL}`)
       .set("Content-Type", "application/json")
       .send({
-        descripcion_actividad: "",
+        descripcion_cultivo: "",
       })
       .set(HEADERS);
     // console.log(response.body);
 
     expect(response.statusCode).toEqual(400);
     expect(response.type).toEqual("application/json");
+    const mensajeRespuesta = response.body?.errors[0]?.msg;
+    expect(mensajeRespuesta).toEqual("El cultivo es requerido");
   });
-
-  // test("Crear una actividad con la descripcion en numeros y letras", async () => {
-  //   const response = await API.post("/api/actividad")
-  //     .set("Content-Type", "application/json")
-  //     .send({
-  //       descripcion_actividad: "Regar 12",
-  //     })
-  //     .set(HEADERS);
-  //   console.log(response.body);
-
-  //   expect(response.statusCode).toEqual(400);
-  //   expect(response.type).toEqual("application/json");
-  // });
 });
 
 describe(`PUT ${URL}/:id`, () => {
@@ -132,11 +120,11 @@ describe(`PUT ${URL}/:id`, () => {
     expect(response.statusCode).toEqual(401);
   });
 
-  test("Actualizar una actividad", async () => {
+  test("Actualizar un cultivo", async () => {
     const response = await API.put(`${URL}/1`)
       .set("Content-Type", "application/json")
       .send({
-        descripcion_actividad: "sembrarrr",
+        descripcion_cultivo: "Uvas",
       })
       .set(HEADERS);
     // console.log(response.body);
@@ -145,50 +133,60 @@ describe(`PUT ${URL}/:id`, () => {
     expect(response.type).toEqual("application/json");
   });
 
-  test("Actualizar una actividad con un id inexistente", async () => {
-    const response = await API.put(`${URL}/5`)
+  test("Actualizar un cultivo con la descripcion vacia", async () => {
+    const response = await API.put(`${URL}/1`)
       .set("Content-Type", "application/json")
       .send({
-        descripcion_actividad: "sembrarrr",
+        descripcion_cultivo: "",
       })
       .set(HEADERS);
     // console.log(response.body);
 
     expect(response.statusCode).toEqual(400);
     expect(response.type).toEqual("application/json");
+
+    const mensajeRespuesta = response.body?.errors[0]?.msg;
+    expect(mensajeRespuesta).toEqual("El cultivo es requerido");
   });
 
-  test("Actualizar una actividad con una descripcion ya existente", async () => {
+  test("Actualizar un cultivo con un id inexistente", async () => {
     const response = await API.put(`${URL}/5`)
       .set("Content-Type", "application/json")
       .send({
-        descripcion_actividad: "Cultivar",
+        descripcion_cultivo: "Uvas",
       })
       .set(HEADERS);
     // console.log(response.body);
 
     expect(response.statusCode).toEqual(400);
     expect(response.type).toEqual("application/json");
+    const mensajeRespuesta = response.body?.errors[0]?.msg;
+    expect(mensajeRespuesta).toEqual("El id enviado no se coincide con ningun registro de la base de datos");
+  });
+
+  test("Actualizar un cultivo con una descripcion ya existente", async () => {
+    const response = await API.put(`${URL}/5`)
+      .set("Content-Type", "application/json")
+      .send({
+        descripcion_cultivo: "Uvas",
+      })
+      .set(HEADERS);
+    // console.log(response.body);
+
+    expect(response.statusCode).toEqual(400);
+    expect(response.type).toEqual("application/json");
+    const mensajeRespuesta = response.body?.errors[1]?.msg;
+    expect(mensajeRespuesta).toEqual("El cultivo ingresado ya se encuentra en la bd");
   });
 });
 
 describe(`DELETE ${URL}/:id`, () => {
   test("Debe retornar un error al no enviar el token", async () => {
-    const response = await API.delete(URL);
+    const response = await API.delete(`${URL}/1`);
     expect(response.statusCode).toEqual(401);
   });
 
-  // test("Actualizar una actividad", async () => {
-  //   const response = await API.put(`${URL}/1`)
-  //     .set("Content-Type", "application/json")
-  //     .set(HEADERS);
-  //   // console.log(response.body);
-
-  //   expect(response.statusCode).toEqual(200);
-  //   expect(response.type).toEqual("application/json");
-  // });
-
-  test("Eliminar una actividad con un id inexistente", async () => {
+  test("Eliminar un cultivo con un id inexistente", async () => {
     const response = await API.delete(`${URL}/5`)
       .set("Content-Type", "application/json")
       .set(HEADERS);
@@ -196,6 +194,8 @@ describe(`DELETE ${URL}/:id`, () => {
 
     expect(response.statusCode).toEqual(400);
     expect(response.type).toEqual("application/json");
+    const mensajeRespuesta = response.body?.errors[0]?.msg;
+    expect(mensajeRespuesta).toEqual("El id enviado no se coincide con ningun registro de la base de datos");
   });
 });
 

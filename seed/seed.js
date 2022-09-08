@@ -21,6 +21,8 @@ import { TiposUsuariosModelo } from "../models/TiposUsuarios.model.js";
 import { UnidadesMedidasModelo } from "../models/UnidadesMedidas.model.js";
 import { UsuariosModelo } from "../models/Usuarios.model.js";
 
+import "../models/Associations.model.js";
+
 // ! resetar bd => npm run dev bd=dev o bd=test
 
 const args = process.argv.slice(2);
@@ -64,7 +66,7 @@ const seedBd = async () => {
   // 3
 
   await CultivosModelo.create({
-    cultivo: "Maiz",
+    descripcion_cultivo: "Maiz",
     activo: true,
   });
 

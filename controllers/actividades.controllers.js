@@ -61,7 +61,7 @@ export const updateActividad = async (req, res) => {
     updateActiv.descripcion_actividad = descripcion_actividad;
     await updateActiv.save();
 
-    res.status(201).json({
+    res.status(200).json({
       msg: "La actividad se actualizo Correctamente",
       updateActiv,
     });

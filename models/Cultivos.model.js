@@ -9,7 +9,7 @@ export const CultivosModelo = connection.define(
       primaryKey: true,
       autoIncrement: true,
     },
-    cultivo: {
+    descripcion_cultivo: {
       type: DataTypes.STRING,
     },
     activo: {

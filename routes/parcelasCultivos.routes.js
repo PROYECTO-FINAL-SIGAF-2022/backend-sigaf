@@ -11,12 +11,12 @@ const router = Router();
 
 router.get("/parcelas-cultivos", getParcelasCultivos);
 
-router.get("/parcela-cultivo/:id", getParcelaCultivoUnico);
+router.get("/parcela-cultivos/:id", getParcelaCultivoUnico);
 
-router.post("/parcela-cultivo", postParcelaCultivo);
+router.post("/parcela-cultivos", postParcelaCultivo);
 
-router.put("/parcela-cultivo/:id", updateParcelaCultivo);
+router.put("/parcela-cultivos/:id", updateParcelaCultivo);
 
-router.delete("/parcela-cultivo/:id", deleteParcelaCultivo);
+router.delete("/parcela-cultivos/:id", deleteParcelaCultivo);
 
 export default router;

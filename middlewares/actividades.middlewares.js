@@ -30,7 +30,7 @@ const postActividadesMidd = [
         const actividad = await ActividadesModelo.count({
           where: { descripcion_actividad },
         });
-        console.log(actividad);
+        // console.log(actividad);
         if (actividad > 0) {
           return Promise.reject("La actividad ingresada ya se encuentra en la bd");
         }
@@ -61,7 +61,7 @@ const putActividadesMidd = [
         const actividad = await ActividadesModelo.count({
           where: { descripcion_actividad },
         });
-        console.log(actividad);
+        // console.log(actividad);
         if (actividad > 0) {
           return Promise.reject("La actividad ingresada ya se encuentra en la bd");
         }
@@ -93,22 +93,3 @@ export {
   putActividadesMidd,
   deleteActividadesMidd,
 };
-
-// const validadorDeCampos = [
-//   check("descripcion_actividad")
-//     .exists()
-//     .not()
-//     .isEmpty()
-//     .withMessage("La actividad es requerida"),
-//   (req, res, next) => {
-//     try {
-//       validationResult(req).throw();
-//       return next();
-//     } catch (error) {
-//       res.status(406).json({
-//         msg: "Error en los datos",
-//         errores: error.mapped(),
-//       });
-//     }
-//   },
-// ];

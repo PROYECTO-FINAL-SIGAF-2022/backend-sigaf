@@ -18,12 +18,12 @@ const router = Router();
 
 router.get("/actividades", validateToken, getActividadesMidd, getActividades);
 
-router.get("/actividad/:id", validateToken, getActividadMidd, getActividadUnico);
+router.get("/actividades/:id", validateToken, getActividadMidd, getActividadUnico);
 
-router.post("/actividad", validateToken, postActividadesMidd, postActividad);
+router.post("/actividades", validateToken, postActividadesMidd, postActividad);
 
-router.put("/actividad/:id", validateToken, putActividadesMidd, updateActividad);
+router.put("/actividades/:id", validateToken, putActividadesMidd, updateActividad);
 
-router.delete("/actividad/:id", validateToken, deleteActividadesMidd, deleteActividad);
+router.delete("/actividades/:id", validateToken, deleteActividadesMidd, deleteActividad);
 
 export default router;

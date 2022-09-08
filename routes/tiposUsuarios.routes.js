@@ -11,12 +11,12 @@ const router = Router();
 
 router.get("/tipos-usuarios", getTiposUsuarios);
 
-router.get("/tipo-usuario/:id", getTipoUsuarioUnico);
+router.get("/tipo-usuarios/:id", getTipoUsuarioUnico);
 
-router.post("/tipo-usuario", postTipoUsuario);
+router.post("/tipo-usuarios", postTipoUsuario);
 
-router.put("/tipo-usuario/:id", updateTipoUsuario);
+router.put("/tipo-usuarios/:id", updateTipoUsuario);
 
-router.delete("/tipo-usuario/:id", deleteTipoUsuario);
+router.delete("/tipo-usuarios/:id", deleteTipoUsuario);
 
 export default router;
