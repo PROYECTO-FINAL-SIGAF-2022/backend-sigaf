@@ -1,4 +1,4 @@
-import { UnidadesMedidasModelo } from "../models/UnidadesMedidas.model";
+import { UnidadesMedidasModelo } from "../models/UnidadesMedidas.model.js";
 
 export const getUnidadesMedidas = async (req, res) => {
   try {
@@ -70,7 +70,7 @@ export const deleteUnidadMedida = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const eliminarUnidadMedida = UnidadesMedidasModelo.findOne({
+    const eliminarUnidadMedida = await UnidadesMedidasModelo.findOne({
       where: { id_unidad_medida: id },
     });
 
