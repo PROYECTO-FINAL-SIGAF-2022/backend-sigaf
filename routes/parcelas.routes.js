@@ -6,17 +6,18 @@ import {
   postParcela,
   updateParcela,
 } from "../controllers/parcela.controllers.js";
+import validateToken from "../middlewares/validateToken.middleware.js";
 
 const router = Router();
 
-router.get("/parcelas", getParcelas);
+router.get("/parcelas", validateToken, getParcelas);
 
-router.get("/parcelas/:id", getParcelaUnico);
+router.get("/parcelas/:id", validateToken, getParcelaUnico);
 
-router.post("/parcelas", postParcela);
+router.post("/parcelas", validateToken, postParcela);
 
-router.put("/parcelas/:id", updateParcela);
+router.put("/parcelas/:id", validateToken, updateParcela);
 
-router.delete("/parcelas/:id", deleteParcela);
+router.delete("/parcelas/:id", validateToken, deleteParcela);
 
 export default router;
