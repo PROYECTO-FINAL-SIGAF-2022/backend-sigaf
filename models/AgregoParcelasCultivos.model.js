@@ -13,6 +13,10 @@ export const AgregoParcelasCultivosModelo = connection.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    id_unidad_medida: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     cantidad_agregada: {
       type: DataTypes.INTEGER,
       allowNull: false,

@@ -32,6 +32,12 @@ AgregoParcelasCultivosModelo.belongsTo(ParcelasCultivosModelo, {
   onUpdate: "restrict",
 });
 
+AgregoParcelasCultivosModelo.belongsTo(UnidadesMedidasModelo, {
+  foreignKey: "id_unidad_medida",
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
+
 // TABLA CAMPANIAS
 CampaniasModelo.belongsTo(CultivosModelo, {
   foreignKey: "id_cultivo",
@@ -149,6 +155,12 @@ ParcelasCultivosModelo.belongsTo(CultivosModelo, {
   onUpdate: "restrict",
 });
 
+ParcelasCultivosModelo.belongsTo(UnidadesMedidasModelo, {
+  foreignKey: "id_unidad_medida",
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
+
 ParcelasCultivosModelo.belongsTo(CampaniasModelo, {
   foreignKey: "id_campania",
   onDelete: "restrict",
@@ -233,7 +245,7 @@ TiposUsuariosModelo.hasMany(UsuariosModelo, {
 });
 
 // TABLA UNIDADES_MEDIDAS
-UnidadesMedidasModelo.hasMany(ProductosModelo, {
+UnidadesMedidasModelo.hasMany(UnidadesMedidasModelo, {
   foreignKey: "id_unidad_medida",
   onDelete: "restrict",
   onUpdate: "restrict",

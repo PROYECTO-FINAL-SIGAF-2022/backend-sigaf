@@ -9,6 +9,7 @@ export const getAggParcelasCultivos = async (req, res) => {
     // Respuesta del servidor
     res.json(Datos);
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: error.message,
     });
@@ -23,6 +24,7 @@ export const getAggParcelaCultivoUnico = async (req, res) => {
     // Respuesta del servidor
     res.json(Datos);
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: error.message,
     });
@@ -44,6 +46,7 @@ export const postAggParcelaCultivo = async (req, res) => {
       nuevaAggParcelaCultivo,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: error.message,
     });
@@ -68,6 +71,7 @@ export const updateAggParcCultela = async (req, res) => {
       updateAggParcCult,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: error.message,
     });
@@ -92,6 +96,7 @@ export const deleteAggParcelaCultivo = async (req, res) => {
 
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: error.message,
     });
