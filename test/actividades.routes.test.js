@@ -46,11 +46,11 @@ describe(`POST ${URL}`, () => {
     descripcion_actividad: "Plantar",
   }, 201, API, HEADERS);
 
-  testFunctionPost(URL, "Crear una actividad", {
+  testFunctionPost(URL, "Debe retornar un error al crear una actividad con una descripcion existente en la bd", {
     descripcion_actividad: "Plantar",
   }, 400, API, HEADERS);
 
-  testFunctionPost(URL, "Crear una actividad", {
+  testFunctionPost(URL, "Debe retornar un error al crear una actividad con la descripcion vacia", {
     descripcion_actividad: "",
   }, 400, API, HEADERS);
 });
@@ -73,11 +73,7 @@ describe(`PUT ${URL}/:id`, () => {
   }, 400, API, HEADERS);
 });
 describe(`DELETE ${URL}/:id`, () => {
-  test("Debe retornar un error al no enviar el token", async () => {
-    const response = await API.delete(`${URL}/1`);
-    // console.log(response.body);
-    expect(response.statusCode).toEqual(401);
-  });
+  testFunctionDelete(`${URL}/1`, "Debe retornar un error al no enviar el token", 401, API);
 
   testFunctionDelete(`${URL}/5`, "Eliminar una actividad con un id inexistente", 400, API, HEADERS);
 });
