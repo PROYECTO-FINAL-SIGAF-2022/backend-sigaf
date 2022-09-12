@@ -245,11 +245,11 @@ TiposUsuariosModelo.hasMany(UsuariosModelo, {
 });
 
 // TABLA UNIDADES_MEDIDAS
-UnidadesMedidasModelo.hasMany(UnidadesMedidasModelo, {
-  foreignKey: "id_unidad_medida",
-  onDelete: "restrict",
-  onUpdate: "restrict",
-});
+// UnidadesMedidasModelo.hasMany(UnidadesMedidasModelo, {
+//   foreignKey: "id_unidad_medida",
+//   onDelete: "restrict",
+//   onUpdate: "restrict",
+// });
 
 UnidadesMedidasModelo.hasMany(DetalleCampanias, {
   foreignKey: "id_unidad_medida",
