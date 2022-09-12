@@ -35,9 +35,11 @@ export const getAggParcelaCultivoUnico = async (req, res) => {
 // TODO: No lo agregue xq creo que lo hace el archivo "Associations"
 export const postAggParcelaCultivo = async (req, res) => {
   try {
-    const { cantidad_agregada } = req.body;
+    const { id_parcela_cultivo, id_unidad_medida, cantidad_agregada } = req.body;
 
     const nuevaAggParcelaCultivo = await AgregoParcelasCultivosModelo.create({
+      id_parcela_cultivo,
+      id_unidad_medida,
       cantidad_agregada,
     });
 
