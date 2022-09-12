@@ -5,73 +5,80 @@ import { UsuariosModelo } from "../models/Usuarios.model.js";
 
 export const loguearse = async (req, res) => {
   const { username_usuario, password_usuario } = req.body;
-  //   console.log(username_usuario, password_usuario);
-  const usuario = await UsuariosModelo.findOne({
-    where: { username_usuario },
-  });
-  //   console.log(usuario);
-  if (!usuario) {
-    res.json({
-      msg: "El usuario no existe",
+
+  try {
+    const usuario = await UsuariosModelo.findOne({
+      where: { username_usuario },
     });
-    return;
-  }
+    //   console.log(usuario);
+    if (!usuario) {
+      return res.status(401).json({
+        msg: "El usuario no existe",
+      });
+    }
 
-  const passwordEncriptado = bcrypt.compareSync(
-    password_usuario,
-    usuario.password_usuario,
-  );
-  if (!passwordEncriptado) {
-    res.json({
-      msg: "El password no es valido",
+    const passwordEncriptado = bcrypt.compareSync(
+      password_usuario,
+      usuario.password_usuario,
+    );
+    if (!passwordEncriptado) {
+      return res.status(401).json({
+        msg: "El password no es valido",
+      });
+    }
+
+    // generar el token
+    const { id_usuario } = usuario;
+    const token = await generarJwt({ id_usuario });
+    return res.status(200).json({
+      token,
     });
-
-    return;
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message,
+    });
   }
-
-  // generar el token
-  const { id_usuario } = usuario;
-  const token = await generarJwt({ id_usuario });
-
-  res.json({
-    // msg: 'El usuario se logueo correctamente',
-    token,
-  });
 };
 
 export const registrarse = async (req, res) => {
-  const {
-    nombre_persona,
-    apellido_persona,
-    dni_persona,
-    fecha_nac_persona,
-    telefono_persona,
-    username_usuario,
-    password_usuario,
-    id_tipo_usuario,
-  } = req.body;
+  try {
+    const {
+      nombre_persona,
+      apellido_persona,
+      dni_persona,
+      fecha_nac_persona,
+      telefono_persona,
+      username_usuario,
+      password_usuario,
+    } = req.body;
 
-  // encriptar el password
-  const passwordEncriptado = bcrypt.hashSync(password_usuario, 10);
-  // console.log(passwordEncriptado);
+    // encriptar el password
+    const passwordEncriptado = bcrypt.hashSync(password_usuario, 10);
+    // console.log(passwordEncriptado);
 
-  const nuevoUsuario = await UsuariosModelo.create({
-    nombre_persona,
-    apellido_persona,
-    dni_persona,
-    fecha_nac_persona,
-    telefono_persona,
-    username_usuario,
-    password_usuario: passwordEncriptado,
-    id_tipo_usuario,
-  });
+    const nuevoUsuario = await UsuariosModelo.create({
+      nombre_persona,
+      apellido_persona,
+      dni_persona,
+      fecha_nac_persona,
+      telefono_persona,
+      username_usuario,
+      password_usuario: passwordEncriptado,
+      id_tipo_usuario: 1,
+    });
 
-  // generar el token
-  const { id_usuario } = nuevoUsuario;
-  const token = await generarJwt({ id_usuario });
+    // generar el token
+    const { id_usuario } = nuevoUsuario;
+    const token = await generarJwt({ id_usuario });
 
-  res.json({
-    msg: "El usuario se creo Correctamente",
-    token,
-  });
+    res.status(200).json({
+      msg: "El usuario se creo Correctamente",
+      token,
+    });
+  } catch (error) {
+    // console.log(error);
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
 };
