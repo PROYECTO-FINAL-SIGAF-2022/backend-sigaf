@@ -67,7 +67,7 @@ export const updateTipoProducto = async (req, res) => {
     updateTipoProd.descripcion_tipo_producto = descripcion_tipo_producto;
     await updateTipoProd.save();
 
-    res.status(201).json({
+    res.status(200).json({
       msg: "El tipo de producto se actualizo Correctamente",
       updateTipoProd,
     });
