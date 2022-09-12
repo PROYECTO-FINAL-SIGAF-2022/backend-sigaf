@@ -14,11 +14,8 @@ import parcelasRutas from "./parcelas.routes.js";
 import parcelasCultivosRutas from "./parcelasCultivos.routes.js";
 import tiposUsuariosRutas from "./tiposUsuarios.routes.js";
 import detalleCampanias from "./detalleCampanias.routes.js";
-<<<<<<< HEAD
 import tiposProductos from "./tiposProductos.routes.js";
-=======
 import agregoParcelasCultivos from "./agregoParcelasCultivos.routes";
->>>>>>> devDany
 // const app = express();
 
 export const rutas = () => [
