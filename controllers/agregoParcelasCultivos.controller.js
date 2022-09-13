@@ -1,14 +1,16 @@
 // ! Falta Completar el Post
 
-import { AgregoParcelasCultivosModelo } from "../models/AgregoParcelasCultivos.model";
+import { AgregoParcelasCultivosModelo } from "../models/AgregoParcelasCultivos.model.js";
+import { LogSistema } from "../models/LogSistema.js";
 
 // Devuelve todos los datos de la colección
 export const getAggParcelasCultivos = async (req, res) => {
   try {
-    const Datos = await AgregoParcelasCultivosModelo.findAll({where: { activo: true }}); // consulta para todos los documentos
+    const agregoParCul = await AgregoParcelasCultivosModelo.findAll({ where: { activo: true } }); // consulta para todos los documentos
     // Respuesta del servidor
-    res.json(Datos);
+    res.json(agregoParCul);
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: error.message,
     });
@@ -18,32 +20,50 @@ export const getAggParcelasCultivos = async (req, res) => {
 export const getAggParcelaCultivoUnico = async (req, res) => {
   try {
     const { id } = req.params;
-    const Datos = await AgregoParcelasCultivosModelo.findByPk(id); // consulta para todos los documentos
+    const agregoParCul = await AgregoParcelasCultivosModelo.findByPk(id); // consulta para todos los documentos
+
+    const { id_usuario } = req.decoded.paramUsuario;
+    const dataLog = agregoParCul.dataValues;
+
+    await LogSistema.create({
+      id_usuario,
+      descripcion_log: `El usuario con ID ${id_usuario} realizo la siguiente busqueda, ${JSON.stringify(dataLog)}`,
+    });
 
     // Respuesta del servidor
-    res.json(Datos);
+    res.json(agregoParCul);
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: error.message,
     });
   }
 };
 
-// TODO: Faltaria Agregar la id de parcela_cultivo
-// TODO: No lo agregue xq creo que lo hace el archivo "Associations"
 export const postAggParcelaCultivo = async (req, res) => {
   try {
-    const { cantidad_agregada } = req.body;
+    const { id_parcela_cultivo, id_unidad_medida, cantidad_agregada } = req.body;
 
     const nuevaAggParcelaCultivo = await AgregoParcelasCultivosModelo.create({
+      id_parcela_cultivo,
+      id_unidad_medida,
       cantidad_agregada,
     });
 
-    res.json({
+    const { id_usuario } = req.decoded.paramUsuario;
+    const dataLog = nuevaAggParcelaCultivo.dataValues;
+
+    await LogSistema.create({
+      id_usuario,
+      descripcion_log: `El usuario con ID ${id_usuario} realizo la siguiente creacion, ${JSON.stringify(dataLog)}`,
+    });
+
+    res.status(200).json({
       msg: "La ParcelaCultivo se creo Correctamente",
       nuevaAggParcelaCultivo,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: error.message,
     });
@@ -53,21 +73,32 @@ export const postAggParcelaCultivo = async (req, res) => {
 export const updateAggParcCultela = async (req, res) => {
   try {
     const { id } = req.params;
-    const { cantidad_agregada } = req.body[0];
+    const { cantidad_agregada, id_parcela_cultivo, id_unidad_medida } = req.body;
 
     console.log(id);
 
     const updateAggParcCult = await AgregoParcelasCultivosModelo.findOne({
       where: { id_agrego_parcela_cultivo: id },
     });
+    updateAggParcCult.id_parcela_cultivo = id_parcela_cultivo;
+    updateAggParcCult.id_unidad_medida = id_unidad_medida;
     updateAggParcCult.cantidad_agregada = cantidad_agregada;
     await updateAggParcCult.save();
+
+    const { id_usuario } = req.decoded.paramUsuario;
+    const dataLog = updateAggParcCult.dataValues;
+
+    await LogSistema.create({
+      id_usuario,
+      descripcion_log: `El usuario con ID ${id_usuario} realizo la siguiente actualizacion, ${JSON.stringify(dataLog)}`,
+    });
 
     res.json({
       msg: "La ParcelaCultivo se actualizo Correctamente",
       updateAggParcCult,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: error.message,
     });
@@ -87,11 +118,20 @@ export const deleteAggParcelaCultivo = async (req, res) => {
 
     await eliminarAgregoParcCultivo.save();
 
+    const { id_usuario } = req.decoded.paramUsuario;
+    const dataLog = eliminarAgregoParcCultivo.dataValues;
+
+    await LogSistema.create({
+      id_usuario,
+      descripcion_log: `El usuario con ID ${id_usuario} realizo la siguiente eliminacion, ${JSON.stringify(dataLog)}`,
+    });
+
     res.status(200).json({
       message: `La Parcela Cultivo ${id} se elimino correctamente`,
 
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: error.message,
     });

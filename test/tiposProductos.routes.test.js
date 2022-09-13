@@ -2,31 +2,29 @@ import supertest from "supertest";
 import { getTokenTest } from "../helpers/getToken.js";
 import { vaciarTablas } from "../helpers/vaciarTablas.js";
 import { app, server } from "../index.js";
-import { ActividadesModelo } from "../models/Actividades.model.js";
 
 import {
   testFunctionGet, testFunctionPost, testFunctionPut, testFunctionDelete,
 } from "../helpers/tests/testFunctions";
-import { crearUsuarios } from "../helpers/createUser.js";
+import { TiposProductosModelo } from "../models/TiposProductos.model.js";
 
 const API = supertest(app);
-const URL = "/api/actividades";
+const URL = "/api/tipo-productos";
 
 const HEADERS = getTokenTest();
 
 beforeAll(async () => {
   await vaciarTablas();
-  await crearUsuarios();
 
-  await ActividadesModelo.create({ descripcion_actividad: "Cultivar" });
-  await ActividadesModelo.create({ descripcion_actividad: "Regar" });
+  await TiposProductosModelo.create({
+    descripcion_tipo_producto: "Semillas de maiz",
+  });
 });
 
 describe(`GET ${URL}`, () => {
-  console.log(HEADERS);
   testFunctionGet(URL, "Debe retornar un error al no enviar el token", 401, API);
 
-  testFunctionGet(URL, "Debe retornar un json con los registros de actividades", 200, API, HEADERS);
+  testFunctionGet(URL, "Debe retornar un json con los registros de tipos de productos", 200, API, HEADERS);
 
   testFunctionGet(URL, "Debe retornar un status-code 200", 200, API, HEADERS);
 });
@@ -43,43 +41,46 @@ describe(`GET ${URL}/:id`, () => {
 
 describe(`POST ${URL}`, () => {
   testFunctionPost(URL, "Debe retornar un error al no enviar el token", {
-    descripcion_actividad: "Plantar",
+    descripcion_tipo_producto: "Semilla de sandia",
   }, 401, API);
 
-  testFunctionPost(URL, "Crear una actividad", {
-    descripcion_actividad: "Plantar",
+  testFunctionPost(URL, "Crear un tipo producto con la descripcion vacia", {
+    descripcion_tipo_producto: "",
+  }, 400, API, HEADERS);
+
+  testFunctionPost(URL, "Crear un tipo de producto con la descripcion ya guardada en a bd", {
+    descripcion_tipo_producto: "Semillas de maiz",
+  }, 400, API, HEADERS);
+
+  testFunctionPost(URL, "Crear un tipo de producto", {
+    descripcion_tipo_producto: "Semilla de aguacate",
   }, 201, API, HEADERS);
-
-  testFunctionPost(URL, "Debe retornar un error al crear una actividad con una descripcion existente en la bd", {
-    descripcion_actividad: "Plantar",
-  }, 400, API, HEADERS);
-
-  testFunctionPost(URL, "Debe retornar un error al crear una actividad con la descripcion vacia", {
-    descripcion_actividad: "",
-  }, 400, API, HEADERS);
 });
 
 describe(`PUT ${URL}/:id`, () => {
   testFunctionPut(`${URL}/1`, "Debe retornar un error al no enviar el token", {
-    descripcion_actividad: "Plantar",
+    descripcion_tipo_producto: "Semilla de mango",
   }, 401, API);
 
-  testFunctionPut(`${URL}/1`, "Actualizar una actividad", {
-    descripcion_actividad: "sembrarrr",
+  testFunctionPut(`${URL}/5`, "Actualizar un tipo de producto con un id inexistente", {
+    descripcion_tipo_producto: "Semilla de mango",
+  }, 400, API, HEADERS);
+
+  testFunctionPut(`${URL}/5`, "Actualizar un tipo de producto con una descripcion ya existente", {
+    descripcion_tipo_producto: "Semilla de mango",
+  }, 400, API, HEADERS);
+
+  testFunctionPut(`${URL}/1`, "Actualizar una descripcion del tipo de producto", {
+    descripcion_tipo_producto: "Semilla de mango",
   }, 200, API, HEADERS);
-
-  testFunctionPut(`${URL}/5`, "Actualizar una actividad con un id inexistente", {
-    descripcion_actividad: "sembrarrr",
-  }, 400, API, HEADERS);
-
-  testFunctionPut(`${URL}/5`, "Actualizar una actividad con una descripcion ya existente", {
-    descripcion_actividad: "Cultivar",
-  }, 400, API, HEADERS);
 });
+
 describe(`DELETE ${URL}/:id`, () => {
   testFunctionDelete(`${URL}/1`, "Debe retornar un error al no enviar el token", 401, API);
 
-  testFunctionDelete(`${URL}/5`, "Eliminar una actividad con un id inexistente", 400, API, HEADERS);
+  testFunctionDelete(`${URL}/30`, "Debe retornar un mensaje de error al intentar eliminar un tipo de producto con id inexistente", 400, API, HEADERS);
+
+  testFunctionDelete(`${URL}/1`, "Debe retornar un status 200 al eliminar el tipo de producto", 200, API, HEADERS);
 });
 
 afterAll(async () => {

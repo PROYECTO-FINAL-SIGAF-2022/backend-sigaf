@@ -15,10 +15,11 @@ import parcelasCultivosRutas from "./parcelasCultivos.routes.js";
 import tiposUsuariosRutas from "./tiposUsuarios.routes.js";
 import productosRutas from "./productos.routes.js";
 import proveedorRutas from "./proveedores.routes.js";
-import tiposProducosRutas from "./tiposProductos.routes.js";
+import tiposProductosRutas from "./tiposProductos.routes.js";
 import perdidaParcelaCultivoRutas from "./perdidasParcelasCultivos.routes.js";
-import detalleCampanias from "./detalleCampanias.routes.js";
+import detalleCampaniasRutas from "./detalleCampanias.routes.js";
 import unidadMedidaRutas from "./unidadesMedidas.routes.js";
+import agregoParcelasCultivosRutas from "./agregoParcelasCultivos.routes.js";
 // const app = express();
 
 export const rutas = () => [
@@ -33,12 +34,13 @@ export const rutas = () => [
   tiposUsuariosRutas,
   authRutas,
   campaniasRutas,
-  productosRutas, 
+  productosRutas,
   proveedorRutas,
-  tiposProducosRutas, 
   perdidaParcelaCultivoRutas,
-  detalleCampanias,
+  detalleCampaniasRutas,
   unidadMedidaRutas,
+  tiposProductosRutas,
+  agregoParcelasCultivosRutas,
 ];
 
 // app.use("/api", usuariosRutas);

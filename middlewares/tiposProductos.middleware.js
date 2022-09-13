@@ -1,8 +1,6 @@
-// validar datos de los productos con express-validator
 import { check, param } from "express-validator";
-import { TiposProductosModelo } from "../models/TiposProductos.model.js";
 import { verificarCampos } from "../helpers/verificarCampos.js";
-
+import { TiposProductosModelo } from "../models/TiposProductos.model.js";
 
 export const getTiposProductosMidd = [verificarCampos];
 
@@ -38,7 +36,7 @@ export const postTipoProductoMidd = [
       },
 
     ),
-    verificarCampos,
+  verificarCampos,
 ];
 
 export const putTipoProductoMidd = [
@@ -63,7 +61,7 @@ export const putTipoProductoMidd = [
         const tipoProducto = await TiposProductosModelo.count({
           where: { descripcion_tipo_producto },
         });
-       
+
         if (tipoProducto > 0) {
           return Promise.reject("El tipo de producto ingresado ya se encuentra en la bd");
         }
@@ -88,4 +86,3 @@ export const deleteTipoProductoMidd = [
   ).withMessage("El id enviado no se coincide con ningun registro de la base de datos"),
   verificarCampos,
 ];
-

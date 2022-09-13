@@ -3,7 +3,9 @@ import { getTokenTest } from "../helpers/getToken.js";
 import { vaciarTablas } from "../helpers/vaciarTablas.js";
 import { app, server } from "../index.js";
 import { CultivosModelo } from "../models/Cultivos.model.js";
-// import { ActividadesModelo } from "../models/Actividades.model.js";
+import {
+  testFunctionGet, testFunctionPost, testFunctionDelete, testFunctionPut,
+} from "../helpers/tests/testFunctions";
 
 const API = supertest(app);
 
@@ -18,188 +20,57 @@ beforeAll(async () => {
 });
 
 describe(`GET ${URL}`, () => {
-  test("Debe retornar un error al no enviar el token", async () => {
-    const response = await API.get(URL);
-    expect(response.statusCode).toEqual(401);
-  });
+  testFunctionGet(URL, "debe retornar un error al no enviar el token", 401, API);
 
-  test("Debe retornar un json con los registros de cultivos", async () => {
-    const response = await API.get(URL).set(HEADERS);
-    // console.log(response.body);
-    expect(response.type).toEqual("application/json");
-  });
+  testFunctionGet(URL, "Debe retornar un json con los registros de cultivos", 200, API, HEADERS);
 
-  test("Debe retornar un status-code 200", async () => {
-    const response = await API.get(URL).set(HEADERS);
-    expect(response.statusCode).toEqual(200);
-  });
+  testFunctionGet(URL, "Debe retornar un status-code 200", 200, API, HEADERS);
 });
 
 describe(`GET ${URL}/:id`, () => {
-  test("Debe retornar un error al no enviar el token", async () => {
-    const response = await API.get(URL);
-    expect(response.statusCode).toEqual(401);
-  });
+  testFunctionGet(`${URL}/1`, "Debe retornar un error al no enviar el token", 401, API);
 
-  test("Debe retornar un json", async () => {
-    const response = await API.get(`${URL}/1`).set(HEADERS);
-    expect(response.type).toEqual("application/json");
-  });
+  testFunctionGet(`${URL}/1`, "Debe retornar un json", 200, API, HEADERS);
 
-  test("Debe retornar un status-code 200", async () => {
-    const response = await API.get(`${URL}/1`).set(HEADERS);
-    expect(response.statusCode).toEqual(200);
-  });
+  testFunctionGet(`${URL}/1`, "Debe retornar un status-code 200", 200, API, HEADERS);
 
-  test("Si no existe debe retornar un json con un mensaje de id no existe en la bd", async () => {
-    const response = await API.get(`${URL}/12`).set(HEADERS);
-    expect(response.type).toEqual("application/json");
-
-    const mensajeRespuesta = response.body?.errors[0]?.msg;
-
-    expect(mensajeRespuesta).toEqual("El id enviado no se coincide con ningun registro de la base de datos");
-  });
+  testFunctionGet(`${URL}/12`, "Si no existe debe retornar un json con un mensaje de id no existe en la bd", 400, API, HEADERS);
 });
 
 describe(`POST ${URL}`, () => {
-  test("Debe retornar un error al no enviar el token", async () => {
-    const response = await API.get(URL);
-    expect(response.statusCode).toEqual(401);
-  });
+  const sendCultivos = {
+    descripcion_cultivo: "Tomate",
+  };
 
-  test("Crear un cultivo", async () => {
-    const response = await API.post(`${URL}`)
-      .set("Content-Type", "application/json")
-      .send({
-        descripcion_cultivo: "Frutilla",
-      })
-      .set(HEADERS);
+  testFunctionPost(URL, "Debe retornar un error al no enviar el token", sendCultivos, 401, API);
 
-    // console.log(response.body);
+  testFunctionPost(URL, "Crear un cultivo", sendCultivos, 201, API, HEADERS);
 
-    expect(response.statusCode).toEqual(201);
-    expect(response.type).toEqual("application/json");
-  });
+  testFunctionPost(URL, "Crear un cultivo con datos ya existentes", sendCultivos, 400, API, HEADERS);
 
-  test("Crear un cultivo con datos ya existentes", async () => {
-    const response = await API.post(`${URL}`)
-      .set("Content-Type", "application/json")
-      .send({
-        descripcion_cultivo: "Frutilla",
-      })
-      .set(HEADERS);
-
-    // console.log(response.body);
-
-    expect(response.statusCode).toEqual(400);
-    expect(response.type).toEqual("application/json");
-    const mensajeRespuesta = response.body?.errors[0]?.msg;
-
-    expect(mensajeRespuesta).toEqual("El cultivo ingresado ya se encuentra en la bd");
-  });
-
-  test("Crear un cultivo con la descripcion vacia", async () => {
-    const response = await API.post(`${URL}`)
-      .set("Content-Type", "application/json")
-      .send({
-        descripcion_cultivo: "",
-      })
-      .set(HEADERS);
-    // console.log(response.body);
-
-    expect(response.statusCode).toEqual(400);
-    expect(response.type).toEqual("application/json");
-    const mensajeRespuesta = response.body?.errors[0]?.msg;
-    expect(mensajeRespuesta).toEqual("El cultivo es requerido");
-  });
+  testFunctionPost(URL, "Crear un cultivo con la descripcion vacia", { descripcion_cultivo: "" }, 400, API, HEADERS);
 });
 
 describe(`PUT ${URL}/:id`, () => {
-  test("Debe retornar un error al no enviar el token", async () => {
-    const response = await API.get(URL);
-    expect(response.statusCode).toEqual(401);
-  });
+  const sendActualizar = {
+    descripcion_cultivo: "tomateee",
+  };
+  testFunctionPut(`${URL}/1`, "Debe retornar un error al no enviar el token", sendActualizar, 401, API);
 
-  test("Actualizar un cultivo", async () => {
-    const response = await API.put(`${URL}/1`)
-      .set("Content-Type", "application/json")
-      .send({
-        descripcion_cultivo: "Uvas",
-      })
-      .set(HEADERS);
-    // console.log(response.body);
+  testFunctionPut(`${URL}/1`, "Actualizar un cultivo", sendActualizar, 200, API, HEADERS);
 
-    expect(response.statusCode).toEqual(200);
-    expect(response.type).toEqual("application/json");
-  });
+  testFunctionPut(`${URL}/1`, "Actualizar un cultivo con la descripcion vacia", { descripcion_cultivo: "" }, 400, API, HEADERS);
 
-  test("Actualizar un cultivo con la descripcion vacia", async () => {
-    const response = await API.put(`${URL}/1`)
-      .set("Content-Type", "application/json")
-      .send({
-        descripcion_cultivo: "",
-      })
-      .set(HEADERS);
-    // console.log(response.body);
+  testFunctionPut(`${URL}/10`, "Actualizar un cultivo con un id inexistente", sendActualizar, 400, API, HEADERS);
 
-    expect(response.statusCode).toEqual(400);
-    expect(response.type).toEqual("application/json");
-
-    const mensajeRespuesta = response.body?.errors[0]?.msg;
-    expect(mensajeRespuesta).toEqual("El cultivo es requerido");
-  });
-
-  test("Actualizar un cultivo con un id inexistente", async () => {
-    const response = await API.put(`${URL}/5`)
-      .set("Content-Type", "application/json")
-      .send({
-        descripcion_cultivo: "Uvas",
-      })
-      .set(HEADERS);
-    // console.log(response.body);
-
-    expect(response.statusCode).toEqual(400);
-    expect(response.type).toEqual("application/json");
-    const mensajeRespuesta = response.body?.errors[0]?.msg;
-    expect(mensajeRespuesta).toEqual("El id enviado no se coincide con ningun registro de la base de datos");
-  });
-
-  test("Actualizar un cultivo con una descripcion ya existente", async () => {
-    const response = await API.put(`${URL}/5`)
-      .set("Content-Type", "application/json")
-      .send({
-        descripcion_cultivo: "Uvas",
-      })
-      .set(HEADERS);
-    // console.log(response.body);
-
-    expect(response.statusCode).toEqual(400);
-    expect(response.type).toEqual("application/json");
-    const mensajeRespuesta = response.body?.errors[1]?.msg;
-    expect(mensajeRespuesta).toEqual("El cultivo ingresado ya se encuentra en la bd");
-  });
+  testFunctionPut(`${URL}/1`, "Actualizar un cultivo con una descripcion ya existente", sendActualizar, 400, API, HEADERS);
 });
 
 describe(`DELETE ${URL}/:id`, () => {
-  test("Debe retornar un error al no enviar el token", async () => {
-    const response = await API.delete(`${URL}/1`);
-    expect(response.statusCode).toEqual(401);
-  });
-
-  test("Eliminar un cultivo con un id inexistente", async () => {
-    const response = await API.delete(`${URL}/5`)
-      .set("Content-Type", "application/json")
-      .set(HEADERS);
-    // console.log(response.body);
-
-    expect(response.statusCode).toEqual(400);
-    expect(response.type).toEqual("application/json");
-    const mensajeRespuesta = response.body?.errors[0]?.msg;
-    expect(mensajeRespuesta).toEqual("El id enviado no se coincide con ningun registro de la base de datos");
-  });
+  testFunctionDelete(`${URL}/1`, "Debe retornar un error al no enviar el token", 401, API); testFunctionDelete(`${URL}/50`, "Eliminar un cultivo con un id inexistente", 400, API, HEADERS);
 });
 
 afterAll(async () => {
   await vaciarTablas();
-  server.close();
+  await server.close();
 });

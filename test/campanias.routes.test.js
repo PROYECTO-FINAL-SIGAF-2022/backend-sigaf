@@ -4,6 +4,9 @@ import { app, server } from "../index";
 import { CampaniasModelo } from "../models/Campanias.model";
 import { getTokenTest } from "../helpers/getToken";
 import { CultivosModelo } from "../models/Cultivos.model";
+import {
+  testFunctionGet, testFunctionPost, testFunctionPut, testFunctionDelete,
+} from "../helpers/tests/testFunctions";
 
 const API = supertest(app);
 const URL = "/api/campanias";
@@ -39,166 +42,68 @@ beforeAll(async () => {
 });
 
 describe(`GET ${URL}`, () => {
-  test("debe retornar un error al no enviar el token", async () => {
-    const response = await API.get(URL);
-    expect(response.statusCode).toEqual(401);
-  });
+  testFunctionGet(URL, "debe retornar un error al no enviar el token", 401, API);
 
-  test("Debe retornar un OBJETO con los registros de campanias", async () => {
-    const response = await API.get(URL).set(HEADERS);
-    expect(response.type).toEqual("application/json");
-  });
+  testFunctionGet(URL, "Debe retornar un OBJETO con los registros de campanias", 200, API, HEADERS);
 
-  test("Debe retornar un status-code 200", async () => {
-    const response = await API.get(URL).set(HEADERS);
-    expect(response.statusCode).toEqual(200);
-  });
+  testFunctionGet(URL, "Debe retornar un status-code 200", 200, API, HEADERS);
 });
 
 describe(`GET ${URL}/:id`, () => {
-  test("Debe retornar un error al no enviar el token", async () => {
-    const response = await API.get(`${URL}/1`);
-    expect(response.statusCode).toEqual(401);
-  });
+  testFunctionGet(`${URL}/1`, "Debe retornar un error al no enviar el token", 401, API);
 
-  test("Si no existe debe retornar un OBJETO con un mensaje de id no existe en la bd", async () => {
-    const response = await API.get(`${URL}/1`).set(HEADERS);
-    expect(response.type).toEqual("application/json");
-  });
+  testFunctionGet(`${URL}/2`, "Si no existe debe retornar un OBJETO con un mensaje de id no existe en la bd", 200, API, HEADERS);
 
-  test("Debe restornar un OBJETO con el registro de campanias encontrado", async () => {
-    const response = await API.get(`${URL}/1`).set(HEADERS);
-    expect(response.type).toEqual("application/json");
-  });
+  testFunctionGet(`${URL}/1`, "Debe restornar un OBJETO con el registro de campanias encontrado", 200, API, HEADERS);
 
-  test("Debe retornar un status-code 200", async () => {
-    const response = await API.get(`${URL}/1`).set(HEADERS);
-
-    expect(response.statusCode).toEqual(200);
-  });
+  testFunctionGet(`${URL}/1`, "Debe retornar un status-code 200", 200, API, HEADERS);
 });
 
 describe(`POST ${URL}`, () => {
-  test("Debe retornar un error al no enviar el token", async () => {
-    const response = await API.get(URL);
-    expect(response.statusCode).toEqual(401);
-  });
+  const sendCampania = {
+    descripcion_campania: "tercera Campaña",
+    fecha_inicio: "2022/09/9",
+    fecha_final: "2023/04/25",
+    id_cultivo: "1",
+  };
 
-  test("Debe Retornar un OBJETO al crear una nueva Campania", async () => {
-    const response = await API.post(URL).set(HEADERS)
-      .set("constent-type", "application/json")
-      .send({
-        descripcion_campania: "tercera Campaña",
-        fecha_inicio: "2022/09/9",
-        fecha_final: "2023/04/25",
-        id_cultivo: "1",
-      });
+  testFunctionPost(URL, "Debe retornar un error al no enviar el token", sendCampania, 401, API);
 
-    expect(response.statusCode).toEqual(200);
-    expect(response.type).toEqual("application/json");
-  });
+  testFunctionPost(URL, "Debe Retornar un OBJETO al crear una nueva Campania", sendCampania, 200, API, HEADERS);
 
-  test("Debe retornar un mensaje de error si los datos cargados ya coinciden con un registro de la base de datos", async () => {
-    const response = await API.post(URL).set(HEADERS)
-      .set("Content-Type", "application/json")
-      .send({
-        descripcion_campania: "tercera Campaña",
-        fecha_inicio: "2022/09/9",
-        fecha_final: "2023/04/25",
-        id_cultivo: "1",
-      });
-
-    expect(response.statusCode).toEqual(400);
-    expect(response.type).toEqual("application/json");
-  });
+  testFunctionPost(URL, "Debe retornar un mensaje de error si los datos cargados ya coinciden con un registro de la base de datos", sendCampania, 400, API, HEADERS);
 });
 
 describe(`PUT ${URL}:id`, () => {
-  test("Debe retornar un error al no enviar el token", async () => {
-    const response = await API.get(`${URL}/1`);
+  const sendActualizar = {
+    descripcion_campania: "primeraaaa Campañaaaa",
+    fecha_inicio: "2022/10/9",
+    fecha_final: "2023/08/25",
+    id_cultivo: "1",
 
-    expect(response.statusCode).toEqual(401);
-  });
+  };
 
-  test("Debe retornar un OBJETO con el registro de campania actualizado", async () => {
-    const response = await API.put(`${URL}/1`).set(HEADERS)
-      .set("content-type", "application/json")
-      .send({
-        descripcion_campania: "primeraaaa Campañaaaa",
-        fecha_inicio: "2022/10/9",
-        fecha_final: "2023/08/25",
-        id_cultivo: "1",
+  testFunctionPut(`${URL}/1`, "Debe retornar un error al no enviar el token", sendActualizar, 401, API);
 
-      });
+  testFunctionPut(`${URL}/1`, "Debe retornar un OBJETO con el registro de campania actualizado", sendActualizar, 200, API, HEADERS);
 
-    expect(response.statusCode).toEqual(200);
-    expect(response.type).toEqual("application/json");
-  });
-
-  test("Debe retornar un mensaje de error si actualizo una campania con la descripcion ya existente", async () => {
-    const response = await API.put(`${URL}/1`).set(HEADERS)
-      .set("content-type", "application/json")
-      .send({
-        descripcion_campania: "segunda Campaña",
-        fecha_inicio: "2022/10/10",
-        fecha_final: "2023/08/27",
-        id_cultivo: "1",
-      });
-
-    expect(response.statusCode).toEqual(400);
-    expect(response.type).toEqual("application/json");
-  });
-
-  test("Debe retornar un error al actualizar una campania con id inexistente", async () => {
-    const response = await API.put(`${URL}/40`).set(HEADERS)
-      .set("content-type", "application/json")
-      .send({
-        descripcion_campania: "segunda Campaña",
-        fecha_inicio: "2022/10/10",
-        fecha_final: "2023/08/27",
-        id_cultivo: "1",
-      });
-
-    expect(response.statusCode).toEqual(400);
-    expect(response.type).toEqual("application/json");
-  });
+  testFunctionPut(`${URL}/2`, "Debe retornar un mensaje de error si actualizo una campania con la descripcion ya existente", {
+    descripcion_campania: "segunda Campaña",
+    fecha_inicio: "2022/10/10",
+    fecha_final: "2023/08/27",
+    id_cultivo: "1",
+  }, 400, API, HEADERS);
 });
 
 describe(`DELETE ${URL}/:id`, () => {
-  test("Debe retornar un error al no enviar el token", async () => {
-    const response = await API.delete(`${URL}/1`);
+  testFunctionDelete(`${URL}/50`, "Debe retornar un error al no enviar el token", 401, API);
 
-    expect(response.statusCode).toEqual(401);
-  });
+  testFunctionDelete(`${URL}/50`, "Debe retornar un mensaje de error al intentar eliminar una campania con id inexistente", 400, API, HEADERS);
 
-  test("Debe retornar un mensaje de error al intentar eliminar una campania con id inexistente", async () => {
-    const response = await API.delete(`${URL}/50`).set(HEADERS)
-      .set("content-type", "application/json")
-      .send({
-        descripcion_campania: "segunda Campaña",
-        fecha_inicio: "2022/10/10",
-        fecha_final: "2023/08/27",
-        id_cultivo: "1",
-      });
-
-    expect(response.statusCode).toEqual(400);
-    expect(response.type).toEqual("application/json");
-  });
-
-  test("Debe retornar un status 200 al eliminar la campania", async () => {
-    const response = await API.delete(`${URL}/1`).set(HEADERS)
-      .set("content-type", "application/json")
-      .send({
-        activo: false,
-      });
-
-    expect(response.statusCode).toEqual(200);
-    expect(response.type).toEqual("application/json");
-  });
+  testFunctionDelete(`${URL}/1`, "Debe retornar un status 200 al eliminar la campania", 200, API, HEADERS);
 });
 
 afterAll(async () => {
   await vaciarTablas();
-
   server.close();
 });

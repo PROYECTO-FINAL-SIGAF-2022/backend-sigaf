@@ -5,20 +5,25 @@ import {
   postAggParcelaCultivo,
   updateAggParcCultela,
   deleteAggParcelaCultivo,
-} from "../controllers/agregoParcelasCultivos.controller";
+} from "../controllers/agregoParcelasCultivos.controller.js";
+
+import validateToken from "../middlewares/validateToken.middleware.js";
+import {
+  getAgregoParcCultivosMidd, getAgregoParCultivoMidd, putAgregoParCultivoMidd, deleteAgregoParCultivoMidd, postAgregoParCultivoMidd,
+} from "../middlewares/agregoParcelasCultivos.middleware.js";
 
 // TODO : Faltan los middlewares
 
 const router = Router();
 
-router.get("/agregar-parcela-cultivos", getAggParcelasCultivos);
+router.get("/agregar-parcela-cultivos", validateToken, getAgregoParcCultivosMidd, getAggParcelasCultivos);
 
-router.get("/agregar-parcela-cultivos/:id", getAggParcelaCultivoUnico);
+router.get("/agregar-parcela-cultivos/:id", validateToken, getAgregoParCultivoMidd, getAggParcelaCultivoUnico);
 
-router.post("/agregar-parcela-cultivos", postAggParcelaCultivo);
+router.post("/agregar-parcela-cultivos", validateToken, postAgregoParCultivoMidd, postAggParcelaCultivo);
 
-router.put("/agregar-parcela-cultivos/:id", updateAggParcCultela);
+router.put("/agregar-parcela-cultivos/:id", validateToken, putAgregoParCultivoMidd, updateAggParcCultela);
 
-router.delete("/agregar-parcela-cultivos/:id", deleteAggParcelaCultivo);
+router.delete("/agregar-parcela-cultivos/:id", validateToken, deleteAgregoParCultivoMidd, deleteAggParcelaCultivo);
 
 export default router;

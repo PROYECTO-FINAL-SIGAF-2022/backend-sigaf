@@ -30,14 +30,14 @@ export const getDetalleCampaniaUnico = async (req, res) => {
 export const postDetalleCampania = async (req, res) => {
   try {
     const {
-      id_campania, id_unidad_medida, cantidad_cosechada
+      id_campania, id_unidad_medida, cantidad_cosechada,
     } = req.body;
 
     const nuevoDetalleCampania = await DetalleCampanias.create({
       id_campania,
       id_unidad_medida,
       cantidad_cosechada,
- 
+
     });
 
     res.json({
@@ -55,9 +55,9 @@ export const updateDetalleCampania = async (req, res) => {
   try {
     const { id } = req.params;
     const {
-      id_campania, id_unidad_medida, cantidad_cosechada
+      id_campania, id_unidad_medida, cantidad_cosechada,
     } = req.body;
-    console.log(id);
+
     const updateDetalleCamp = await DetalleCampanias.findOne({
       where: { id_detalle_campania: id },
     });

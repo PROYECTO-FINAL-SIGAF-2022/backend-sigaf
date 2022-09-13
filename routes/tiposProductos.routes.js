@@ -8,7 +8,7 @@ import {
   deleteTipoProducto,
 } from "../controllers/tiposProductos.controller.js";
 
-import { 
+import {
   getTiposProductosMidd,
   getTipoProductoMidd,
   postTipoProductoMidd,

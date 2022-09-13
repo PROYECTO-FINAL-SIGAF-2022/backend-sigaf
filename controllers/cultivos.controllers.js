@@ -3,7 +3,7 @@ import { CultivosModelo } from "../models/Cultivos.model.js";
 // Devuelve todos los Cultivos de la colección
 export const getCultivos = async (req, res) => {
   try {
-    const cultivos = await CultivosModelo.findAll({where: { activo: true }});
+    const cultivos = await CultivosModelo.findAll({ where: { activo: true } });
     res.status(200).json(cultivos);
   } catch (error) {
     return res.status(500).json({

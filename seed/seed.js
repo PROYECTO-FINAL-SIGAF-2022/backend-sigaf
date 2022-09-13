@@ -109,7 +109,7 @@ const seedBd = async () => {
 
   // 9
 
-  LogSistema.create({
+  await LogSistema.create({
     descripcion_log: "Se cargo el producto fertilizante",
     fecha_hora: "2020/10/10",
     id_usuario: 1,
@@ -147,13 +147,14 @@ const seedBd = async () => {
     id_parcela: 1,
     id_cultivo: "1",
     id_campania: "1",
+    id_unidad_medida: "1",
     cantidad_sembrada: "23131",
     activo: true,
   });
 
   // 14
 
-  DetalleCampanias.create({
+  await DetalleCampanias.create({
     id_campania: "1",
     id_unidad_medida: "1",
     cantidad_cosechada: "2000",
@@ -174,6 +175,7 @@ const seedBd = async () => {
 
   await AgregoParcelasCultivosModelo.create({
     id_parcela_cultivo: "1",
+    id_unidad_medida: "1",
     cantidad_agregada: "20",
   });
 
