@@ -18,6 +18,8 @@ export const getEstablecimientoUnico = async (req, res) => {
     const { id } = req.params;
     const establecimiento = await EstablecimientosModelo.findByPk(id); // consulta para todos los documentos
 
+    await logSistema(req.decoded, establecimiento.dataValues, "busqueda");
+
     // Respuesta del servidor
     res.status(200).json(establecimiento);
   } catch (error) {
@@ -43,6 +45,9 @@ export const postEstablecimiento = async (req, res) => {
       id_usuario,
     });
 
+    
+    await logSistema(req.decoded, nuevoEstablecimiento.dataValues, "creacion");
+
     res.status(201).json({
       msg: "El Establecimiento se creo Correctamente",
       nuevoEstablecimiento,
@@ -67,6 +72,9 @@ export const updateEstablecimiento = async (req, res) => {
     updateEstab.superficie = superficie;
     await updateEstab.save();
 
+        
+    await logSistema(req.decoded, updateEstab.dataValues, "actualizacion");
+
     res.json({
       msg: "El Establecimiento se actualizo Correctamente",
       updateEstab,
@@ -87,6 +95,8 @@ export const deleteEstablecimiento = async (req, res) => {
     eliminarEstablecimiento.activo = false;
 
     await eliminarEstablecimiento.save();
+
+    await logSistema(req.decoded, eliminarEstablecimiento.dataValues, "eliminacion");
 
     res.status(200).json({
       msg: `El establecimiento con el ID: ${id} se elimino correctamente`,

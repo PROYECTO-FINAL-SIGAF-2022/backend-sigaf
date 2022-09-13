@@ -18,12 +18,13 @@ export const getProductoUnico = async (req, res) => {
     const { id } = req.params;
     const producto = await ProductosModelo.findByPk(id); // consulta para todos los documentos
 
+
+    await logSistema(req.decoded, producto.dataValues, "busqueda");
+
     // Respuesta del servidor
-    if (producto) {
-      res.json(producto);
-    } else {
-      res.sendStatus(404);
-    }
+ 
+    res.status(200).json(producto);
+   
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -44,6 +45,9 @@ export const postPoducto = async (req, res) => {
       fecha_vencimiento_producto,
       cantidad_producto,
     });
+
+    
+    await logSistema(req.decoded, nuevoProducto.dataValues, "creacion");
 
     res.status(201).json({
       msg: "El producto se creo Correctamente",
@@ -75,6 +79,8 @@ export const updateProducto = async (req, res) => {
     updateProduc.cantidad_producto = cantidad_producto;
     await updateProduc.save();
 
+    await logSistema(req.decoded, updateProduc.dataValues, "actualizacion");
+
     res.status(201).json({
       msg: "El producto se actualizo Correctamente",
       updateProduc,
@@ -96,6 +102,8 @@ export const deleteProducto = async (req, res) => {
     eliminarProducto.activo = false;
 
     await eliminarProducto.save();
+
+    await logSistema(req.decoded, eliminarProducto.dataValues, "eliminacion");
 
     res.status(201).json({
       msg: `El producto con id ${id} se elimino Correctamente`

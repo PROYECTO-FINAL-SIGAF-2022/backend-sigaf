@@ -18,6 +18,9 @@ export const getParcelaUnico = async (req, res) => {
     const { id } = req.params;
     const parcela = await ParcelasModelo.findByPk(id); // consulta para todos los documentos
 
+
+    await logSistema(req.decoded, parcela.dataValues, "busqueda");
+
     // Respuesta del servidor
     res.status(200).json(parcela);
   } catch (error) {
@@ -36,6 +39,8 @@ export const postParcela = async (req, res) => {
       superficie,
       id_establecimiento,
     });
+
+    await logSistema(req.decoded, nuevaParcela.dataValues, "creacion");
 
     res.status(201).json({
       msg: "La Parcela se creo Correctamente",
@@ -63,6 +68,8 @@ export const updateParcela = async (req, res) => {
     updateParc.id_establecimiento = id_establecimiento;
     await updateParc.save();
 
+    await logSistema(req.decoded, updateParc.dataValues, "actualizacion");
+
     res.status(200).json({
       msg: "La Parcela se actualizo Correctamente",
       updateParc,
@@ -85,6 +92,8 @@ export const deleteParcela = async (req, res) => {
 
     eliminarParcela.activo = false;
     await eliminarParcela.save();
+
+    await logSistema(req.decoded, eliminarParcela.dataValues, "eliminacion");
 
     res.status(200).json({
       message: `La Parcela ${id} se elimino correctamente`,

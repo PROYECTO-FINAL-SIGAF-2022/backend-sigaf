@@ -18,6 +18,9 @@ export const getParcelaCultivoUnico = async (req, res) => {
     const { id } = req.params;
     const datosParcCultivo = await ParcelasCultivosModelo.findByPk(id); // consulta para todos los documentos
 
+
+    await logSistema(req.decoded, datosParcCultivo.dataValues, "busqueda");
+
     // Respuesta del servidor
     res.json(datosParcCultivo);
   } catch (error) {
@@ -39,6 +42,8 @@ export const postParcelaCultivo = async (req, res) => {
       id_campania,
       cantidad_sembrada,
     });
+
+    await logSistema(req.decoded, nuevoParcelaCultivo.dataValues, "creacion");
 
     res.json({
       msg: "La Parcela_Cultivo se creo Correctamente",
@@ -69,6 +74,8 @@ export const updateParcelaCultivo = async (req, res) => {
     updateParcCult.cantidad_sembrada = cantidad_sembrada;
     await updateParcCult.save();
 
+    await logSistema(req.decoded, updateParcCult.dataValues, "actualizacion");
+
     res.json({
       msg: "La Parcela_Cultivo se actualizo Correctamente",
       updateParcCult,
@@ -92,6 +99,8 @@ export const deleteParcelaCultivo = async (req, res) => {
     eliminarParcelaCultivo.activo = false;
 
     await eliminarParcelaCultivo.save();
+
+    await logSistema(req.decoded, eliminarParcelaCultivo.dataValues, "eliminacion");
 
     res.status(200).json({
       message: `La Parcela_Cultivo con id ${id} fue eliminado`,

@@ -5,9 +5,9 @@ import { HistorialesParcelasCultivosModelo } from "../models/HistorialesParcelas
 // Devuelve todos los Historials de la colección
 export const getHistoriales = async (req, res) => {
   try {
-    const Datos = await HistorialesParcelasCultivosModelo.findAll({where: { activo: true }}); // consulta para todos los documentos
+    const historial = await HistorialesParcelasCultivosModelo.findAll({where: { activo: true }}); // consulta para todos los documentos
     // Respuesta del servidor
-    res.json(Datos);
+    res.json(historial);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -18,10 +18,13 @@ export const getHistoriales = async (req, res) => {
 export const getHistorialUnico = async (req, res) => {
   try {
     const { id } = req.params;
-    const Datos = await HistorialesParcelasCultivosModelo.findByPk(id); // consulta para todos los documentos
+    const historial = await HistorialesParcelasCultivosModelo.findByPk(id); // consulta para todos los documentos
+
+
+    await logSistema(req.decoded, historial.dataValues, "busqueda");
 
     // Respuesta del servidor
-    res.json(Datos);
+    res.json(historial);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -46,6 +49,8 @@ export const postHistorial = async (req, res) => {
       cantidad_uso_producto,
       id_producto,
     });
+    
+    await logSistema(req.decoded, nuevoHistorial.dataValues, "creacion");
 
     res.json({
       msg: "El Historial se creo Correctamente",
@@ -82,6 +87,8 @@ export const updateHistorial = async (req, res) => {
     updateHist.id_producto = id_producto;
     await updateHist.save();
 
+    await logSistema(req.decoded, updateHist.dataValues, "atualizacion");
+
     res.json({
       msg: "El Historial se actualizo Correctamente",
       updateHist,
@@ -102,6 +109,8 @@ export const deleteHistorial = async (req, res) => {
     eliminarHistorial.activo = false;
 
     await eliminarHistorial.save();
+
+    await logSistema(req.decoded, eliminarHistorial.dataValues, "eliminacion");
 
     res.json({
       message: `El Historial con el id ${id} se elimino correctamente`,
