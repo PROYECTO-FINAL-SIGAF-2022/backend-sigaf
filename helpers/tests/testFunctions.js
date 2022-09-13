@@ -29,6 +29,7 @@ export const testFunctionPost = async (paramUrl, paramMensaje, paramSend, paramS
     }
     expect(response.statusCode).toEqual(paramStatus);
     expect(response.type).toEqual("application/json");
+
     if (paramDebug) {
       const bodyResponse = response.body;
       console.log(bodyResponse);

@@ -1,6 +1,6 @@
 // ! Falta Completar el Post
 
-import { AgregoParcelasCultivosModelo } from "../models/AgregoParcelasCultivos.model";
+import { AgregoParcelasCultivosModelo } from "../models/AgregoParcelasCultivos.model.js";
 
 // Devuelve todos los datos de la colección
 export const getAggParcelasCultivos = async (req, res) => {
@@ -31,8 +31,7 @@ export const getAggParcelaCultivoUnico = async (req, res) => {
   }
 };
 
-// TODO: Faltaria Agregar la id de parcela_cultivo
-// TODO: No lo agregue xq creo que lo hace el archivo "Associations"
+
 export const postAggParcelaCultivo = async (req, res) => {
   try {
     const { id_parcela_cultivo, id_unidad_medida, cantidad_agregada } = req.body;
@@ -43,7 +42,9 @@ export const postAggParcelaCultivo = async (req, res) => {
       cantidad_agregada,
     });
 
-    res.json({
+
+
+    res.status(200).json({
       msg: "La ParcelaCultivo se creo Correctamente",
       nuevaAggParcelaCultivo,
     });
@@ -58,13 +59,15 @@ export const postAggParcelaCultivo = async (req, res) => {
 export const updateAggParcCultela = async (req, res) => {
   try {
     const { id } = req.params;
-    const { cantidad_agregada } = req.body[0];
+    const { cantidad_agregada, id_parcela_cultivo, id_unidad_medida } = req.body;
 
     console.log(id);
 
     const updateAggParcCult = await AgregoParcelasCultivosModelo.findOne({
       where: { id_agrego_parcela_cultivo: id },
     });
+    updateAggParcCult.id_parcela_cultivo = id_parcela_cultivo;
+    updateAggParcCult.id_unidad_medida = id_unidad_medida
     updateAggParcCult.cantidad_agregada = cantidad_agregada;
     await updateAggParcCult.save();
 

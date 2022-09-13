@@ -21,9 +21,10 @@ const HEADERS = {
 };
 
 beforeAll(async () => {
-  await vaciarTablas();
+ 
 
   try {
+    await vaciarTablas();
     await TiposUsuariosModelo.create({ descripcion_tipo_usuario: "Administrador" });
 
     await UsuariosModelo.create({
@@ -83,23 +84,23 @@ beforeAll(async () => {
   }
 });
 
-// describe(`GET ${URL}`, () => {
-//   testFunctionGet(URL, "Debe retornar un error al no enviar el token", 401, API, {}, true);
+describe(`GET ${URL}`, () => {
+  testFunctionGet(URL, "Debe retornar un error al no enviar el token", 401, API);
 
-//   testFunctionGet(URL, "Debe retornar un json con los registros de agrego parcelas cultivos", 200, API, HEADERS, true);
+  testFunctionGet(URL, "Debe retornar un json con los registros de agrego parcelas cultivos", 200, API, HEADERS);
 
-//   testFunctionGet(URL, "Debe retornar un status-code 200", 200, API, HEADERS, true);
-// });
+  testFunctionGet(URL, "Debe retornar un status-code 200", 200, API, HEADERS);
+});
 
-// describe(`GET ${URL}/1`, () => {
-//   testFunctionGet(`${URL}/1`, "Debe retornar un error al no enviar el token", 401, API, {}, true);
+describe(`GET ${URL}/1`, () => {
+  testFunctionGet(`${URL}/1`, "Debe retornar un error al no enviar el token", 401, API);
 
-//   testFunctionGet(`${URL}/3`, "Debe retornar un error si el ID no existe en la bd", 400, API, HEADERS, true);
+  testFunctionGet(`${URL}/3`, "Debe retornar un error si el ID no existe en la bd", 400, API, HEADERS);
 
-//   testFunctionGet(`${URL}/1`, "Debe retornar un json con el registro encontrado", 200, API, HEADERS, true);
+  testFunctionGet(`${URL}/1`, "Debe retornar un json con el registro encontrado", 200, API, HEADERS);
 
-//   testFunctionGet(`${URL}/1`, "Debe retornar un status-code 200", 200, API, HEADERS, true);
-// });
+  testFunctionGet(`${URL}/1`, "Debe retornar un status-code 200", 200, API, HEADERS);
+});
 
 describe(`POST ${URL}`, () => {
   const sendCrear = {
@@ -109,67 +110,67 @@ describe(`POST ${URL}`, () => {
 
   };
 
-  // testFunctionPost(URL, "Debe retornar un error al no enviar el token", sendCrear, 401, API, {}, true);
+  testFunctionPost(URL, "Debe retornar un error al no enviar el token", sendCrear, 401, API);
 
-  // testFunctionPost(URL, "Debe retornar un error no cargar la cantidad ", {
-  //   id_parcela_cultivo: "1",
-  //   id_unidad_medida: "2",
-  //   cantidad_agregada: "",
-  // }, 400, API, HEADERS, true);
+  testFunctionPost(URL, "Debe retornar un error no cargar la cantidad ", {
+    id_parcela_cultivo: "1",
+    id_unidad_medida: "2",
+    cantidad_agregada: "",
+  }, 400, API, HEADERS);
 
-  // testFunctionPost(URL, "Debe retornar un error si el id_parcela_cultivo no exite en la bd", {
-  //   id_parcela_cultivo: "3",
-  //   id_unidad_medida: "2",
-  //   cantidad_agregada: "23",
-  // }, 400, API, HEADERS, true);
-  // testFunctionPost(URL, "Debe retornar un error si el id_unidad_medida no exite en la bd", {
-  //   id_parcela_cultivo: "1",
-  //   id_unidad_medida: "3",
-  //   cantidad_agregada: "23",
-  // }, 400, API, HEADERS, true);
+  testFunctionPost(URL, "Debe retornar un error si el id_parcela_cultivo no exite en la bd", {
+    id_parcela_cultivo: "3",
+    id_unidad_medida: "2",
+    cantidad_agregada: "23",
+  }, 400, API, HEADERS);
+  testFunctionPost(URL, "Debe retornar un error si el id_unidad_medida no exite en la bd", {
+    id_parcela_cultivo: "1",
+    id_unidad_medida: "3",
+    cantidad_agregada: "23",
+  }, 400, API, HEADERS);
 
-  testFunctionPost(URL, "Debe retornar un json con el nuevo registro ", sendCrear, 200, API, HEADERS, true);
+  testFunctionPost(URL, "Debe retornar un json con el nuevo registro ", sendCrear, 200, API, HEADERS);
 });
 
-// describe(` PUT ${URL}/1`, () => {
-//   const sendActualizar = {
-//     id_parcela_cultivo: "1",
-//     id_unidad_medida: "2",
-//     cantidad_agregada: "230",
-//   };
+describe(` PUT ${URL}/1`, () => {
+  const sendActualizar = {
+    id_parcela_cultivo: "1",
+    id_unidad_medida: "2",
+    cantidad_agregada: "230",
+  };
 
-//   testFunctionPut(`${URL}/1`, "Debe retornar un error al no enviar el token", sendActualizar, 401, API);
+  testFunctionPut(`${URL}/1`, "Debe retornar un error al no enviar el token", sendActualizar, 401, API);
 
-//   testFunctionPut(`${URL}/4`, "Debe retornar un error si el id no existe en la bd ", sendActualizar, 400, API, HEADERS);
+  testFunctionPut(`${URL}/4`, "Debe retornar un error si el id no existe en la bd ", sendActualizar, 400, API, HEADERS);
 
-//   testFunctionPut(`${URL}/1`, "Debe retornar un error si el id_parcela_cultivo no existe en la bd ", {
-//     id_parcela_cultivo: "3",
-//     id_unidad_medida: "2",
-//     cantidad_agregada: "230",
-//   }, 400, API, HEADERS);
+  testFunctionPut(`${URL}/1`, "Debe retornar un error si el id_parcela_cultivo no existe en la bd ", {
+    id_parcela_cultivo: "3",
+    id_unidad_medida: "2",
+    cantidad_agregada: "230",
+  }, 400, API, HEADERS);
 
-//   testFunctionPut(`${URL}/1`, "Debe retornar un error si el id_unidad_medida no existe en la bd ", {
-//     id_parcela_cultivo: "1",
-//     id_unidad_medida: "4",
-//     cantidad_agregada: "230",
-//   }, 400, API, HEADERS);
+  testFunctionPut(`${URL}/1`, "Debe retornar un error si el id_unidad_medida no existe en la bd ", {
+    id_parcela_cultivo: "1",
+    id_unidad_medida: "4",
+    cantidad_agregada: "230",
+  }, 400, API, HEADERS);
 
-//   testFunctionPut(`${URL}/4`, "Debe retornar un error si no ingresa la cantidad agregada", {
-//     id_parcela_cultivo: "1",
-//     id_unidad_medida: "4",
-//     cantidad_agregada: "",
-//   }, 400, API, HEADERS);
+  testFunctionPut(`${URL}/4`, "Debe retornar un error si no ingresa la cantidad agregada", {
+    id_parcela_cultivo: "1",
+    id_unidad_medida: "4",
+    cantidad_agregada: "",
+  }, 400, API, HEADERS);
 
-//   testFunctionPut(`${URL}/1`, "Debe retornar un json al actualizar el registro", sendActualizar, 200, API, HEADERS);
-// });
+  testFunctionPut(`${URL}/1`, "Debe retornar un json al actualizar el registro", sendActualizar, 200, API, HEADERS);
+});
 
-// describe(`DELETE ${URL}/1`, () => {
-//   testFunctionDelete(`${URL}/1`, "Debe retornar un error al no enviar el token", 401, API);
+describe(`DELETE ${URL}/1`, () => {
+  testFunctionDelete(`${URL}/1`, "Debe retornar un error al no enviar el token", 401, API);
 
-//   testFunctionDelete(`${URL}/2`, "Debe retornar un error si el id no existe en la bd", 400, API, HEADERS);
+  testFunctionDelete(`${URL}/6`, "Debe retornar un error si el id no existe en la bd", 400, API, HEADERS);
 
-//   testFunctionDelete(`${URL}/1`, "Debe retornar un status-code 200 si se elimino el registro", 200, API, HEADERS);
-// });
+  testFunctionDelete(`${URL}/1`, "Debe retornar un status-code 200 si se elimino el registro", 200, API, HEADERS);
+});
 
 afterAll(async () => {
   await vaciarTablas();

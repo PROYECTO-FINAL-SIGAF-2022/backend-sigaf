@@ -5,12 +5,12 @@ import {
   postAggParcelaCultivo,
   updateAggParcCultela,
   deleteAggParcelaCultivo,
-} from "../controllers/agregoParcelasCultivos.controller";
+} from "../controllers/agregoParcelasCultivos.controller.js";
 
-import validateToken from "../middlewares/validateToken.middleware";
+import validateToken from "../middlewares/validateToken.middleware.js";
 import {
   getAgregoParcCultivosMidd, getAgregoParCultivoMidd, putAgregoParCultivoMidd, deleteAgregoParCultivoMidd, postAgregoParCultivoMidd,
-} from "../middlewares/agregoParcelasCultivos.middleware";
+} from "../middlewares/agregoParcelasCultivos.middleware.js";
 
 // TODO : Faltan los middlewares
 

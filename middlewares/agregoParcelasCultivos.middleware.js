@@ -25,11 +25,13 @@ export const postAgregoParCultivoMidd = [
   check("id_parcela_cultivo")
     .custom(
       async (id_parcela_cultivo) => {
+        
+
         const parCult = await ParcelasCultivosModelo.count({
           where: { id_parcela_cultivo },
         });
-        // console.log(actividad);
-        if (parCult > 0) {
+    
+        if (parCult <= 0) {
           return Promise.reject("El id ingresado de parcela cultivo no se encuentra en la bd");
         }
       },
@@ -44,7 +46,7 @@ export const postAgregoParCultivoMidd = [
           where: { id_unidad_medida },
         });
         // console.log(actividad);
-        if (uniMedida > 0) {
+        if (uniMedida <= 0) {
           return Promise.reject("El id ingresado de unidad de medida no se encuentra en la bd");
         }
       },
@@ -79,7 +81,7 @@ export const putAgregoParCultivoMidd = [
           where: { id_parcela_cultivo },
         });
         // console.log(actividad);
-        if (parCult > 0) {
+        if (parCult <= 0) {
           return Promise.reject("El id ingresado de parcela cultivo no se encuentra en la bd");
         }
       },
@@ -94,7 +96,7 @@ export const putAgregoParCultivoMidd = [
           where: { id_unidad_medida },
         });
         // console.log(actividad);
-        if (uniMedida > 0) {
+        if (uniMedida <= 0) {
           return Promise.reject("El id ingresado de unidad de medida no se encuentra en la bd");
         }
       },
