@@ -22,13 +22,7 @@ export const getAggParcelaCultivoUnico = async (req, res) => {
     const { id } = req.params;
     const agregoParCul = await AgregoParcelasCultivosModelo.findByPk(id); // consulta para todos los documentos
 
-    const { id_usuario } = req.decoded.paramUsuario;
-    const dataLog = agregoParCul.dataValues;
-
-    await LogSistema.create({
-      id_usuario,
-      descripcion_log: `El usuario con ID ${id_usuario} realizo la siguiente busqueda, ${JSON.stringify(dataLog)}`,
-    });
+    await logSistema(req.decoded, agregoParCul.dataValues, "busqueda");
 
     // Respuesta del servidor
     res.json(agregoParCul);
@@ -50,13 +44,7 @@ export const postAggParcelaCultivo = async (req, res) => {
       cantidad_agregada,
     });
 
-    const { id_usuario } = req.decoded.paramUsuario;
-    const dataLog = nuevaAggParcelaCultivo.dataValues;
-
-    await LogSistema.create({
-      id_usuario,
-      descripcion_log: `El usuario con ID ${id_usuario} realizo la siguiente creacion, ${JSON.stringify(dataLog)}`,
-    });
+    await logSistema(req.decoded, nuevaAggParcelaCultivo.dataValues, "creacion");
 
     res.status(200).json({
       msg: "La ParcelaCultivo se creo Correctamente",
@@ -85,13 +73,7 @@ export const updateAggParcCultela = async (req, res) => {
     updateAggParcCult.cantidad_agregada = cantidad_agregada;
     await updateAggParcCult.save();
 
-    const { id_usuario } = req.decoded.paramUsuario;
-    const dataLog = updateAggParcCult.dataValues;
-
-    await LogSistema.create({
-      id_usuario,
-      descripcion_log: `El usuario con ID ${id_usuario} realizo la siguiente actualizacion, ${JSON.stringify(dataLog)}`,
-    });
+    await logSistema(req.decoded, updateAggParcCult.dataValues, "actualizacion");
 
     res.json({
       msg: "La ParcelaCultivo se actualizo Correctamente",
@@ -118,13 +100,7 @@ export const deleteAggParcelaCultivo = async (req, res) => {
 
     await eliminarAgregoParcCultivo.save();
 
-    const { id_usuario } = req.decoded.paramUsuario;
-    const dataLog = eliminarAgregoParcCultivo.dataValues;
-
-    await LogSistema.create({
-      id_usuario,
-      descripcion_log: `El usuario con ID ${id_usuario} realizo la siguiente eliminacion, ${JSON.stringify(dataLog)}`,
-    });
+    await logSistema(req.decoded, eliminarAgregoParcCultivo.dataValues, "eliminacion");
 
     res.status(200).json({
       message: `La Parcela Cultivo ${id} se elimino correctamente`,

@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import { generarJwt } from "../helpers/generarJwt.js";
+import { LogSistema } from "../models/LogSistema.js";
 
 import { UsuariosModelo } from "../models/Usuarios.model.js";
 
@@ -30,6 +31,12 @@ export const loguearse = async (req, res) => {
     // generar el token
     const { id_usuario } = usuario;
     const token = await generarJwt({ id_usuario });
+
+    await LogSistema.create({
+      id_usuario,
+      descripcion_log: `El usuario con ID ${id_usuario} ha iniciado sesion`,
+    });
+
     return res.status(200).json({
       token,
     });
@@ -71,12 +78,21 @@ export const registrarse = async (req, res) => {
     const { id_usuario } = nuevoUsuario;
     const token = await generarJwt({ id_usuario });
 
+    const dataLog = nuevoUsuario.dataValues;
+
+    console.log(dataLog);
+
+    await LogSistema.create({
+      id_usuario,
+      descripcion_log: `El usuario con ID ${id_usuario} se ha registrado`,
+    });
+
     res.status(200).json({
       msg: "El usuario se creo Correctamente",
       token,
     });
   } catch (error) {
-    // console.log(error);
+    console.log(error);
     return res.status(500).json({
       message: error.message,
     });

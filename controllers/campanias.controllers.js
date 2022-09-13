@@ -1,11 +1,12 @@
 import { CampaniasModelo } from "../models/Campanias.model.js";
+import { logSistema } from "../helpers/createLog";
 
 // Devuelve todos los Campanias de la colección
 export const getCampanias = async (req, res) => {
   try {
-    const Datos = await CampaniasModelo.findAll({where: { activo: true }}); // consulta para todos los documentos
+    const campania = await CampaniasModelo.findAll({ where: { activo: true } }); // consulta para todos los documentos
     // Respuesta del servidor
-    res.json(Datos);
+    res.json(campania);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -16,10 +17,13 @@ export const getCampanias = async (req, res) => {
 export const getCampaniaUnico = async (req, res) => {
   try {
     const { id } = req.params;
-    const Datos = await CampaniasModelo.findByPk(id); // consulta para todos los documentos
+
+    const campania = await CampaniasModelo.findByPk(id); // consulta para todos los documentos
+
+    await logSistema(req.decoded, campania.dataValues, "busqueda");
 
     // Respuesta del servidor
-    res.json(Datos);
+    res.json(campania);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -39,6 +43,8 @@ export const postCampania = async (req, res) => {
       fecha_final,
       id_cultivo,
     });
+
+    await logSistema(req.decoded, nuevaCampania.dataValues, "creacion");
 
     res.json({
       msg: "La Campania se creo Correctamente",
@@ -66,6 +72,9 @@ export const updateCampania = async (req, res) => {
     updateCamp.fecha_final = fecha_final;
     updateCamp.id_cultivo = id_cultivo;
     await updateCamp.save();
+
+    await logSistema(req.decoded, updateCamp.dataValues, "actualizacion");
+
     res.json({
       msg: "La Compania se actualizo  Correctamente",
       updateCamp,
@@ -90,6 +99,7 @@ export const deleteCampania = async (req, res) => {
 
     await eleiminarCompania.save();
 
+    await logSistema(req.decoded, eleiminarCompania.dataValues, "eliminacion");
     res.status(200).json({
       message: `La Compania con ID  ${id} se elimino correctamente`,
     });
