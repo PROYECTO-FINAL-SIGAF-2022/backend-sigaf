@@ -6,25 +6,29 @@ import {
   postProveedor,
   updateProveedor,
   deleteProveedor,
-} from "../controllers/proveedores.controller";
+} from "../controllers/proveedores.controller.js";
+import {
+  deleteProveedoresMidd,
+  getProveedoresMidd, getProveedorMidd, postProveedoresMidd, putProveedorMidd,
+} from "../middlewares/proveedores.middleware.js";
 
-import { validadorDeCampos } from "../middlewares/proveedores.middleware.js";
+import validateToken from "../middlewares/validateToken.middleware.js";
 
 const router = Router();
 
 //  Ruta que devuelve todos los proveedores
-router.get("/proveedores", getProveedores);
+router.get("/proveedores", validateToken, getProveedoresMidd, getProveedores);
 
 // Ruta que devuelve un solo proveedor
-router.get("/proveedores/:id", getProveedorUnico);
+router.get("/proveedores/:id", validateToken, getProveedorMidd, getProveedorUnico);
 
 // Ruta que almacena nuevos proveedores
-router.post("/proveedores", validadorDeCampos, postProveedor);
+router.post("/proveedores", validateToken, postProveedoresMidd, postProveedor);
 
 // Ruta que actualiza los datos de unproveedor
-router.put("/proveedores/:id", updateProveedor);
+router.put("/proveedores/:id", validateToken, putProveedorMidd, updateProveedor);
 
 // Ruta que elimina un proveedor
-router.delete("/proveedores/:id", deleteProveedor);
+router.delete("/proveedores/:id", validateToken, deleteProveedoresMidd, deleteProveedor);
 
 export default router;

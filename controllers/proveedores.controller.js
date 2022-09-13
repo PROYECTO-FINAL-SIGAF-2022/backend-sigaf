@@ -1,4 +1,4 @@
-import { ProveedoresModelo } from "../models/Proveedores.model";
+import { ProveedoresModelo } from "../models/Proveedores.model.js";
 
 // Devuelve todos los proveedores de la colección
 export const getProveedores = async (req, res) => {
@@ -58,6 +58,7 @@ export const postProveedor = async (req, res) => {
 };
 
 export const updateProveedor = async (req, res) => {
+  console.log(req.params);
   try {
     const { id } = req.params;
     const {
@@ -75,7 +76,7 @@ export const updateProveedor = async (req, res) => {
     updateProvee.direccion_proveedor = direccion_proveedor;
     await updateProvee.save();
 
-    res.status(201).json({
+    res.status(200).json({
       msg: "El proveedor se actualizo Correctamente",
       updateProvee,
     });
@@ -91,7 +92,7 @@ export const deleteProveedor = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const eliminarProveedor = await ProveedoresModelo.finOne({ where: { id_proveedor: id } });
+    const eliminarProveedor = await ProveedoresModelo.findOne({ where: { id_proveedor: id } });
 
     eliminarProveedor.activo = false;
 
@@ -101,6 +102,7 @@ export const deleteProveedor = async (req, res) => {
       message: `El proveedor con id ${id} fue eliminado`,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: error.message,
     });
