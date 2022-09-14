@@ -1,3 +1,4 @@
+import { logSistema } from "../helpers/createLog.js";
 import { ProveedoresModelo } from "../models/Proveedores.model.js";
 
 // Devuelve todos los proveedores de la colección
@@ -18,12 +19,13 @@ export const getProveedorUnico = async (req, res) => {
     const { id } = req.params;
     const proveedor = await ProveedoresModelo.findByPk(id); // consulta para todos los documentos
 
+
+    await logSistema(req.decoded, proveedor.dataValues, "busqueda");
+
     // Respuesta del servidor
-    if (proveedor) {
-      res.json(proveedor);
-    } else {
-      res.sendStatus(404);
-    }
+
+      res.satus(200).json(proveedor);
+
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -45,6 +47,8 @@ export const postProveedor = async (req, res) => {
       direccion_proveedor,
     });
 
+    await logSistema(req.decoded, nuevoProveedor.dataValues, "creacion");
+
     res.status(201).json({
       msg: "El proveedor se creo Correctamente",
       nuevo_proveedor: nuevoProveedor,
@@ -58,6 +62,7 @@ export const postProveedor = async (req, res) => {
 };
 
 export const updateProveedor = async (req, res) => {
+  console.log(req.params);
   try {
     const { id } = req.params;
     const {
@@ -75,7 +80,11 @@ export const updateProveedor = async (req, res) => {
     updateProvee.direccion_proveedor = direccion_proveedor;
     await updateProvee.save();
 
-    res.status(201).json({
+
+    await logSistema(req.decoded, updateProvee.dataValues, "actualizacion");
+
+
+    res.status(200).json({
       msg: "El proveedor se actualizo Correctamente",
       updateProvee,
     });
@@ -91,16 +100,21 @@ export const deleteProveedor = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const eliminarProveedor = await ProveedoresModelo.finOne({ where: { id_proveedor: id } });
+    const eliminarProveedor = await ProveedoresModelo.findOne({ where: { id_proveedor: id } });
 
     eliminarProveedor.activo = false;
 
     await eliminarProveedor.save();
 
+    
+    await logSistema(req.decoded, eliminarProveedor.dataValues, "eliminacion");
+
+
     res.status(200).json({
       message: `El proveedor con id ${id} fue eliminado`,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: error.message,
     });

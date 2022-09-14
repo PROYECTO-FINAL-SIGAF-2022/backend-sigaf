@@ -7,6 +7,7 @@ import {
   testFunctionGet, testFunctionPost, testFunctionPut, testFunctionDelete,
 } from "../helpers/tests/testFunctions";
 import { TiposProductosModelo } from "../models/TiposProductos.model.js";
+import { crearUsuarios } from "../helpers/createUser.js";
 
 const API = supertest(app);
 const URL = "/api/tipo-productos";
@@ -15,9 +16,10 @@ const HEADERS = getTokenTest();
 
 beforeAll(async () => {
   await vaciarTablas();
+  await crearUsuarios();
 
   await TiposProductosModelo.create({
-    descripcion_tipo_producto: "Semillas de maiz",
+    descripcion_tipo_producto: "Semillas",
   });
 });
 
@@ -41,7 +43,7 @@ describe(`GET ${URL}/:id`, () => {
 
 describe(`POST ${URL}`, () => {
   testFunctionPost(URL, "Debe retornar un error al no enviar el token", {
-    descripcion_tipo_producto: "Semilla de sandia",
+    descripcion_tipo_producto: "Insecticidas",
   }, 401, API);
 
   testFunctionPost(URL, "Crear un tipo producto con la descripcion vacia", {
@@ -49,29 +51,29 @@ describe(`POST ${URL}`, () => {
   }, 400, API, HEADERS);
 
   testFunctionPost(URL, "Crear un tipo de producto con la descripcion ya guardada en a bd", {
-    descripcion_tipo_producto: "Semillas de maiz",
+    descripcion_tipo_producto: "Semillas",
   }, 400, API, HEADERS);
 
   testFunctionPost(URL, "Crear un tipo de producto", {
-    descripcion_tipo_producto: "Semilla de aguacate",
+    descripcion_tipo_producto: "Insecticidas",
   }, 201, API, HEADERS);
 });
 
 describe(`PUT ${URL}/:id`, () => {
   testFunctionPut(`${URL}/1`, "Debe retornar un error al no enviar el token", {
-    descripcion_tipo_producto: "Semilla de mango",
+    descripcion_tipo_producto: "Semillas",
   }, 401, API);
 
   testFunctionPut(`${URL}/5`, "Actualizar un tipo de producto con un id inexistente", {
-    descripcion_tipo_producto: "Semilla de mango",
+    descripcion_tipo_producto: "Semillas",
   }, 400, API, HEADERS);
 
   testFunctionPut(`${URL}/5`, "Actualizar un tipo de producto con una descripcion ya existente", {
-    descripcion_tipo_producto: "Semilla de mango",
+    descripcion_tipo_producto: "Semillas",
   }, 400, API, HEADERS);
 
   testFunctionPut(`${URL}/1`, "Actualizar una descripcion del tipo de producto", {
-    descripcion_tipo_producto: "Semilla de mango",
+    descripcion_tipo_producto: "Efermicidas",
   }, 200, API, HEADERS);
 });
 

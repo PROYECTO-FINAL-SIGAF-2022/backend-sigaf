@@ -1,5 +1,6 @@
 // Falta agregar cosas al post-put-delete
 
+import { logSistema } from "../helpers/createLog.js";
 import { HistorialesParcelasCultivosModelo } from "../models/HistorialesParcelasCultivos.model.js";
 
 // Devuelve todos los Historials de la colección

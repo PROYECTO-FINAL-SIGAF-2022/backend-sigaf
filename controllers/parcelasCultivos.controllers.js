@@ -1,3 +1,4 @@
+import { logSistema } from "../helpers/createLog.js";
 import { ParcelasCultivosModelo } from "../models/ParcelasCultivos.model.js";
 
 // Devuelve todos los Cultivos de la colección

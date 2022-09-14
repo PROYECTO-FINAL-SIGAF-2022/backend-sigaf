@@ -1,3 +1,4 @@
+import { logSistema } from "../helpers/createLog.js";
 import { TiposUsuariosModelo } from "../models/TiposUsuarios.model.js";
 import { UsuariosModelo } from "../models/Usuarios.model.js";
 
@@ -29,14 +30,17 @@ export const getUsuarioUnico = async (req, res) => {
         model: TiposUsuariosModelo,
       },
     }); // consulta para todos los documentos
+  
+
+
+    // await logSistema(req.decoded, usuario.dataValues, "busqueda");
 
     // Respuesta del servidor
-    if (usuario) {
+
       res.json(usuario);
-    } else {
-      res.sendStatus(404);
-    }
+   
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: error.message,
     });
@@ -70,6 +74,8 @@ export const postUsuario = async (req, res) => {
       password_usuario,
       id_tipo_usuario: idTipoUsuario,
     });
+
+    // await logSistema(req.decoded, nuevoUsuario.dataValues, "creacion");
 
     res.status(201).json({
       msg: "El usuario se creo Correctamente",
@@ -112,6 +118,8 @@ export const updateUsuario = async (req, res) => {
     updateUser.id_tipo_usuario = id_tipo_usuario;
     await updateUser.save();
 
+    // await logSistema(req.decoded, updateUser.dataValues, "actualizacion");
+
     res.status(200).json({
       msg: "El usuario se actualizo Correctamente",
       updateUser,
@@ -136,6 +144,8 @@ export const deleteUsuario = async (req, res) => {
     eliminarUsuario.activo = false;
 
     await eliminarUsuario.save();
+
+    // await logSistema(req.decoded, eliminarUsuario.dataValues, "eliminacion");
 
     res.status(200).json({
       msg: `El usuario con id ${id} se ha eliminado correctamente`,

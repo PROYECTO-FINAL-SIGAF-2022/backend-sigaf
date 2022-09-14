@@ -1,11 +1,12 @@
+import { logSistema } from "../helpers/createLog.js";
 import { TiposUsuariosModelo } from "../models/TiposUsuarios.model.js";
 
 // Devuelve todos los Tipo_usuarios de la colección
 export const getTiposUsuarios = async (req, res) => {
   try {
-    const Datos = await TiposUsuariosModelo.findAll({where: { activo: true }}); // consulta para todos los documentos
+    const tipoUsu = await TiposUsuariosModelo.findAll({where: { activo: true }}); // consulta para todos los documentos
     // Respuesta del servidor
-    res.json(Datos);
+    res.json(tipoUsu);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -16,10 +17,13 @@ export const getTiposUsuarios = async (req, res) => {
 export const getTipoUsuarioUnico = async (req, res) => {
   try {
     const { id } = req.params;
-    const Datos = await TiposUsuariosModelo.findByPk(id); // consulta para todos los documentos
+    const tipoUsu = await TiposUsuariosModelo.findByPk(id); // consulta para todos los documentos
+
+    
+    await logSistema(req.decoded, eliminarTipoProdcuto.dataValues, "busqueda");
 
     // Respuesta del servidor
-    res.json(Datos);
+    res.json(tipoUsu);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -34,6 +38,8 @@ export const postTipoUsuario = async (req, res) => {
     const nuevoTipo_Usuario = await TiposUsuariosModelo.create({
       descripcion_tipo_usuario,
     });
+
+    await logSistema(req.decoded, nuevoTipo_Usuario.dataValues, "creacion");
 
     res.json({
       msg: "El Tipo_Usuario se creo Correctamente",
@@ -51,13 +57,14 @@ export const updateTipoUsuario = async (req, res) => {
     const { id } = req.params;
     const { descripcion_tipo_usuario } = req.body[0];
 
-    console.log(id);
 
     const updateTipoUser = await TiposUsuariosModelo.findOne({
       where: { id_tipo_usuario: id },
     });
     updateTipoUser.descripcion_tipo_usuario = descripcion_tipo_usuario;
     await updateTipoUser.save();
+
+    await logSistema(req.decoded, updateTipoUser.dataValues, "actualizacion");
 
     res.json({
       msg: "El Tipo_Usuario se actualizo Correctamente",
@@ -82,6 +89,8 @@ export const deleteTipoUsuario = async (req, res) => {
     eliminarTipoUsuario.activo = false;
 
     await eliminarTipoUsuario.save();
+
+    await logSistema(req.decoded, eliminarTipoUsuario.dataValues, "eliminacion");
 
     res.status(200).json({
       message: `El Tipo_Usuario con id ${id} se elimino correctamente`,

@@ -1,3 +1,4 @@
+import { logSistema } from "../helpers/createLog.js";
 import { TiposProductosModelo } from "../models/TiposProductos.model.js";
 
 // Devuelve todos los tipos de productos de la colección
@@ -18,12 +19,13 @@ export const getTipoProductoUnico = async (req, res) => {
     const { id } = req.params;
     const tipoProducto = await TiposProductosModelo.findByPk(id); // consulta para todos los documentos
 
+
+    await logSistema(req.decoded, tipoProducto.dataValues, "busqueda");
+
     // Respuesta del servidor
-    if (tipoProducto) {
-      res.json(tipoProducto);
-    } else {
-      res.sendStatus(404);
-    }
+
+      res.status(200).json(tipoProducto);
+
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -40,6 +42,10 @@ export const postTipoPoducto = async (req, res) => {
     const nuevotipoProducto = await TiposProductosModelo.create({
       descripcion_tipo_producto,
     });
+
+    
+    await logSistema(req.decoded, nuevotipoProducto.dataValues, "creacion");
+
 
     res.status(201).json({
       msg: "El tipo de producto se creo Correctamente",
@@ -67,6 +73,9 @@ export const updateTipoProducto = async (req, res) => {
     updateTipoProd.descripcion_tipo_producto = descripcion_tipo_producto;
     await updateTipoProd.save();
 
+    
+    await logSistema(req.decoded, updateTipoProd.dataValues, "actualizacion");
+
     res.status(200).json({
       msg: "El tipo de producto se actualizo Correctamente",
       updateTipoProd,
@@ -88,6 +97,10 @@ export const deleteTipoProducto = async (req, res) => {
     eliminarTipoProdcuto.activo = false;
 
     await eliminarTipoProdcuto.save();
+
+    
+    await logSistema(req.decoded, eliminarTipoProdcuto.dataValues, "eliminacion");
+
 
     res.status(200).json({
       msg: `El tipo de procuto con id ${id} se elimino correctamente`,

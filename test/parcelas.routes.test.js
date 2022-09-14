@@ -8,25 +8,21 @@ import {
 } from "../helpers/tests/testFunctions";
 import { ParcelasModelo } from "../models/Parcelas.model.js";
 import { EstablecimientosModelo } from "../models/Establecimientos.model.js";
-import { TiposUsuariosModelo } from "../models/TiposUsuarios.model.js";
-import { UsuariosModelo } from "../models/Usuarios.model.js";
+import {crearUsuarios} from "../helpers/createUser";
 
-import generarNuevoUsuario from "../helpers/generarNuevoUsuario.js";
+
 
 const API = supertest(app);
 const URL = "/api/parcelas";
 
 const HEADERS = getTokenTest();
 
-const usuariosIniciales = {
-  usuarios1: generarNuevoUsuario(),
-};
+
 
 beforeAll(async () => {
   await vaciarTablas();
 
-  await TiposUsuariosModelo.create({ descripcion_tipo_usuario: "Administrador" });
-  await UsuariosModelo.create(usuariosIniciales.usuarios1);
+  await crearUsuarios();
 
   await EstablecimientosModelo.create({
     descripcion_establecimiento: "Establecimiento 1",

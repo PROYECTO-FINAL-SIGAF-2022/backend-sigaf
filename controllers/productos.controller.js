@@ -1,3 +1,4 @@
+import { logSistema } from "../helpers/createLog.js";
 import { ProductosModelo } from "../models/Productos.model.js";
 
 // Devuelve todos los productos de la colección

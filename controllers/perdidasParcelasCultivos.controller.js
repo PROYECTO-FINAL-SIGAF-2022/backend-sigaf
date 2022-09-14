@@ -1,3 +1,4 @@
+import { logSistema } from "../helpers/createLog.js";
 import { PerdidasParcelasCultivosModelo } from "../models/PerdidasParcelasCultivos.model.js";
 
 //TODO: falta agregar el activo en el modelo y controlador

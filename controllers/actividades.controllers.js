@@ -1,5 +1,5 @@
 import { ActividadesModelo } from "../models/Actividades.model.js";
-import { LogSistema } from "../models/LogSistema.js";
+import { logSistema } from "../helpers/createLog.js";
 
 // Devuelve todos los actividadess de la colección
 export const getActividades = async (req, res) => {

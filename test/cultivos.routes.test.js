@@ -6,6 +6,7 @@ import { CultivosModelo } from "../models/Cultivos.model.js";
 import {
   testFunctionGet, testFunctionPost, testFunctionDelete, testFunctionPut,
 } from "../helpers/tests/testFunctions";
+import { crearUsuarios } from "../helpers/createUser.js";
 
 const API = supertest(app);
 
@@ -14,6 +15,7 @@ const URL = "/api/cultivos";
 
 beforeAll(async () => {
   await vaciarTablas();
+  await crearUsuarios();
 
   await CultivosModelo.create({ descripcion_cultivo: "Maiz" });
   await CultivosModelo.create({ descripcion_cultivo: "Soja" });

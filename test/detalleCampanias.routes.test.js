@@ -6,6 +6,7 @@ import { UnidadesMedidasModelo } from "../models/UnidadesMedidas.model";
 import { CultivosModelo } from "../models/Cultivos.model";
 import { getTokenTest } from "../helpers/getToken";
 import { CampaniasModelo } from "../models/Campanias.model";
+import { crearUsuarios } from "../helpers/createUser";
 
 const API = SuperTest(app);
 const URL = "/api/detalle-campanias";
@@ -14,6 +15,7 @@ const HEADERS = getTokenTest();
 beforeAll(async () => {
   try {
     await vaciarTablas();
+    await crearUsuarios();
 
     await UnidadesMedidasModelo.create({
       descripcion_unidad_medida: "Tonelada/s",

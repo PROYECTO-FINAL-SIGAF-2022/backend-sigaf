@@ -1,3 +1,4 @@
+import { logSistema } from "../helpers/createLog.js";
 import { EstablecimientosModelo } from "../models/Establecimientos.model.js";
 
 // Devuelve todos los Establecimientos de la colección

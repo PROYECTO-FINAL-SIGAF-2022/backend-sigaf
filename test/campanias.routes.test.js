@@ -7,6 +7,7 @@ import { CultivosModelo } from "../models/Cultivos.model";
 import {
   testFunctionGet, testFunctionPost, testFunctionPut, testFunctionDelete,
 } from "../helpers/tests/testFunctions";
+import { crearUsuarios } from "../helpers/createUser";
 
 const API = supertest(app);
 const URL = "/api/campanias";
@@ -15,7 +16,9 @@ const HEADERS = getTokenTest();
 
 beforeAll(async () => {
   try {
-    // await vaciarTablas();
+    await vaciarTablas();
+
+    await crearUsuarios();
 
     await CultivosModelo.create({
       descripcion_cultivo: "tomate",

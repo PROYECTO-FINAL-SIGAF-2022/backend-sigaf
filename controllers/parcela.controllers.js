@@ -1,3 +1,4 @@
+import { logSistema } from "../helpers/createLog.js";
 import { ParcelasModelo } from "../models/Parcelas.model.js";
 
 // Devuelve todos los Parcelas de la colección

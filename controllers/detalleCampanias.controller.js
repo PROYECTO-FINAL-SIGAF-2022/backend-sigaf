@@ -1,3 +1,4 @@
+import { logSistema } from "../helpers/createLog.js";
 import { DetalleCampanias } from "../models/DetalleCampanias.model.js";
 
 // Devuelve todos los Campanias de la colección

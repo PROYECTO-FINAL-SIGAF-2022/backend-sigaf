@@ -1,28 +1,21 @@
 import supertest from "supertest";
-import generarNuevoUsuario from "../helpers/generarNuevoUsuario.js";
 import { app, server } from "../index.js";
 import { vaciarTablas } from "../helpers/vaciarTablas.js";
 import { getTokenTest } from "../helpers/getToken.js";
 import { EstablecimientosModelo } from "../models/Establecimientos.model.js";
-import { TiposUsuariosModelo } from "../models/TiposUsuarios.model.js";
-import { UsuariosModelo } from "../models/Usuarios.model.js";
+import { crearUsuarios } from "../helpers/createUser.js";
 
 const API = supertest(app);
 
 const HEADERS = getTokenTest();
 const URL = "/api/establecimientos";
 
-const usuariosIniciales = {
-  usuarios1: generarNuevoUsuario(),
-  usuarios2: generarNuevoUsuario(),
-};
+
 
 beforeAll(async () => {
   await vaciarTablas();
 
-  await TiposUsuariosModelo.create({ descripcion_tipo_usuario: "Administrador" });
-  await UsuariosModelo.create(usuariosIniciales.usuarios1);
-  await UsuariosModelo.create(usuariosIniciales.usuarios2);
+  await crearUsuarios();
 
   await EstablecimientosModelo.create({
     descripcion_establecimiento: "Establecimiento 1",
