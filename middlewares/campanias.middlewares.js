@@ -10,7 +10,6 @@ const getCampaniasMidd = [verificarCampos];
 const getCampaniaMidd = [
   param("id").custom(
     async (id_campania) => {
-      // console.log(id_campania);
       const campania = await CampaniasModelo.count({
         where: { id_campania },
       });
@@ -34,7 +33,6 @@ const postCampaniasMidd = [
         const actividad = await CampaniasModelo.count({
           where: { descripcion_campania },
         });
-        // console.log(actividad);
         if (actividad > 0) {
           return Promise.reject("La actividad ingresada ya se encuentra en la bd");
         }
@@ -80,7 +78,6 @@ const putCampaniasMidd = [
         const campania = await CampaniasModelo.count({
           where: { descripcion_campania },
         });
-        // console.log(actividad);
         if (campania > 0) {
           return Promise.reject("La campania ingresada ya se encuentra en la bd");
         }

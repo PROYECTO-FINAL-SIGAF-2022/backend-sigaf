@@ -10,7 +10,7 @@ import { UnidadesMedidasModelo } from "../models/UnidadesMedidas.model";
 import {
   testFunctionGet, testFunctionPost, testFunctionPut, testFunctionDelete,
 } from "../helpers/tests/testFunctions";
-import {crearUsuarios} from "../helpers/createUser";
+import { crearUsuarios } from "../helpers/createUser";
 
 const API = supertest(app);
 const URL = "/api/agregar-parcela-cultivos";
@@ -20,8 +20,6 @@ const HEADERS = {
 };
 
 beforeAll(async () => {
- 
-
   try {
     await vaciarTablas();
     await crearUsuarios();

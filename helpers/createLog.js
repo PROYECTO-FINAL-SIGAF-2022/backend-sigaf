@@ -1,8 +1,6 @@
 import { LogSistema } from "../models/LogSistema.js";
 
 export const logSistema = async (paramIdUsuario, paramDataLog, paramDescripcion) => {
-
-
   const { id_usuario } = paramIdUsuario.paramUsuario;
   const dataLog = paramDataLog;
 

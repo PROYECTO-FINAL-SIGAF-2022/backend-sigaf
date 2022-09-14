@@ -4,7 +4,7 @@ import { ProveedoresModelo } from "../models/Proveedores.model.js";
 // Devuelve todos los proveedores de la colección
 export const getProveedores = async (req, res) => {
   try {
-    const proveedores = await ProveedoresModelo.findAll({where: { activo: true }}); // consulta para todos los documentos
+    const proveedores = await ProveedoresModelo.findAll({ where: { activo: true } }); // consulta para todos los documentos
 
     res.status(200).json(proveedores);
   } catch (error) {
@@ -19,14 +19,13 @@ export const getProveedorUnico = async (req, res) => {
     const { id } = req.params;
     const proveedor = await ProveedoresModelo.findByPk(id); // consulta para todos los documentos
 
-
     await logSistema(req.decoded, proveedor.dataValues, "busqueda");
 
     // Respuesta del servidor
 
-      res.satus(200).json(proveedor);
-
+    res.status(200).json(proveedor);
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: error.message,
     });
@@ -80,9 +79,7 @@ export const updateProveedor = async (req, res) => {
     updateProvee.direccion_proveedor = direccion_proveedor;
     await updateProvee.save();
 
-
     await logSistema(req.decoded, updateProvee.dataValues, "actualizacion");
-
 
     res.status(200).json({
       msg: "El proveedor se actualizo Correctamente",
@@ -106,9 +103,7 @@ export const deleteProveedor = async (req, res) => {
 
     await eliminarProveedor.save();
 
-    
     await logSistema(req.decoded, eliminarProveedor.dataValues, "eliminacion");
-
 
     res.status(200).json({
       message: `El proveedor con id ${id} fue eliminado`,

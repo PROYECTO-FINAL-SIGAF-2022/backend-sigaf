@@ -1,5 +1,5 @@
 import { CampaniasModelo } from "../models/Campanias.model.js";
-import { logSistema } from "../helpers/createLog";
+import { logSistema } from "../helpers/createLog.js";
 
 // Devuelve todos los Campanias de la colección
 export const getCampanias = async (req, res) => {
@@ -22,9 +22,9 @@ export const getCampaniaUnico = async (req, res) => {
 
     await logSistema(req.decoded, campania.dataValues, "busqueda");
 
-    // Respuesta del servidor
-    res.json(campania);
+    res.status(200).json(campania);
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: error.message,
     });
@@ -63,7 +63,6 @@ export const updateCampania = async (req, res) => {
     const {
       descripcion_campania, fecha_inicio, fecha_final, id_cultivo,
     } = req.body;
-    console.log(id);
     const updateCamp = await CampaniasModelo.findOne({
       where: { id_campania: id },
     });

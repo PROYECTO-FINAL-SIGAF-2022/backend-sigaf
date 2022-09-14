@@ -11,7 +11,7 @@ export const loguearse = async (req, res) => {
     const usuario = await UsuariosModelo.findOne({
       where: { username_usuario },
     });
-    //   console.log(usuario);
+    console.log(usuario);
     if (!usuario) {
       return res.status(401).json({
         msg: "El usuario no existe",
@@ -41,6 +41,7 @@ export const loguearse = async (req, res) => {
       token,
     });
   } catch (error) {
+    // console.log(error);
     return res.status(500).json({
       message: error.message,
     });
@@ -78,9 +79,9 @@ export const registrarse = async (req, res) => {
     const { id_usuario } = nuevoUsuario;
     const token = await generarJwt({ id_usuario });
 
-    const dataLog = nuevoUsuario.dataValues;
+    // const dataLog = nuevoUsuario.dataValues;
 
-    console.log(dataLog);
+    // console.log(dataLog);
 
     await LogSistema.create({
       id_usuario,

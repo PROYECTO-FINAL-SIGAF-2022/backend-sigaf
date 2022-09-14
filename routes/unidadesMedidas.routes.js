@@ -1,19 +1,19 @@
 import { Router } from "express";
 
 import {
-    getUnidadesMedidas,
-    getUnidadMedidaUnico,
-    postUnidadMedida,
-    updateUnidadMedida,
-    deleteUnidadMedida,
+  getUnidadesMedidas,
+  getUnidadMedidaUnico,
+  postUnidadMedida,
+  updateUnidadMedida,
+  deleteUnidadMedida,
 } from "../controllers/unidadesMedidas.controller.js";
 
-import { 
-    getUnidadesMedidasMidd,
-    getUnidadMedidaMidd,
-    postUnidadMedidaMidd,
-    putUnidadMedidaMidd,
-    deleteUnidadMedidaMidd,
+import {
+  getUnidadesMedidasMidd,
+  getUnidadMedidaMidd,
+  postUnidadMedidaMidd,
+  putUnidadMedidaMidd,
+  deleteUnidadMedidaMidd,
 } from "../middlewares/unidadesMedidas.middleware.js";
 
 import validateToken from "../middlewares/validateToken.middleware.js";

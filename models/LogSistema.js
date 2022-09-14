@@ -20,7 +20,7 @@ export const LogSistema = connection.define(
       defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
     },
     descripcion_log: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
   },

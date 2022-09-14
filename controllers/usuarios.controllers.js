@@ -1,3 +1,4 @@
+import bcrypt from "bcryptjs";
 import { logSistema } from "../helpers/createLog.js";
 import { TiposUsuariosModelo } from "../models/TiposUsuarios.model.js";
 import { UsuariosModelo } from "../models/Usuarios.model.js";
@@ -9,8 +10,8 @@ export const getUsuarios = async (req, res) => {
       include: {
         model: TiposUsuariosModelo,
       },
-      where: { 
-        activo: true 
+      where: {
+        activo: true,
       },
     }); // consulta para todos los documentos
 
@@ -25,20 +26,12 @@ export const getUsuarios = async (req, res) => {
 export const getUsuarioUnico = async (req, res) => {
   try {
     const { id } = req.params;
-    const usuario = await UsuariosModelo.findByPk(id, {
-      include: {
-        model: TiposUsuariosModelo,
-      },
-    }); // consulta para todos los documentos
-  
 
+    const usuario = await UsuariosModelo.findOne({ where: { id_usuario: id } });
 
-    // await logSistema(req.decoded, usuario.dataValues, "busqueda");
+    await logSistema(req.decoded, usuario.dataValues, "busqueda");
 
-    // Respuesta del servidor
-
-      res.json(usuario);
-   
+    res.status(200).json(usuario);
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -62,7 +55,8 @@ export const postUsuario = async (req, res) => {
     } = req.body;
 
     const idTipoUsuario = id_tipo_usuario || 1;
-
+    // encriptar el password
+    // const passwordEncriptado = bcrypt.hashSync(password_usuario, 10);
     const nuevoUsuario = await UsuariosModelo.create({
       nombre_persona,
       apellido_persona,
@@ -71,18 +65,18 @@ export const postUsuario = async (req, res) => {
       email_persona,
       telefono_persona,
       username_usuario,
-      password_usuario,
+      password_usuario: bcrypt.hashSync(password_usuario, 10),
       id_tipo_usuario: idTipoUsuario,
     });
 
-    // await logSistema(req.decoded, nuevoUsuario.dataValues, "creacion");
+    await logSistema(req.decoded, nuevoUsuario.dataValues, "creacion");
 
     res.status(201).json({
       msg: "El usuario se creo Correctamente",
       nuevo_usuario: nuevoUsuario,
     });
   } catch (error) {
-    // console.log(error);
+    console.log(error);
     return res.status(500).json({
       message: error.message,
     });
@@ -107,6 +101,7 @@ export const updateUsuario = async (req, res) => {
     const updateUser = await UsuariosModelo.findOne({
       where: { id_usuario: id },
     });
+
     updateUser.nombre_persona = nombre_persona;
     updateUser.apellido_persona = apellido_persona;
     updateUser.dni_persona = dni_persona;
@@ -114,18 +109,18 @@ export const updateUsuario = async (req, res) => {
     updateUser.email_persona = email_persona;
     updateUser.telefono_persona = telefono_persona;
     updateUser.username_usuario = username_usuario;
-    updateUser.password_usuario = password_usuario;
+    updateUser.password_usuario = bcrypt.hashSync(password_usuario, 10);
     updateUser.id_tipo_usuario = id_tipo_usuario;
     await updateUser.save();
 
-    // await logSistema(req.decoded, updateUser.dataValues, "actualizacion");
+    await logSistema(req.decoded, updateUser.dataValues, "actualizacion");
 
     res.status(200).json({
       msg: "El usuario se actualizo Correctamente",
       updateUser,
     });
   } catch (error) {
-    // console.log(error);
+    console.log(error);
     return res.status(500).json({
       message: error.message,
     });
@@ -145,7 +140,7 @@ export const deleteUsuario = async (req, res) => {
 
     await eliminarUsuario.save();
 
-    // await logSistema(req.decoded, eliminarUsuario.dataValues, "eliminacion");
+    await logSistema(req.decoded, eliminarUsuario.dataValues, "eliminacion");
 
     res.status(200).json({
       msg: `El usuario con id ${id} se ha eliminado correctamente`,

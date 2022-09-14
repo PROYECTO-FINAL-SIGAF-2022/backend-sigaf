@@ -1,126 +1,108 @@
 import supertest from "supertest";
 import { crearUsuarios } from "../helpers/createUser.js";
-import { getTokenTest } from "../helpers/getToken.js";
 import { vaciarTablas } from "../helpers/vaciarTablas.js";
 import { app, server } from "../index.js";
-import {testFunctionGet, testFunctionPost, testFunctionDelete, testFunctionPut} from "../helpers/tests/testFunctions";
-
+import { getTokenTest } from "../helpers/getToken.js";
+import {
+  testFunctionGet, testFunctionPost, testFunctionDelete, testFunctionPut,
+} from "../helpers/tests/testFunctions";
 
 const API = supertest(app);
 
 const URL = "/api/usuarios";
 
-
-
+const HEADERS = getTokenTest();
 
 beforeAll(async () => {
   try {
-
     await vaciarTablas();
     await crearUsuarios();
   } catch (error) {
-    // console.log(error);
+    console.log(error);
   }
 });
 
-// describe(`GET ${URL}`, () => {
-// testFunctionGet(URL, "Debe retornar un json con los registros", 200, API);
-// testFunctionGet(URL, "Debe retornar un status-code 200", 200, API);
-
-// });
-
- describe(`GET ${URL}/:id`, () => {
-  testFunctionGet(`${URL}/1`, "Debe retornar un json", 200, API,{},true);
-  // test("Debe retornar un json", async () => {
-  //   const response = await API.get(`${URL}/1`);
-  //   // console.log(response.body);
-  //   expect(response.type).toEqual("application/json");
-  // });
-  testFunctionGet(`${URL}/1`, "Debe retornar un status-code 200", 200, API,{},true);
-
-  // test("Debe retornar un status-code 200", async () => {
-  //   const response = await API.get(`${URL}/1`);
-  //   expect(response.statusCode).toEqual(200);
-  // });
-
-  testFunctionGet(`${URL}/12345`, "Si no existe deve retornar un status-code 404", 404, API,{},true);
-
-
-  // test("Si no existe deve retornar un status-code 404", async () => {
-  //   const response = await API.get(`${URL}/12345`);
-  //   expect(response.statusCode).toEqual(404);
-  // });
-
-  testFunctionGet(`${URL}/12345`, "Si no existe deve retornar texto plano", 400, API,{},true);
-
-
-  // test("Si no existe deve retornar texto plano", async () => {
-  //   const response = await API.get(`${URL}/12345`);
-  //   expect(response.type).toEqual("text/plain");
-  // });
+describe(`GET ${URL}`, () => {
+  testFunctionGet(URL, "Debe retornar un error al no enviar el token", 401, API);
+  testFunctionGet(URL, "Debe retornar un json con los registros", 200, API, HEADERS);
+  testFunctionGet(URL, "Debe retornar un status-code 200", 200, API, HEADERS);
 });
 
-// describe(`POST ${URL}`, () => {
-//   test("Crear un usuario", async () => {
-//     const response = await API.post(URL)
-//       .set("Content-Type", "application/json")
-//       .send(generarNuevoUsuario());
-//     expect(response.statusCode).toEqual(201);
-//     expect(response.type).toEqual("application/json");
-//   });
+describe(`GET ${URL}/:id`, () => {
+  testFunctionGet(URL, "Debe retornar un error al no enviar el token", 401, API);
+  testFunctionGet(`${URL}/1`, "Debe retornar un json", 200, API, HEADERS);
 
-//   test("Crear un usuario con datos ya existentes", async () => {
-//     const equalUser = generarNuevoUsuario();
+  testFunctionGet(`${URL}/1`, "Debe retornar un status-code 200", 200, API, HEADERS);
 
-//     await API.post(URL)
-//       .set("Content-Type", "application/json")
-//       .send(equalUser);
+  testFunctionGet(`${URL}/40`, "Si no existe deve retornar un status-code 400", 400, API, HEADERS);
+});
 
-//     const userTwo = await API.post(URL)
-//       .set("Content-Type", "application/json")
-//       .send(equalUser);
-//     expect(userTwo.statusCode).toEqual(406);
-//   });
+describe(`POST ${URL}`, () => {
+  const nuevoUsuario = {
+    nombre_persona: "marcos",
+    apellido_persona: "franco",
+    dni_persona: 441017905,
+    fecha_nac_persona: "2022-08-27T14:24:15.525Z",
+    email_persona: "test2@gmail.com",
+    telefono_persona: 3704234234,
+    username_usuario: "tester3",
+    password_usuario: "tester3",
+    id_tipo_usuario: "1",
+  };
 
-//   test("Crear un usuarios sin todos los datos", async () => {
-//     const { username_usuario, password_usuario, ...restOfTestUser } = generarNuevoUsuario();
-//     const usuarioSinTodosLosDatos = restOfTestUser;
+  testFunctionGet(URL, "Debe retornar un error al no enviar el token", 401, API);
 
-//     const response = await API.post(URL)
-//       .set("Content-Type", "application/json")
-//       .send(usuarioSinTodosLosDatos);
+  testFunctionPost(URL, "Crear un usuario", nuevoUsuario, 201, API, HEADERS);
 
-//     expect(response.statusCode).toEqual(406);
-//   });
-// });
+  testFunctionPost(URL, "Crear un usuario con datos ya existentes", nuevoUsuario, 400, API, HEADERS);
 
-// describe(`PUT ${URL}/:id`, () => {
-//   test("Actualizar un usuario", async () => {
-//     const response = await API.put(`${URL}/1`)
-//       .set("Content-Type", "application/json")
-//       .send({
-//         username_usuario: "nuevo_username",
-//         password_usuario: "nuevo_password",
-//       });
-//     expect(response.statusCode).toEqual(200);
-//     expect(response.type).toEqual("application/json");
-//   });
+  testFunctionPost(URL, "Crear un usuarios sin todos los datos", {
+    nombre_persona: "",
+    apellido_persona: "",
+    dni_persona: "",
+    fecha_nac_persona: "",
+    email_persona: "",
+    telefono_persona: "",
+    username_usuario: "",
+    password_usuario: "",
+    id_tipo_usuario: "",
+  }, 400, API, HEADERS);
+});
 
-//   // TODO: "Actualizar un usuario con datos ya existentes"
+describe(`PUT ${URL}/:id`, () => {
+  const actualizarUsuario = {
+    nombre_persona: "marcos",
+    apellido_persona: "junior",
+    dni_persona: 441017906,
+    fecha_nac_persona: "2022-08-27",
+    email_persona: "test2@gmail.com",
+    telefono_persona: 3704234234,
+    username_usuario: "tester34",
+    password_usuario: "tester34",
+    id_tipo_usuario: "1",
+  };
 
-//   // test("Actualizar un usuario con datos ya existentes", async () => {
-//   //   const equalUser = generarNuevoUsuario();
+  testFunctionGet(URL, "Debe retornar un error al no enviar el token", 401, API);
 
-//   //   await API.post(URL)
-//   //     .set("Content-Type", "application/json")
-//   //     .send(equalUser);
+  testFunctionPut(`${URL}/2`, "Actualizar un usuario", actualizarUsuario, 200, API, HEADERS);
 
-//   //   const userTwo = await API.put(URL)
-//   //     .set("Content-Type", "application/json")
-//   //     .send(equalUser);
-//   //   expect(userTwo.statusCode).toEqual(406);
-//   // });
-// });
+  testFunctionPut(`${URL}/2`, "Actualizar un usuario con datos ya existentes", {
+    nombre_persona: "Nombre Usuario",
+    apellido_persona: "Apellido Usuario",
+    dni_persona: "43711023",
+    fecha_nac_persona: "2001/09/01",
+    email_persona: "correo@gmail.com",
+    telefono_persona: "3704871212",
+    username_usuario: "usuariodev",
+    password_usuario: "123456",
+    id_tipo_usuario: "1",
+  }, 400, API, HEADERS);
+});
+
+describe(`DELETE ${URL}/1`, () => {
+  testFunctionGet(URL, "Debe retornar un error al no enviar el token", 401, API);
+  testFunctionDelete(`${URL}/1`, "Debe retornar un error si el ID no se encuentra en la bd", 400, API, HEADERS);
+});
 
 afterAll(async () => {
   await vaciarTablas();

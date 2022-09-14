@@ -1,3 +1,4 @@
+import bcrypt from "bcryptjs";
 import { UsuariosModelo } from "../models/Usuarios.model";
 import { TiposUsuariosModelo } from "../models/TiposUsuarios.model";
 
@@ -12,7 +13,7 @@ export const crearUsuarios = async () => {
     email_persona: "correo@gmail.com",
     telefono_persona: "3704871212",
     username_usuario: "usuariodev",
-    password_usuario: "123456",
+    password_usuario: bcrypt.hashSync("123456", 10),
     id_tipo_usuario: "1",
   });
 };

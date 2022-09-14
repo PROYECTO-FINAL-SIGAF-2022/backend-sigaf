@@ -15,10 +15,13 @@ const URL = "/api";
 // const HEADERS = getTokenTest();
 
 beforeAll(async () => {
-  await vaciarTablas();
+  try {
+    await vaciarTablas();
 
-  await crearUsuarios();
-  
+    await crearUsuarios();
+  } catch (error) {
+    console.log(error);
+  }
 });
 describe(`POST AUTENTIFICAR ${URL}/login`, () => {
   testFunctionPost(`${URL}/login`, "Debe retornar un 401 si no se envia el nombre de usuario", {

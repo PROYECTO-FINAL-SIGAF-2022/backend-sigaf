@@ -23,7 +23,6 @@ beforeAll(async () => {
 });
 
 describe(`GET ${URL}`, () => {
-  console.log(HEADERS);
   testFunctionGet(URL, "Debe retornar un error al no enviar el token", 401, API);
 
   testFunctionGet(URL, "Debe retornar un json con los registros de actividades", 200, API, HEADERS);
