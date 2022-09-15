@@ -6,17 +6,21 @@ import {
   postHistorial,
   updateHistorial,
 } from "../controllers/historialesParcelasCultivos.controllers.js";
+import validateToken from "../middlewares/validateToken.middleware.js";
+import {
+  getHistorialMidd, getHistorialesMidd, postHostorialMidd, putHostorialMidd, deleteHostorialMidd,
+} from "../middlewares/hostorialesParcelasCultivos.middleware.js";
 
 const router = Router();
 
-router.get("/historiales", getHistoriales);
+router.get("/historiales", validateToken, getHistorialesMidd, getHistoriales);
 
-router.get("/historiales/:id", getHistorialUnico);
+router.get("/historiales/:id", validateToken, getHistorialMidd, getHistorialUnico);
 
-router.post("/historiales", postHistorial);
+router.post("/historiales", validateToken, postHostorialMidd, postHistorial);
 
-router.put("/historiales/:id", updateHistorial);
+router.put("/historiales/:id", validateToken, putHostorialMidd, updateHistorial);
 
-router.delete("/historiales/:id", deleteHistorial);
+router.delete("/historiales/:id", validateToken, deleteHostorialMidd, deleteHistorial);
 
 export default router;

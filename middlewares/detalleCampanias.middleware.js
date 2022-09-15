@@ -4,8 +4,8 @@ import { check, param } from "express-validator";
 import { verificarCampos } from "../helpers/verificarCampos.js";
 
 import { DetalleCampanias } from "../models/DetalleCampanias.model.js";
-import {CampaniasModelo} from "../models/Campanias.model.js"
-import {UnidadesMedidasModelo} from "../models/UnidadesMedidas.model.js"
+import { CampaniasModelo } from "../models/Campanias.model.js";
+import { UnidadesMedidasModelo } from "../models/UnidadesMedidas.model.js";
 
 const getDetalleCampaniasMidd = [verificarCampos];
 
@@ -56,18 +56,19 @@ const postDetalleCampaniasMidd = [
         if (campania <= 0) {
           return Promise.reject("La Unidad de medida ingresada no se encuentra en la bd");
         }
-      }),
+      },
+    ),
   check("cantidad_cosechada")
     .exists()
     .isNumeric()
     .not()
     .isEmpty()
     .withMessage("La cantidad cosechada  es requerida"),
-    verificarCampos,
-  ];
+  verificarCampos,
+];
 
 const putDetalleCampaniasMidd = [
- param("id").custom(
+  param("id").custom(
     async (id_detalle_campania) => {
       // console.log(id_campania);
       const detalle = await DetalleCampanias.count({
@@ -110,19 +111,20 @@ const putDetalleCampaniasMidd = [
         if (campania <= 0) {
           return Promise.reject("La Unidad de medida ingresada no se encuentra en la bd");
         }
-      }),
+      },
+    ),
   check("cantidad_cosechada")
     .exists()
     .isNumeric()
     .not()
     .isEmpty()
     .withMessage("La cantidad cosechada  es requerida"),
-    verificarCampos,
+  verificarCampos,
 ];
 const deleteCampaniasMidd = [
   param("id").custom(
     async (id_detalle_campania) => {
-      const campania = await CampaniasModelo.count({
+      const campania = await DetalleCampanias.count({
         where: { id_detalle_campania },
       });
       // console.log(actividad);

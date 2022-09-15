@@ -6,7 +6,7 @@ import { HistorialesParcelasCultivosModelo } from "../models/HistorialesParcelas
 // Devuelve todos los Historials de la colección
 export const getHistoriales = async (req, res) => {
   try {
-    const historial = await HistorialesParcelasCultivosModelo.findAll({where: { activo: true }}); // consulta para todos los documentos
+    const historial = await HistorialesParcelasCultivosModelo.findAll({ where: { activo: true } }); // consulta para todos los documentos
     // Respuesta del servidor
     res.json(historial);
   } catch (error) {
@@ -20,7 +20,6 @@ export const getHistorialUnico = async (req, res) => {
   try {
     const { id } = req.params;
     const historial = await HistorialesParcelasCultivosModelo.findByPk(id); // consulta para todos los documentos
-
 
     await logSistema(req.decoded, historial.dataValues, "busqueda");
 
@@ -50,7 +49,7 @@ export const postHistorial = async (req, res) => {
       cantidad_uso_producto,
       id_producto,
     });
-    
+
     await logSistema(req.decoded, nuevoHistorial.dataValues, "creacion");
 
     res.json({
@@ -73,7 +72,7 @@ export const updateHistorial = async (req, res) => {
       id_usuario,
       cantidad_uso_producto,
       id_producto,
-    } = req.body[0];
+    } = req.body;
 
     // console.log(id_parcela_cultivo);
 
@@ -95,6 +94,7 @@ export const updateHistorial = async (req, res) => {
       updateHist,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: error.message,
     });
