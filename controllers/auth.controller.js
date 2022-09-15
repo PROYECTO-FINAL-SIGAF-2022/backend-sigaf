@@ -99,3 +99,11 @@ export const registrarse = async (req, res) => {
     });
   }
 };
+
+export const getDataUser = async (req, res) => {
+  try {
+    const id_user = req.params;
+  } catch (error) {
+
+  }
+};
