@@ -244,7 +244,13 @@ describe(`PUT ${URL}/:id`, () => {
     activo: true,
   }, 400, API, HEADERS);
 
-  testFunctionPut(URL, "Actualizar un Historial", sendActualizar, 200, API, HEADERS);
+  testFunctionPut(`${URL}/1`, "Actualizar un Historial", sendActualizar, 200, API, HEADERS);
+});
+
+describe(`${URL}/:id`, () => {
+  testFunctionDelete(`${URL}/1`, "Debe retornar un error al no enviar el token", 401, API);
+  testFunctionDelete(`${URL}/12`, "Debe retornar un error si el ID no existe", 400, API, HEADERS);
+  testFunctionDelete(`${URL}/1`, "Debe retornar un status-code 200", 200, API, HEADERS);
 });
 
 afterAll(async () => {
