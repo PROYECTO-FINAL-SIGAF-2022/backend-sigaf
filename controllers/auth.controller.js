@@ -1,8 +1,10 @@
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 import { generarJwt } from "../helpers/generarJwt.js";
 import { LogSistema } from "../models/LogSistema.js";
-
 import { UsuariosModelo } from "../models/Usuarios.model.js";
+import { TiposUsuariosModelo } from "../models/TiposUsuarios.model.js";
 
 export const loguearse = async (req, res) => {
   const { username_usuario, password_usuario } = req.body;
@@ -102,8 +104,40 @@ export const registrarse = async (req, res) => {
 
 export const getDataUser = async (req, res) => {
   try {
-    const id_user = req.params;
-  } catch (error) {
+    dotenv.config();
+    const token = req.headers.authorization;
 
+    const decoded = jwt.verify(token, process.env.PRIVATE_KEY);
+
+    const { id_usuario } = decoded.paramUsuario;
+
+    const usuario = await UsuariosModelo.findOne({ where: { id_usuario } });
+
+    const usuData = usuario.dataValues;
+
+    const {
+      nombre_persona, apellido_persona, email_persona, username_usuario, telefono_persona, id_tipo_usuario,
+    } = usuData;
+
+    const tipoUsuario = await TiposUsuariosModelo.findOne({ where: { id_tipo_usuario } });
+
+    const { descripcion_tipo_usuario } = tipoUsuario.dataValues;
+
+    const objetoUsuario = {
+      nombre_persona,
+      apellido_persona,
+      email_persona,
+      username_usuario,
+      telefono_persona,
+      descripcion_tipo_usuario,
+
+    };
+
+    res.status(200).json(objetoUsuario);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: error.message,
+    });
   }
 };

@@ -1,7 +1,7 @@
 // ! Falta Completar el Post
 
 import { AgregoParcelasCultivosModelo } from "../models/AgregoParcelasCultivos.model.js";
-import { logSistema } from "../helpers/createLog";
+import { logSistema } from "../helpers/createLog.js";
 
 // Devuelve todos los datos de la colección
 export const getAggParcelasCultivos = async (req, res) => {

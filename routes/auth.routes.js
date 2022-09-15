@@ -1,13 +1,13 @@
 import { Router } from "express";
-import { loguearse, registrarse } from "../controllers/auth.controller.js";
+import { loguearse, registrarse, getDataUser } from "../controllers/auth.controller.js";
 import { postAuthLoginMidd, postAuthRegisterMidd } from "../middlewares/auth.middlewares.js";
-import validateToken from "../middlewares/validateToken.middleware";
+import validateToken from "../middlewares/validateToken.middleware.js";
 
 const router = Router();
 
 router.post("/login", postAuthLoginMidd, loguearse);
 router.post("/registrarse", postAuthRegisterMidd, registrarse);
 
-router.get("/dataUser", validateToken);
+router.get("/data-User", validateToken, getDataUser);
 
 export default router;
