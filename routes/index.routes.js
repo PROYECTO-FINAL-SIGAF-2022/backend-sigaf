@@ -17,6 +17,7 @@ import detalleCampanias from "./detalleCampanias.routes.js";
 import tiposProductos from "./tiposProductos.routes.js";
 import agregoParcelasCultivos from "./agregoParcelasCultivos.routes.js";
 import proveedoresRutas from "./proveedores.routes.js";
+import UnidadesMedidas from "./unidadesMedidas.routes.js";
 // const app = express();
 
 export const rutas = () => [
@@ -34,6 +35,7 @@ export const rutas = () => [
   tiposProductos,
   agregoParcelasCultivos,
   proveedoresRutas,
+  UnidadesMedidas,
 ];
 
 // app.use("/api", usuariosRutas);

@@ -3,7 +3,7 @@ import { UnidadesMedidasModelo } from "../models/UnidadesMedidas.model.js";
 
 export const getUnidadesMedidas = async (req, res) => {
   try {
-    const unidadMedida = await UnidadesMedidasModelo.findAll({where: { activo: true }}); // consulta para todos los documentos
+    const unidadMedida = await UnidadesMedidasModelo.findAll({ where: { activo: true } }); // consulta para todos los documentos
     // Respuesta del servidor
     res.json(unidadMedida);
   } catch (error) {
@@ -43,6 +43,7 @@ export const postUnidadMedida = async (req, res) => {
       nuevaUnidadMedida,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: error.message,
     });
@@ -53,9 +54,9 @@ export const updateUnidadMedida = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const { descripcion_unidad_medida } = req.body[0];
+    const { descripcion_unidad_medida } = req.body;
 
-    const actualizarUnidadMedida = UnidadesMedidasModelo.findOne({
+    const actualizarUnidadMedida = await UnidadesMedidasModelo.findOne({
       where: { id_unidad_medida: id },
     });
 
@@ -63,13 +64,11 @@ export const updateUnidadMedida = async (req, res) => {
 
     await actualizarUnidadMedida.save();
 
-    
     await logSistema(req.decoded, actualizarUnidadMedida.dataValues, "actualizaion");
 
-  
-    res.status(200).json(actualizarUnidadMedida)
-
+    res.status(200).json(actualizarUnidadMedida);
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: error.message,
     });
@@ -87,7 +86,6 @@ export const deleteUnidadMedida = async (req, res) => {
     eliminarUnidadMedida.activo = false;
 
     await eliminarUnidadMedida.save();
-
 
     await logSistema(req.decoded, eliminarUnidadMedida.dataValues, "eliminacion");
 

@@ -8,6 +8,6 @@ const router = Router();
 router.post("/login", postAuthLoginMidd, loguearse);
 router.post("/registrarse", postAuthRegisterMidd, registrarse);
 
-router.get("/data-User", validateToken, getDataUser);
+router.get("/data-user", validateToken, getDataUser);
 
 export default router;
