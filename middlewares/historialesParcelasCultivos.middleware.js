@@ -23,7 +23,7 @@ export const getHistorialMidd = [
   verificarCampos,
 ];
 
-export const postHostorialMidd = [
+export const postHistorialMidd = [
   check("id_parcela_cultivo")
     .exists()
     .not()
@@ -101,7 +101,7 @@ export const postHostorialMidd = [
 
   verificarCampos,
 ];
-export const putHostorialMidd = [
+export const putHistorialMidd = [
   param("id").custom(
     async (id_historial_parcelas_cultivos) => {
       const actividad = await HistorialesParcelasCultivosModelo.count({
@@ -191,7 +191,7 @@ export const putHostorialMidd = [
 
   verificarCampos,
 ];
-export const deleteHostorialMidd = [
+export const deleteHistorialMidd = [
   param("id").custom(
     async (id_historial_parcelas_cultivos) => {
       const actividad = await HistorialesParcelasCultivosModelo.count({

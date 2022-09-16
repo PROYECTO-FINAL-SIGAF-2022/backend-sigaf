@@ -8,8 +8,8 @@ import {
 } from "../controllers/historialesParcelasCultivos.controllers.js";
 import validateToken from "../middlewares/validateToken.middleware.js";
 import {
-  getHistorialMidd, getHistorialesMidd, postHostorialMidd, putHostorialMidd, deleteHostorialMidd,
-} from "../middlewares/hostorialesParcelasCultivos.middleware.js";
+  getHistorialMidd, getHistorialesMidd, postHistorialMidd, putHistorialMidd, deleteHistorialMidd,
+} from "../middlewares/historialesParcelasCultivos.middleware.js";
 
 const router = Router();
 
@@ -17,10 +17,10 @@ router.get("/historiales", validateToken, getHistorialesMidd, getHistoriales);
 
 router.get("/historiales/:id", validateToken, getHistorialMidd, getHistorialUnico);
 
-router.post("/historiales", validateToken, postHostorialMidd, postHistorial);
+router.post("/historiales", validateToken, postHistorialMidd, postHistorial);
 
-router.put("/historiales/:id", validateToken, putHostorialMidd, updateHistorial);
+router.put("/historiales/:id", validateToken, putHistorialMidd, updateHistorial);
 
-router.delete("/historiales/:id", validateToken, deleteHostorialMidd, deleteHistorial);
+router.delete("/historiales/:id", validateToken, deleteHistorialMidd, deleteHistorial);
 
 export default router;
