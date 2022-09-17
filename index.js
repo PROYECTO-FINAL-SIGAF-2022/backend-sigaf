@@ -1,9 +1,9 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
+// import expressListRoutes from "express-list-routes";
 import { connection } from "./config/connection.js";
 import { rutas } from "./routes/index.routes.js";
-
 // RELACIONES
 import "./models/Associations.model.js";
 
@@ -40,5 +40,5 @@ try {
 const server = app.listen(app.get("port"), () => {
   console.log("Server is running on port 4000");
 });
-
+// expressListRoutes(app);
 export { server, app };

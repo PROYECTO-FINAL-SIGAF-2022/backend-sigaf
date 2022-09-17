@@ -12,6 +12,9 @@ export const TiposUsuariosModelo = connection.define(
     descripcion_tipo_usuario: {
       type: DataTypes.STRING,
     },
+    rutas_usuario: {
+      type: DataTypes.JSON,
+    },
     activo: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,

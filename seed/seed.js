@@ -42,6 +42,7 @@ const seedBd = async () => {
   // 1
   await TiposUsuariosModelo.create({
     descripcion_tipo_usuario: "Administrador",
+    rutas_usuario: ["actividades", "usuarios"],
     activo: true,
   });
 

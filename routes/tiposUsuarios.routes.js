@@ -6,17 +6,22 @@ import {
   updateTipoUsuario,
   deleteTipoUsuario,
 } from "../controllers/tiposUsuarios.controllers.js";
+import {
+  deleteTipoUsuarioMidd,
+  getTiposUsuariosMidd, getTipoUsuarioMidd, postTipoUsuarioMidd, putTipoUsuarioMidd,
+} from "../middlewares/tiposUsuarios.middleware.js";
+import validateToken from "../middlewares/validateToken.middleware.js";
 
 const router = Router();
 
-router.get("/tipos-usuarios", getTiposUsuarios);
+router.get("/tipos-usuarios", validateToken, getTiposUsuariosMidd, getTiposUsuarios);
 
-router.get("/tipo-usuarios/:id", getTipoUsuarioUnico);
+router.get("/tipos-usuarios/:id", validateToken, getTipoUsuarioMidd, getTipoUsuarioUnico);
 
-router.post("/tipo-usuarios", postTipoUsuario);
+router.post("/tipos-usuarios", validateToken, postTipoUsuarioMidd, postTipoUsuario);
 
-router.put("/tipo-usuarios/:id", updateTipoUsuario);
+router.put("/tipos-usuarios/:id", validateToken, putTipoUsuarioMidd, updateTipoUsuario);
 
-router.delete("/tipo-usuarios/:id", deleteTipoUsuario);
+router.delete("/tipos-usuarios/:id", validateToken, deleteTipoUsuarioMidd, deleteTipoUsuario);
 
 export default router;

@@ -1,12 +1,10 @@
 import { logSistema } from "../helpers/createLog.js";
 import { TiposUsuariosModelo } from "../models/TiposUsuarios.model.js";
 
-// Devuelve todos los Tipo_usuarios de la colección
 export const getTiposUsuarios = async (req, res) => {
   try {
-    const tipoUsu = await TiposUsuariosModelo.findAll({where: { activo: true }}); // consulta para todos los documentos
-    // Respuesta del servidor
-    res.json(tipoUsu);
+    const tipoUsuarios = await TiposUsuariosModelo.findAll({ where: { activo: true } });
+    res.status(200).json(tipoUsuarios);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -17,14 +15,13 @@ export const getTiposUsuarios = async (req, res) => {
 export const getTipoUsuarioUnico = async (req, res) => {
   try {
     const { id } = req.params;
-    const tipoUsu = await TiposUsuariosModelo.findByPk(id); // consulta para todos los documentos
+    const tipoUsuario = await TiposUsuariosModelo.findByPk(id);
 
-    
-    await logSistema(req.decoded, eliminarTipoProdcuto.dataValues, "busqueda");
+    await logSistema(req.decoded, tipoUsuario.dataValues, "busqueda");
 
-    // Respuesta del servidor
-    res.json(tipoUsu);
+    res.json(tipoUsuario);
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: error.message,
     });
@@ -33,17 +30,18 @@ export const getTipoUsuarioUnico = async (req, res) => {
 
 export const postTipoUsuario = async (req, res) => {
   try {
-    const { descripcion_tipo_usuario } = req.body;
+    const { descripcion_tipo_usuario, rutas_usuario } = req.body;
 
-    const nuevoTipo_Usuario = await TiposUsuariosModelo.create({
+    const nuevoTipoUsuario = await TiposUsuariosModelo.create({
       descripcion_tipo_usuario,
+      rutas_usuario,
     });
 
-    await logSistema(req.decoded, nuevoTipo_Usuario.dataValues, "creacion");
+    await logSistema(req.decoded, nuevoTipoUsuario.dataValues, "creacion");
 
-    res.json({
+    res.status(201).json({
       msg: "El Tipo_Usuario se creo Correctamente",
-      nuevoTipo_Usuario,
+      nuevoTipoUsuario,
     });
   } catch (error) {
     return res.status(500).json({
@@ -55,22 +53,23 @@ export const postTipoUsuario = async (req, res) => {
 export const updateTipoUsuario = async (req, res) => {
   try {
     const { id } = req.params;
-    const { descripcion_tipo_usuario } = req.body[0];
+    const { descripcion_tipo_usuario, rutas_usuario } = req.body;
 
-
-    const updateTipoUser = await TiposUsuariosModelo.findOne({
+    const updateTipoUsario = await TiposUsuariosModelo.findOne({
       where: { id_tipo_usuario: id },
     });
-    updateTipoUser.descripcion_tipo_usuario = descripcion_tipo_usuario;
-    await updateTipoUser.save();
+    updateTipoUsario.descripcion_tipo_usuario = descripcion_tipo_usuario;
+    updateTipoUsario.rutas_usuario = rutas_usuario;
+    await updateTipoUsario.save();
 
-    await logSistema(req.decoded, updateTipoUser.dataValues, "actualizacion");
+    await logSistema(req.decoded, updateTipoUsario.dataValues, "actualizacion");
 
-    res.json({
+    res.status(200).json({
       msg: "El Tipo_Usuario se actualizo Correctamente",
-      updateTipoUser,
+      updateTipoUsario,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: error.message,
     });
