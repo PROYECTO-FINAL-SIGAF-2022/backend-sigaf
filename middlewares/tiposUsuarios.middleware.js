@@ -122,10 +122,10 @@ export const deleteTipoUsuarioMidd = [
       });
 
       if (tipoUsuario === 0) {
-        return Promise.reject();
+        return Promise.reject("El id enviado no se coincide con ningun registro de la base de datos");
       }
     },
 
-  ).withMessage("El id enviado no se coincide con ningun registro de la base de datos"),
+  ),
   verificarCampos,
 ];

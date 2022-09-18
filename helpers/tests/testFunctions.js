@@ -27,6 +27,7 @@ export const testFunctionPost = async (paramUrl, paramMensaje, paramSend, paramS
         .set("content-type", "application/json")
         .send(paramSend);
     }
+    // console.log(response);
     expect(response.statusCode).toEqual(paramStatus);
     expect(response.type).toEqual("application/json");
 

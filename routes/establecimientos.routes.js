@@ -10,18 +10,19 @@ import {
   deleteEstablecimientoMidd,
   getEstablecimientoMidd, getEstablecimientosMidd, postEstablecimientoMidd, putEstablecimientoMidd,
 } from "../middlewares/establecimientos.middlewares.js";
+import { validarAccesoRutas } from "../middlewares/validarAccesoRutas.middleware.js";
 import validateToken from "../middlewares/validateToken.middleware.js";
 
 const router = Router();
 
-router.get("/establecimientos", validateToken, getEstablecimientosMidd, getEstablecimientos);
+router.get("/establecimientos", validateToken, validarAccesoRutas, getEstablecimientosMidd, getEstablecimientos);
 
-router.get("/establecimientos/:id", validateToken, getEstablecimientoMidd, getEstablecimientoUnico);
+router.get("/establecimientos/:id", validateToken, validarAccesoRutas, getEstablecimientoMidd, getEstablecimientoUnico);
 
-router.post("/establecimientos", validateToken, postEstablecimientoMidd, postEstablecimiento);
+router.post("/establecimientos", validateToken, validarAccesoRutas, postEstablecimientoMidd, postEstablecimiento);
 
-router.put("/establecimientos/:id", validateToken, putEstablecimientoMidd, updateEstablecimiento);
+router.put("/establecimientos/:id", validateToken, validarAccesoRutas, putEstablecimientoMidd, updateEstablecimiento);
 
-router.delete("/establecimientos/:id", validateToken, deleteEstablecimientoMidd, deleteEstablecimiento);
+router.delete("/establecimientos/:id", validateToken, validarAccesoRutas, deleteEstablecimientoMidd, deleteEstablecimiento);
 
 export default router;

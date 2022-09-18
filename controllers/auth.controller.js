@@ -5,6 +5,7 @@ import { generarJwt } from "../helpers/generarJwt.js";
 import { LogSistema } from "../models/LogSistema.js";
 import { UsuariosModelo } from "../models/Usuarios.model.js";
 import { TiposUsuariosModelo } from "../models/TiposUsuarios.model.js";
+import { EstablecimientosModelo } from "../models/Establecimientos.model.js";
 
 export const loguearse = async (req, res) => {
   const { username_usuario, password_usuario } = req.body;
@@ -31,7 +32,27 @@ export const loguearse = async (req, res) => {
 
     // generar el token
     const { id_usuario } = usuario;
-    const token = await generarJwt({ id_usuario });
+
+    // verificar que el usuario tenga un establecimiento creado
+
+    const estabCantidad = await EstablecimientosModelo.count({
+      where: { id_usuario },
+    });
+
+    let token;
+    if (estabCantidad > 0) {
+      const establecimiento = await EstablecimientosModelo.findOne({
+        where: { id_usuario },
+      });
+      // console.log(establecimiento);
+      const { id_establecimiento } = establecimiento;
+      // console.log(id_establecimiento);
+      token = await generarJwt({ id_usuario, id_establecimiento });
+    } else {
+      token = await generarJwt({ id_usuario });
+    }
+
+    // obtener establecimiento
 
     await LogSistema.create({
       id_usuario,
@@ -78,12 +99,23 @@ export const registrarse = async (req, res) => {
 
     // generar el token
     const { id_usuario } = nuevoUsuario;
-    const token = await generarJwt({ id_usuario });
 
-    // const dataLog = nuevoUsuario.dataValues;
+    const estabCantidad = await EstablecimientosModelo.count({
+      where: { id_usuario },
+    });
 
-    // console.log(dataLog);
+    let token;
+    if (estabCantidad > 0) {
+      const establecimiento = await EstablecimientosModelo.findOne({
+        where: { id_usuario },
+      });
+      console.log(establecimiento);
+      const { id_establecimiento } = establecimientodataValues;
 
+      token = await generarJwt({ id_usuario, id_establecimiento });
+    } else {
+      token = await generarJwt({ id_usuario });
+    }
     await LogSistema.create({
       id_usuario,
       descripcion_log: `El usuario con ID ${id_usuario} se ha registrado`,

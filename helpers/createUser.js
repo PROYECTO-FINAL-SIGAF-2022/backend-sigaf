@@ -3,7 +3,7 @@ import { UsuariosModelo } from "../models/Usuarios.model";
 import { TiposUsuariosModelo } from "../models/TiposUsuarios.model";
 
 export const crearUsuarios = async () => {
-  await TiposUsuariosModelo.create({ descripcion_tipo_usuario: "Administrador" });
+  await TiposUsuariosModelo.create({ descripcion_tipo_usuario: "Administrador", rutas_usuario: ["usuarios", "establecimientos", "actividades", "campanias", "cultivos", "historiales", "parcelas", "parcelas-cultivos", "tipos-usuarios", "detalle-campanias", "tipo-productos", "agregar-parcela-cultivos", "proveedores", "unidades-medidas", "productos", "perdidas-parcelas-cultivos"] });
 
   await UsuariosModelo.create({
     nombre_persona: "Nombre Usuario",

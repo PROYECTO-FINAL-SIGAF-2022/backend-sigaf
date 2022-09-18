@@ -21,7 +21,7 @@ beforeAll(async () => {
 
   await TiposUsuariosModelo.create({
     descripcion_tipo_usuario: "Administrador",
-    rutas_usuario: ["actividades", "usuarios"],
+    rutas_usuario: ["usuarios", "establecimientos", "actividades", "campanias", "cultivos", "historiales", "parcelas", "parcelas-cultivos", "tipos-usuarios", "detalle-campanias", "tipo-productos", "agregar-parcela-cultivos", "proveedores", "unidades-medidas", "productos", "perdidas-parcelas-cultivos"],
   });
 });
 
@@ -93,7 +93,7 @@ describe(`PUT ${URL}/:id`, () => {
 
   testFunctionPut(`${URL}/1`, "Actualizar un tipo de usuario", {
     descripcion_tipo_usuario: "Administrador Actualizar",
-    rutas_usuario: ["establecimientos", "actividades", "campanias", "proveedores"],
+    rutas_usuario: ["usuarios", "establecimientos", "actividades", "campanias", "cultivos", "historiales", "parcelas", "parcelas-cultivos", "tipos-usuarios", "detalle-campanias", "tipo-productos", "agregar-parcela-cultivos", "proveedores", "unidades-medidas", "productos", "perdidas-parcelas-cultivos"],
   }, 200, API, HEADERS);
 });
 

@@ -42,7 +42,7 @@ const seedBd = async () => {
   // 1
   await TiposUsuariosModelo.create({
     descripcion_tipo_usuario: "Administrador",
-    rutas_usuario: ["actividades", "usuarios"],
+    rutas_usuario: ["usuarios", "establecimientos", "actividades", "campanias", "cultivos", "historiales", "parcelas", "parcelas-cultivos", "tipos-usuarios", "detalle-campanias", "tipo-productos", "agregar-parcela-cultivos", "proveedores", "unidades-medidas", "productos", "perdidas-parcelas-cultivos"],
     activo: true,
   });
 

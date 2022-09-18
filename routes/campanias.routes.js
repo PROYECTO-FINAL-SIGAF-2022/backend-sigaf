@@ -15,17 +15,18 @@ import {
   putCampaniasMidd,
   deleteCampaniasMidd,
 } from "../middlewares/campanias.middlewares.js";
+import { validarAccesoRutas } from "../middlewares/validarAccesoRutas.middleware.js";
 
 const router = Router();
 
-router.get("/campanias", validateToken, getCampaniasMidd, getCampanias);
+router.get("/campanias", validateToken, validarAccesoRutas, getCampaniasMidd, getCampanias);
 
-router.get("/campanias/:id", validateToken, getCampaniaMidd, getCampaniaUnico);
+router.get("/campanias/:id", validateToken, validarAccesoRutas, getCampaniaMidd, getCampaniaUnico);
 
-router.post("/campanias", validateToken, postCampaniasMidd, postCampania);
+router.post("/campanias", validateToken, validarAccesoRutas, postCampaniasMidd, postCampania);
 
-router.put("/campanias/:id", validateToken, putCampaniasMidd, updateCampania);
+router.put("/campanias/:id", validateToken, validarAccesoRutas, putCampaniasMidd, updateCampania);
 
-router.delete("/campanias/:id", validateToken, deleteCampaniasMidd, deleteCampania);
+router.delete("/campanias/:id", validateToken, validarAccesoRutas, deleteCampaniasMidd, deleteCampania);
 
 export default router;

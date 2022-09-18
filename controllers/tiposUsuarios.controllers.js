@@ -95,6 +95,7 @@ export const deleteTipoUsuario = async (req, res) => {
       message: `El Tipo_Usuario con id ${id} se elimino correctamente`,
     });
   } catch (error) {
+    // console.log(error);
     return res.status(500).json({
       message: error.message,
     });

@@ -15,24 +15,25 @@ import {
   putProductoMidd,
   deleteCultivoMidd,
 } from "../middlewares/productos.middleware.js";
+import { validarAccesoRutas } from "../middlewares/validarAccesoRutas.middleware.js";
 
 import validateToken from "../middlewares/validateToken.middleware.js";
 
 const router = Router();
 
 //  Ruta que devuelve todos los productos
-router.get("/productos", validateToken, getProductosMidd, getProductos);
+router.get("/productos", validateToken, validarAccesoRutas, getProductosMidd, getProductos);
 
 // Ruta que devuelve un solo porducto
-router.get("/productos/:id", validateToken, getProductoMidd, getProductoUnico);
+router.get("/productos/:id", validateToken, validarAccesoRutas, getProductoMidd, getProductoUnico);
 
 // Ruta que almacena nuevos productos
-router.post("/productos", validateToken, postProductoMidd, postProducto);
+router.post("/productos", validateToken, validarAccesoRutas, postProductoMidd, postProducto);
 
 // Ruta que actualiza los datos de un producto
-router.put("/productos/:id", validateToken, putProductoMidd, updateProducto);
+router.put("/productos/:id", validateToken, validarAccesoRutas, putProductoMidd, updateProducto);
 
 // Ruta que elimina un producto
-router.delete("/productos/:id", validateToken, deleteCultivoMidd, deleteProducto);
+router.delete("/productos/:id", validateToken, validarAccesoRutas, deleteCultivoMidd, deleteProducto);
 
 export default router;
