@@ -1,10 +1,9 @@
 import { logSistema } from "../helpers/createLog.js";
 import { ParcelasCultivosModelo } from "../models/ParcelasCultivos.model.js";
 
-// Devuelve todos los Cultivos de la colección
 export const getParcelasCultivos = async (req, res) => {
   try {
-    const datosParcCultivo = await ParcelasCultivosModelo.findAll({ where: { activo: true } }); // consulta para todos los documentos
+    const datosParcCultivo = await ParcelasCultivosModelo.findAll({ where: { activo: true } });
     // Respuesta del servidor
     res.json(datosParcCultivo);
   } catch (error) {
@@ -17,7 +16,7 @@ export const getParcelasCultivos = async (req, res) => {
 export const getParcelaCultivoUnico = async (req, res) => {
   try {
     const { id } = req.params;
-    const datosParcCultivo = await ParcelasCultivosModelo.findByPk(id); // consulta para todos los documentos
+    const datosParcCultivo = await ParcelasCultivosModelo.findByPk(id);
 
     await logSistema(req.decoded, datosParcCultivo.dataValues, "busqueda");
 
@@ -63,8 +62,6 @@ export const updateParcelaCultivo = async (req, res) => {
     const {
       id_parcela, id_cultivo, id_campania, cantidad_sembrada,
     } = req.body;
-
-    console.log(id);
 
     const updateParcCult = await ParcelasCultivosModelo.findOne({
       where: { id_parcela_cultivo: id },

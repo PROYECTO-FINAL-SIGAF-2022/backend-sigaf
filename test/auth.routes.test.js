@@ -1,4 +1,3 @@
-import bcrypt from "bcryptjs";
 import supertest from "supertest";
 // import { getTokenTest } from "../helpers/getToken.js";
 import { vaciarTablas } from "../helpers/vaciarTablas.js";

@@ -13,7 +13,6 @@ export const loguearse = async (req, res) => {
     const usuario = await UsuariosModelo.findOne({
       where: { username_usuario },
     });
-    console.log(usuario);
     if (!usuario) {
       return res.status(401).json({
         msg: "El usuario no existe",

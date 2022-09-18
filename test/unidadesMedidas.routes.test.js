@@ -68,7 +68,7 @@ describe(`PUT ${URL}/:id`, () => {
 
   testFunctionPut(`${URL}/1`, "Actualizar una unidad de medida", {
     descripcion_unidad_medida: "Toneladitas",
-  }, 200, API, HEADERS, true);
+  }, 200, API, HEADERS);
 
   testFunctionPut(`${URL}/13`, "Actualizar una unidad de medida con un id inexistente", {
     descripcion_unidad_medida: "Toneladas",

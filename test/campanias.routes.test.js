@@ -55,7 +55,7 @@ describe(`GET ${URL}`, () => {
 describe(`GET ${URL}/:id`, () => {
   testFunctionGet(`${URL}/1`, "Debe retornar un error al no enviar el token", 401, API);
 
-  testFunctionGet(`${URL}/3`, "Si no existe debe retornar un OBJETO con un mensaje de id no existe en la bd", 400, API, HEADERS, true);
+  testFunctionGet(`${URL}/3`, "Si no existe debe retornar un OBJETO con un mensaje de id no existe en la bd", 400, API, HEADERS);
 
   testFunctionGet(`${URL}/1`, "Debe restornar un OBJETO con el registro de campanias encontrado", 200, API, HEADERS);
 

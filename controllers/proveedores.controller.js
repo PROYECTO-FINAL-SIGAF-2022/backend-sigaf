@@ -61,7 +61,6 @@ export const postProveedor = async (req, res) => {
 };
 
 export const updateProveedor = async (req, res) => {
-  console.log(req.params);
   try {
     const { id } = req.params;
     const {

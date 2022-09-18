@@ -1,5 +1,3 @@
-// ! Falta Completar el Post
-
 import { AgregoParcelasCultivosModelo } from "../models/AgregoParcelasCultivos.model.js";
 import { logSistema } from "../helpers/createLog.js";
 
@@ -8,7 +6,7 @@ export const getAggParcelasCultivos = async (req, res) => {
   try {
     const agregoParCul = await AgregoParcelasCultivosModelo.findAll({ where: { activo: true } }); // consulta para todos los documentos
     // Respuesta del servidor
-    res.json(agregoParCul);
+    res.status(200).json(agregoParCul);
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -25,7 +23,7 @@ export const getAggParcelaCultivoUnico = async (req, res) => {
     await logSistema(req.decoded, agregoParCul.dataValues, "busqueda");
 
     // Respuesta del servidor
-    res.json(agregoParCul);
+    res.status(200).json(agregoParCul);
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -46,7 +44,7 @@ export const postAggParcelaCultivo = async (req, res) => {
 
     await logSistema(req.decoded, nuevaAggParcelaCultivo.dataValues, "creacion");
 
-    res.status(200).json({
+    res.status(201).json({
       msg: "La ParcelaCultivo se creo Correctamente",
       nuevaAggParcelaCultivo,
     });
@@ -63,8 +61,6 @@ export const updateAggParcCultela = async (req, res) => {
     const { id } = req.params;
     const { cantidad_agregada, id_parcela_cultivo, id_unidad_medida } = req.body;
 
-    console.log(id);
-
     const updateAggParcCult = await AgregoParcelasCultivosModelo.findOne({
       where: { id_agrego_parcela_cultivo: id },
     });
@@ -75,7 +71,7 @@ export const updateAggParcCultela = async (req, res) => {
 
     await logSistema(req.decoded, updateAggParcCult.dataValues, "actualizacion");
 
-    res.json({
+    res.status(200).json({
       msg: "La ParcelaCultivo se actualizo Correctamente",
       updateAggParcCult,
     });

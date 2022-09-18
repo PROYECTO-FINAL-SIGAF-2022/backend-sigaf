@@ -95,12 +95,10 @@ export const updateUsuariosMidd = [
           const usuario = await UsuariosModelo.count({
             where: { nombre_persona, id_usuario: { [Op.not]: id_usuario } },
           });
-          // console.log(proveedor);
           if (usuario > 0) {
             return Promise.reject("El nombre del usuario ingresado ya se encuentra en la bd");
           }
         } catch (error) {
-          // console.log(error);
           return Promise.reject(error);
         }
       },
@@ -117,12 +115,10 @@ export const updateUsuariosMidd = [
           const usuario = await UsuariosModelo.count({
             where: { apellido_persona, id_usuario: { [Op.not]: id_usuario } },
           });
-          console.log(usuario);
           if (usuario > 0) {
             return Promise.reject("El apellido del usuario ingresado ya se encuentra en la bd");
           }
         } catch (error) {
-          // console.log(error);
           return Promise.reject(error);
         }
       },
@@ -139,12 +135,10 @@ export const updateUsuariosMidd = [
           const usuario = await UsuariosModelo.count({
             where: { dni_persona, id_usuario: { [Op.not]: id_usuario } },
           });
-          // console.log(proveedor);
           if (usuario > 0) {
             return Promise.reject("El dni del usuario ingresado ya se encuentra en la bd");
           }
         } catch (error) {
-          // console.log(error);
           return Promise.reject(error);
         }
       },
@@ -160,12 +154,10 @@ export const updateUsuariosMidd = [
           const usuario = await UsuariosModelo.count({
             where: { fecha_nac_persona, id_usuario: { [Op.not]: id_usuario } },
           });
-          // console.log(proveedor);
           if (usuario > 0) {
             return Promise.reject("La fecha de nacimiento del usuario ingresado ya se encuentra en la bd");
           }
         } catch (error) {
-          // console.log(error);
           return Promise.reject(error);
         }
       },
@@ -183,12 +175,10 @@ export const updateUsuariosMidd = [
           const usuario = await UsuariosModelo.count({
             where: { telefono_persona, id_usuario: { [Op.not]: id_usuario } },
           });
-          // console.log(proveedor);
           if (usuario > 0) {
             return Promise.reject("El nuemero de telefono del usuario ingresado ya se encuentra en la bd");
           }
         } catch (error) {
-          // console.log(error);
           return Promise.reject(error);
         }
       },
@@ -205,12 +195,10 @@ export const updateUsuariosMidd = [
           const usuario = await UsuariosModelo.count({
             where: { username_usuario, id_usuario: { [Op.not]: id_usuario } },
           });
-          // console.log(proveedor);
           if (usuario > 0) {
             return Promise.reject("El nombre de usuario del usuario ingresado ya se encuentra en la bd");
           }
         } catch (error) {
-          // console.log(error);
           return Promise.reject(error);
         }
       },

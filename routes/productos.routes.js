@@ -3,7 +3,7 @@ import { Router } from "express";
 import {
   getProductos,
   getProductoUnico,
-  postPoducto,
+  postProducto,
   updateProducto,
   deleteProducto,
 } from "../controllers/productos.controller.js";
@@ -27,7 +27,7 @@ router.get("/productos", validateToken, getProductosMidd, getProductos);
 router.get("/productos/:id", validateToken, getProductoMidd, getProductoUnico);
 
 // Ruta que almacena nuevos productos
-router.post("/productos", validateToken, postProductoMidd, postPoducto);
+router.post("/productos", validateToken, postProductoMidd, postProducto);
 
 // Ruta que actualiza los datos de un producto
 router.put("/productos/:id", validateToken, putProductoMidd, updateProducto);

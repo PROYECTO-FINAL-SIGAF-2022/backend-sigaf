@@ -1,10 +1,9 @@
 import { logSistema } from "../helpers/createLog.js";
 import { ProductosModelo } from "../models/Productos.model.js";
 
-// Devuelve todos los productos de la colección
 export const getProductos = async (req, res) => {
   try {
-    const productos = await ProductosModelo.findAll({where: { activo: true }}); // consulta para todos los documentos
+    const productos = await ProductosModelo.findAll({ where: { activo: true } });
 
     res.status(200).json(productos);
   } catch (error) {
@@ -17,15 +16,11 @@ export const getProductos = async (req, res) => {
 export const getProductoUnico = async (req, res) => {
   try {
     const { id } = req.params;
-    const producto = await ProductosModelo.findByPk(id); // consulta para todos los documentos
-
+    const producto = await ProductosModelo.findByPk(id);
 
     await logSistema(req.decoded, producto.dataValues, "busqueda");
 
-    // Respuesta del servidor
- 
     res.status(200).json(producto);
-   
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -33,21 +28,28 @@ export const getProductoUnico = async (req, res) => {
   }
 };
 
-export const postPoducto = async (req, res) => {
+export const postProducto = async (req, res) => {
   try {
     const {
       descripcion_producto,
       fecha_vencimiento_producto,
       cantidad_producto,
+      id_proveedor,
+      id_tipo_producto,
+      id_usuario,
+      id_unidad_medida,
     } = req.body;
 
     const nuevoProducto = await ProductosModelo.create({
       descripcion_producto,
       fecha_vencimiento_producto,
       cantidad_producto,
+      id_proveedor,
+      id_tipo_producto,
+      id_usuario,
+      id_unidad_medida,
     });
 
-    
     await logSistema(req.decoded, nuevoProducto.dataValues, "creacion");
 
     res.status(201).json({
@@ -69,6 +71,10 @@ export const updateProducto = async (req, res) => {
       descripcion_producto,
       fecha_vencimiento_producto,
       cantidad_producto,
+      id_proveedor,
+      id_tipo_producto,
+      id_usuario,
+      id_unidad_medida,
     } = req.body;
     // console.log(id);
 
@@ -78,11 +84,15 @@ export const updateProducto = async (req, res) => {
     updateProduc.descripcion_producto = descripcion_producto;
     updateProduc.fecha_vencimiento_producto = fecha_vencimiento_producto;
     updateProduc.cantidad_producto = cantidad_producto;
+    updateProduc.id_proveedor = id_proveedor;
+    updateProduc.id_tipo_producto = id_tipo_producto;
+    updateProduc.id_usuario = id_usuario;
+    updateProduc.id_unidad_medida = id_unidad_medida;
     await updateProduc.save();
 
     await logSistema(req.decoded, updateProduc.dataValues, "actualizacion");
 
-    res.status(201).json({
+    res.status(200).json({
       msg: "El producto se actualizo Correctamente",
       updateProduc,
     });
@@ -106,10 +116,11 @@ export const deleteProducto = async (req, res) => {
 
     await logSistema(req.decoded, eliminarProducto.dataValues, "eliminacion");
 
-    res.status(201).json({
-      msg: `El producto con id ${id} se elimino Correctamente`
+    res.status(200).json({
+      msg: `El producto con id ${id} se elimino Correctamente`,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: error.message,
     });

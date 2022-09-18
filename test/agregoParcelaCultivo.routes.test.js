@@ -114,7 +114,7 @@ describe(`POST ${URL}`, () => {
     cantidad_agregada: "23",
   }, 400, API, HEADERS);
 
-  testFunctionPost(URL, "Debe retornar un json con el nuevo registro ", sendCrear, 200, API, HEADERS);
+  testFunctionPost(URL, "Debe retornar un json con el nuevo registro ", sendCrear, 201, API, HEADERS);
 });
 
 describe(` PUT ${URL}/1`, () => {
