@@ -13,6 +13,7 @@ const args = process.argv;
 const resultArgBd = args.find((arg) => arg.includes("bd="));
 
 let nombreBD = "";
+// console.log(args);
 if (args.length > 0 && resultArgBd) {
   const [, dbNameArgs] = resultArgBd.split("=");
   // console.log(dbNameArgs);

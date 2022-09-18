@@ -16,9 +16,10 @@ import tiposUsuariosRutas from "./tiposUsuarios.routes.js";
 import detalleCampaniasRutas from "./detalleCampanias.routes.js";
 import tiposProductosRutas from "./tiposProductos.routes.js";
 import agregoParcelasCultivosRutas from "./agregoParcelasCultivos.routes.js";
+import perdidaParcelasCultivosRutas from "./perdidasParcelasCultivos.routes.js";
 import proveedoresRutas from "./proveedores.routes.js";
 import unidadesMedidasRutas from "./unidadesMedidas.routes.js";
-import productosRutas from "./productos.routes";
+import productosRutas from "./productos.routes.js";
 // const app = express();
 
 export const rutas = () => [
@@ -38,6 +39,7 @@ export const rutas = () => [
   proveedoresRutas,
   unidadesMedidasRutas,
   productosRutas,
+  perdidaParcelasCultivosRutas,
 ];
 
 // app.use("/api", usuariosRutas);

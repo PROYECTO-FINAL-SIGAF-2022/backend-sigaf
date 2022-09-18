@@ -6,17 +6,22 @@ import {
   updatePerdidaParcelaCultivo,
   deletePerdidaParcelaCultivo,
 } from "../controllers/perdidasParcelasCultivos.controller.js";
+import {
+  deletePerdidaParCultivoMidd,
+  getPerdidaParcCultivosMidd, getPerdidaParCultivoMidd, postPerdidaParCultivoMidd, putPerdidaParCultivoMidd,
+} from "../middlewares/perdidasParcelasCultivos.middleware.js";
+import validateToken from "../middlewares/validateToken.middleware.js";
 
 const router = Router();
 
-router.get("/perdida-parcelas-cultivos", getPerdidasParcelasCultivos);
+router.get("/perdidas-parcelas-cultivos", validateToken, getPerdidaParcCultivosMidd, getPerdidasParcelasCultivos);
 
-router.get("/perdida-parcela-cultivo/:id", getPerdidaParcelaCultivoUnico);
+router.get("/perdidas-parcelas-cultivos/:id", validateToken, getPerdidaParCultivoMidd, getPerdidaParcelaCultivoUnico);
 
-router.post("/perdida-parcelas-cultivos", postPerdidaParcelaCultivo);
+router.post("/perdidas-parcelas-cultivos", validateToken, postPerdidaParCultivoMidd, postPerdidaParcelaCultivo);
 
-router.put("/perdida-parcelas-cultivos/:id", updatePerdidaParcelaCultivo);
+router.put("/perdidas-parcelas-cultivos/:id", validateToken, putPerdidaParCultivoMidd, updatePerdidaParcelaCultivo);
 
-router.delete("/perdida-parcelas-cultivos/:id", deletePerdidaParcelaCultivo);
+router.delete("/perdidas-parcelas-cultivos/:id", validateToken, deletePerdidaParCultivoMidd, deletePerdidaParcelaCultivo);
 
 export default router;

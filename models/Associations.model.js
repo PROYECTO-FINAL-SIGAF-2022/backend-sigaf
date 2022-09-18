@@ -186,6 +186,12 @@ PerdidasParcelasCultivosModelo.belongsTo(ParcelasCultivosModelo, {
   onUpdate: "restrict",
 });
 
+PerdidasParcelasCultivosModelo.belongsTo(UnidadesMedidasModelo, {
+  foreignKey: "id_unidad_medida",
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
+
 // TABLA PRODUCTOS
 ProductosModelo.belongsTo(ProveedoresModelo, {
   foreignKey: "id_proveedor",

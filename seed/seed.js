@@ -183,6 +183,7 @@ const seedBd = async () => {
   // 17
   await PerdidasParcelasCultivosModelo.create({
     id_parcela_cultivo: "1",
+    id_unidad_medida: "1",
     cantidad_perdida: "10",
   });
 

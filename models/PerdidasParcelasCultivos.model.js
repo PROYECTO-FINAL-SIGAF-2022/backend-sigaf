@@ -13,9 +13,17 @@ export const PerdidasParcelasCultivosModelo = connection.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    id_unidad_medida: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     cantidad_perdida: {
       type: DataTypes.INTEGER,
       allowNull: false,
+    },
+    activo: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
     },
   },
   {
