@@ -75,14 +75,14 @@ describe(`PUT ${URL}/:id`, () => {
     apellido_persona: "junior",
     dni_persona: 441017906,
     fecha_nac_persona: "2022-08-27",
-    email_persona: "test2@gmail.com",
+    email_persona: "test222@gmail.com",
     telefono_persona: 3704234234,
     username_usuario: "tester34",
     password_usuario: "tester34",
     id_tipo_usuario: "1",
   };
 
-  testFunctionGet(URL, "Debe retornar un error al no enviar el token", 401, API);
+  testFunctionPut(`${URL}/2`, "Debe retornar un error al no enviar el token", {}, 401, API);
 
   testFunctionPut(`${URL}/2`, "Actualizar un usuario", actualizarUsuario, 200, API, HEADERS);
 

@@ -58,7 +58,7 @@ describe(`POST REGISTRAR ${URL}`, () => {
     apellido_persona: "Apellido Usuario",
     dni_persona: "43711025",
     fecha_nac_persona: "2001/09/01",
-    email_persona: "correo@gmail.com",
+    email_persona: "correo12@gmail.com",
     telefono_persona: "3704871212",
     username_usuario: "usuariodevprueba",
     password_usuario: "123456",

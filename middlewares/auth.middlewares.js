@@ -45,17 +45,17 @@ export const postAuthRegisterMidd = [
     .isLength(8)
     .withMessage("El dni debe ser de una longitud de 8 numero")
 
-    .custom(
-      async (dni_persona) => {
-        const usuario = await UsuariosModelo.count({
-          where: { dni_persona },
-        });
-        // console.log(usuario);
-        if (usuario > 0) {
-          return Promise.reject("El dni de usuario ingresado ya se encuentra en la bd");
-        }
-      },
-    ),
+    .custom(async (dni_persona) => {
+      const usuario = await UsuariosModelo.count({
+        where: { dni_persona },
+      });
+      // console.log(usuario);
+      if (usuario > 0) {
+        return Promise.reject(
+          "El dni de usuario ingresado ya se encuentra en la bd",
+        );
+      }
+    }),
   check("fecha_nac_persona")
     .exists()
     .not()
@@ -67,7 +67,18 @@ export const postAuthRegisterMidd = [
     .exists()
     .not()
     .isEmpty()
-    .withMessage("El correo de la persona es requerida"),
+    .withMessage("El correo de la persona es requerida")
+    .custom(async (email_persona) => {
+      const usuario = await UsuariosModelo.count({
+        where: { email_persona },
+      });
+      // console.log(usuario);
+      if (usuario > 0) {
+        return Promise.reject(
+          "El correo ingresado ingresado ya se encuentra en la bd",
+        );
+      }
+    }),
   check("telefono_persona")
     .isNumeric()
     .withMessage("El telefono solo puede contener numeros")
@@ -82,17 +93,17 @@ export const postAuthRegisterMidd = [
     .not()
     .isEmpty()
     .withMessage("El usuario de la persona es requerida")
-    .custom(
-      async (username_usuario) => {
-        const usuario = await UsuariosModelo.count({
-          where: { username_usuario },
-        });
-        // console.log(usuario);
-        if (usuario > 0) {
-          return Promise.reject("El nombre de usuario ingresado ya se encuentra en la bd");
-        }
-      },
-    ),
+    .custom(async (username_usuario) => {
+      const usuario = await UsuariosModelo.count({
+        where: { username_usuario },
+      });
+      // console.log(usuario);
+      if (usuario > 0) {
+        return Promise.reject(
+          "El nombre de usuario ingresado ya se encuentra en la bd",
+        );
+      }
+    }),
   check("password_usuario")
     .exists()
     .not()

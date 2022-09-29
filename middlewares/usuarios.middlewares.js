@@ -1,5 +1,3 @@
-// validar datos de usuario con express-validator
-
 import { check, param } from "express-validator";
 import { Op } from "sequelize";
 import { verificarCampos } from "../helpers/verificarCampos.js";
@@ -162,7 +160,24 @@ export const updateUsuariosMidd = [
         }
       },
     ),
-
+  check("email_persona")
+    .isEmail()
+    .withMessage("El correo ingresado no es un correo valido")
+    .exists()
+    .not()
+    .isEmpty()
+    .withMessage("El correo de la persona es requerida")
+    .custom(async (email_persona) => {
+      const usuario = await UsuariosModelo.count({
+        where: { email_persona },
+      });
+      // console.log(usuario);
+      if (usuario > 0) {
+        return Promise.reject(
+          "El correo ingresado ingresado ya se encuentra en la bd",
+        );
+      }
+    }),
   check("telefono_persona")
 
     .not()
@@ -244,17 +259,3 @@ export const deleteUsuariosMidd = [
   verificarCampos,
 
 ];
-
-export const existUser = async (req, res, next) => {
-  const { username_usuario } = req.body;
-  const usuario = await UsuariosModelo.findOne({
-    where: { username_usuario },
-  });
-  if (usuario) {
-    res.status(406).json({
-      msg: "El usuario ya existe",
-    });
-    return;
-  }
-  next();
-};
