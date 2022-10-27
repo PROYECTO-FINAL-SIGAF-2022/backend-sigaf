@@ -2,7 +2,10 @@ import { Router } from "express";
 import {
   deleteEstablecimiento,
   getEstablecimientos,
+  getEstablecimientosUsuario,
   getEstablecimientoUnico,
+  getTokenEstablecimientoUsuario,
+  getVerificarTokenEstablecimientoUsuario,
   postEstablecimiento,
   updateEstablecimiento,
 } from "../controllers/establecimiento.controllers.js";
@@ -16,6 +19,12 @@ import validateToken from "../middlewares/validateToken.middleware.js";
 const router = Router();
 
 router.get("/establecimientos", validateToken, validarAccesoRutas, getEstablecimientosMidd, getEstablecimientos);
+
+router.get("/establecimientos-usuarios", validateToken, validarAccesoRutas, getEstablecimientosMidd, getEstablecimientosUsuario);
+
+router.get("/establecimientos-usuarios/:id", validateToken, validarAccesoRutas, getEstablecimientosMidd, getTokenEstablecimientoUsuario);
+
+router.get("/verificar-token-establecimiento-usuario", validateToken, validarAccesoRutas, getEstablecimientosMidd, getVerificarTokenEstablecimientoUsuario);
 
 router.get("/establecimientos/:id", validateToken, validarAccesoRutas, getEstablecimientoMidd, getEstablecimientoUnico);
 

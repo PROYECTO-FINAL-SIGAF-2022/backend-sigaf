@@ -20,6 +20,8 @@ export const validarAccesoRutas = async (req, res, next) => {
 
     const rutasParseada = JSON.parse(rutas_usuario);
 
+    // console.log(rutasParseada);
+    // console.log(pathRuta);
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < rutasParseada.length; i++) {
       if (rutasParseada[i].includes(pathRuta)) {
