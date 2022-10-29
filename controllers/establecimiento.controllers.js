@@ -37,9 +37,10 @@ export const postEstablecimiento = async (req, res) => {
       descripcion_establecimiento,
       georeferencia,
       superficie,
-      id_usuario,
+      // id_usuario,
     } = req.body;
 
+    const { id_usuario } = req.decoded.paramUsuario;
     const nuevoEstablecimiento = await EstablecimientosModelo.create({
       descripcion_establecimiento,
       georeferencia,
@@ -135,7 +136,7 @@ export const getTokenEstablecimientoUsuario = async (req, res) => {
       id_establecimiento,
     });
 
-    console.log(token);
+    // console.log(token);
     res.status(200).json({ token });
   } catch (error) {
     return res.status(500).json({

@@ -14,7 +14,7 @@ export const EstablecimientosModelo = connection.define(
       type: DataTypes.STRING,
     },
     georeferencia: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
     },
     superficie: {
       type: DataTypes.STRING,
