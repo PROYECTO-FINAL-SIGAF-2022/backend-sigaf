@@ -307,8 +307,16 @@ ProveedoresModelo.belongsTo(EstablecimientosModelo, {
 
 // TABLA TIPOS PRODUCTOS
 
-TiposProductosModelo.belongsTo(UnidadesMedidasModelo, {
-  foreignKey: "id_unidad_medida",
+// TiposProductosModelo.belongsTo(UnidadesMedidasModelo, {
+//   foreignKey: "id_unidad_medida",
+//   onDelete: "restrict",
+//   onUpdate: "restrict",
+// });
+TiposProductosModelo.belongsTo(EstablecimientosModelo, {
+  foreignKey: {
+    name: "id_establecimiento",
+    allowNull: false,
+  },
   onDelete: "restrict",
   onUpdate: "restrict",
 });
@@ -327,11 +335,6 @@ TiposUsuariosModelo.hasMany(UsuariosModelo, {
 });
 
 // TABLA UNIDADES_MEDIDAS
-// UnidadesMedidasModelo.hasMany(UnidadesMedidasModelo, {
-//   foreignKey: "id_unidad_medida",
-//   onDelete: "restrict",
-//   onUpdate: "restrict",
-// });
 
 UnidadesMedidasModelo.hasMany(DetalleCampanias, {
   foreignKey: "id_unidad_medida",
@@ -339,11 +342,11 @@ UnidadesMedidasModelo.hasMany(DetalleCampanias, {
   onUpdate: "restrict",
 });
 
-UnidadesMedidasModelo.hasMany(TiposProductosModelo, {
-  foreignKey: "id_unidad_medida",
-  onDelete: "restrict",
-  onUpdate: "restrict",
-});
+// UnidadesMedidasModelo.hasMany(TiposProductosModelo, {
+//   foreignKey: "id_unidad_medida",
+//   onDelete: "restrict",
+//   onUpdate: "restrict",
+// });
 
 // TABLA USUARIOS
 UsuariosModelo.belongsTo(TiposUsuariosModelo, {
@@ -439,6 +442,11 @@ EstablecimientosModelo.hasMany(ProductosModelo, {
 });
 
 EstablecimientosModelo.hasMany(ProveedoresModelo, {
+  foreignKey: "id_establecimiento",
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
+EstablecimientosModelo.hasMany(TiposProductosModelo, {
   foreignKey: "id_establecimiento",
   onDelete: "restrict",
   onUpdate: "restrict",

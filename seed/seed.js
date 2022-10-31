@@ -83,8 +83,8 @@ const seedBd = async () => {
 
   // 5
 
-  await TiposProductosModelo.create({
-    descripcion_tipo_producto: "Estiercol",
+  await UnidadesMedidasModelo.create({
+    descripcion_unidad_medida: "Kilogramos",
   });
 
   // 6
@@ -96,9 +96,9 @@ const seedBd = async () => {
   });
 
   // 7
-
-  await UnidadesMedidasModelo.create({
-    descripcion_unidad_medida: "Kilogramos",
+  await TiposProductosModelo.create({
+    descripcion_tipo_producto: "Estiercol",
+    id_establecimiento: "1",
   });
 
   // 8

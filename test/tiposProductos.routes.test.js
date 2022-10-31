@@ -10,6 +10,7 @@ import {
 } from "../helpers/tests/testFunctions";
 import { TiposProductosModelo } from "../models/TiposProductos.model.js";
 import { crearUsuarios } from "../helpers/createUser.js";
+import { EstablecimientosModelo } from "../models/Establecimientos.model.js";
 
 const API = supertest(app);
 const URL = "/api/tipo-productos";
@@ -21,8 +22,16 @@ beforeAll(async () => {
   await vaciarTablas();
   await crearUsuarios();
 
+  await EstablecimientosModelo.create({
+    descripcion_establecimiento: "Establecimiento 1",
+    georeferencia: "[[[17.385044, 78.486671], [16.506174, 80.648015], [17.686816, 83.218482]],[[13.082680, 80.270718], [12.971599, 77.594563],[15.828126, 78.037279]]]",
+    superficie: "20",
+    id_usuario: 1,
+  });
+
   await TiposProductosModelo.create({
     descripcion_tipo_producto: "Semillas",
+    id_establecimiento: "1",
   });
 });
 
