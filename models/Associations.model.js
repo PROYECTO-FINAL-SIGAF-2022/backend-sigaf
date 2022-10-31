@@ -296,6 +296,15 @@ ProveedoresModelo.hasMany(ProductosModelo, {
   onUpdate: "restrict",
 });
 
+ProveedoresModelo.belongsTo(EstablecimientosModelo, {
+  foreignKey: {
+    name: "id_establecimiento",
+    allowNull: false,
+  },
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
+
 // TABLA TIPOS PRODUCTOS
 
 TiposProductosModelo.belongsTo(UnidadesMedidasModelo, {
@@ -424,6 +433,12 @@ EstablecimientosModelo.hasMany(PerdidasParcelasCultivosModelo, {
   onUpdate: "restrict",
 });
 EstablecimientosModelo.hasMany(ProductosModelo, {
+  foreignKey: "id_establecimiento",
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
+
+EstablecimientosModelo.hasMany(ProveedoresModelo, {
   foreignKey: "id_establecimiento",
   onDelete: "restrict",
   onUpdate: "restrict",

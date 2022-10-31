@@ -92,6 +92,7 @@ const seedBd = async () => {
     nombre_proveedor: "proveedor 1",
     telefono_proveedor: "3704981212",
     direccion_proveedor: "Avenida siempre viva",
+    id_establecimiento: "1",
   });
 
   // 7

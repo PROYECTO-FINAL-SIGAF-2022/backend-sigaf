@@ -1,12 +1,15 @@
 import { logSistema } from "../helpers/createLog.js";
 import { ProveedoresModelo } from "../models/Proveedores.model.js";
 
-// Devuelve todos los proveedores de la colección
 export const getProveedores = async (req, res) => {
   try {
-    const proveedores = await ProveedoresModelo.findAll({ where: { activo: true } }); // consulta para todos los documentos
+    const { id_establecimiento } = req.decoded.paramUsuario;
+    const proveedores = await ProveedoresModelo.findAll({ where: { id_establecimiento, activo: true } });
 
-    res.status(200).json(proveedores);
+    if (proveedores.length === 0) {
+      return res.status(400).json("No hay proveedores asociadas a este establecimiento");
+    }
+    return res.status(200).json(proveedores[0].dataValues);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -17,13 +20,14 @@ export const getProveedores = async (req, res) => {
 export const getProveedorUnico = async (req, res) => {
   try {
     const { id } = req.params;
-    const proveedor = await ProveedoresModelo.findByPk(id); // consulta para todos los documentos
+    const proveedor = await ProveedoresModelo.findByPk(id);
 
     await logSistema(req.decoded, proveedor.dataValues, "busqueda");
 
-    // Respuesta del servidor
-
-    res.status(200).json(proveedor);
+    if (!proveedor) {
+      return res.status(400).json("No hay una proveedor asociada a este ID");
+    }
+    return res.status(200).json(proveedor);
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -34,6 +38,7 @@ export const getProveedorUnico = async (req, res) => {
 
 export const postProveedor = async (req, res) => {
   try {
+    const { id_establecimiento } = req.decoded.paramUsuario;
     const {
       nombre_proveedor,
       telefono_proveedor,
@@ -44,6 +49,7 @@ export const postProveedor = async (req, res) => {
       nombre_proveedor,
       telefono_proveedor,
       direccion_proveedor,
+      id_establecimiento,
     });
 
     await logSistema(req.decoded, nuevoProveedor.dataValues, "creacion");
