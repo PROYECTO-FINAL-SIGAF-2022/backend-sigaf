@@ -85,6 +85,7 @@ const seedBd = async () => {
 
   await UnidadesMedidasModelo.create({
     descripcion_unidad_medida: "Kilogramos",
+    id_establecimiento: "1",
   });
 
   // 6

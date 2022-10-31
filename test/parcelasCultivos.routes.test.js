@@ -54,6 +54,7 @@ beforeAll(async () => {
 
     await UnidadesMedidasModelo.create({
       descripcion_unidad_medida: "Toneladas",
+      id_establecimiento: "1",
     });
 
     await ParcelasCultivosModelo.create({

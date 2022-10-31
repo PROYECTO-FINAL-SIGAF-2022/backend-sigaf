@@ -342,6 +342,15 @@ UnidadesMedidasModelo.hasMany(DetalleCampanias, {
   onUpdate: "restrict",
 });
 
+UnidadesMedidasModelo.belongsTo(EstablecimientosModelo, {
+  foreignKey: {
+    name: "id_establecimiento",
+    allowNull: false,
+  },
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
+
 // UnidadesMedidasModelo.hasMany(TiposProductosModelo, {
 //   foreignKey: "id_unidad_medida",
 //   onDelete: "restrict",
@@ -447,6 +456,12 @@ EstablecimientosModelo.hasMany(ProveedoresModelo, {
   onUpdate: "restrict",
 });
 EstablecimientosModelo.hasMany(TiposProductosModelo, {
+  foreignKey: "id_establecimiento",
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
+
+EstablecimientosModelo.hasMany(UnidadesMedidasModelo, {
   foreignKey: "id_establecimiento",
   onDelete: "restrict",
   onUpdate: "restrict",

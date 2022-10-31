@@ -59,9 +59,11 @@ beforeAll(async () => {
 
     await UnidadesMedidasModelo.create({
       descripcion_unidad_medida: "Tonelada/s",
+      id_establecimiento: "1",
     });
     await UnidadesMedidasModelo.create({
       descripcion_unidad_medida: "Metros cuadrados",
+      id_establecimiento: "1",
     });
 
     await ParcelasCultivosModelo.create({

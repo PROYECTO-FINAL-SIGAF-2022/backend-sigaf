@@ -38,14 +38,17 @@ beforeAll(async () => {
       nombre_proveedor: "Proveedor 1",
       telefono_proveedor: "3704871212",
       direccion_proveedor: "Direccion proveedor 1",
+      id_establecimiento: "1",
     });
 
     await TiposProductosModelo.create({
       descripcion_tipo_producto: "Comestibles",
+      id_establecimiento: "1",
     });
 
     await UnidadesMedidasModelo.create({
       descripcion_unidad_medida: "Kilogramos",
+      id_establecimiento: "1",
     });
 
     await ProductosModelo.create({

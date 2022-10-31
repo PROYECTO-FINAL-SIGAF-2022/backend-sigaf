@@ -45,6 +45,7 @@ beforeAll(async () => {
 
     await UnidadesMedidasModelo.create({
       descripcion_unidad_medida: "Toneladas",
+      id_establecimiento: "1",
     });
 
     await CultivosModelo.create({
@@ -56,10 +57,12 @@ beforeAll(async () => {
       nombre_proveedor: "proveedor 1",
       telefono_proveedor: "3704981212",
       direccion_proveedor: "Avenida siempre viva",
+      id_establecimiento: "1",
     });
 
     await TiposProductosModelo.create({
       descripcion_tipo_producto: "Estiercol",
+      id_establecimiento: "1",
     });
 
     await ProductosModelo.create({
@@ -71,6 +74,7 @@ beforeAll(async () => {
       id_usuario: 1,
       id_unidad_medida: 1,
       precio_producto: "20000",
+      id_establecimiento: "1",
     });
 
     await ActividadesModelo.create({

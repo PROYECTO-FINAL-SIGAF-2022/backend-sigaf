@@ -3,9 +3,12 @@ import { UnidadesMedidasModelo } from "../models/UnidadesMedidas.model.js";
 
 export const getUnidadesMedidas = async (req, res) => {
   try {
-    const unidadMedida = await UnidadesMedidasModelo.findAll({ where: { activo: true } }); // consulta para todos los documentos
-    // Respuesta del servidor
-    res.json(unidadMedida);
+    const { id_establecimiento } = req.decoded.paramUsuario;
+    const unidadMedida = await UnidadesMedidasModelo.findAll({ where: { id_establecimiento, activo: true } });
+    if (unidadMedida.length === 0) {
+      return res.status(400).json("No hay unidad medidas asociadas a este establecimiento");
+    }
+    return res.status(200).json(unidadMedida[0].dataValues);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -20,7 +23,10 @@ export const getUnidadMedidaUnico = async (req, res) => {
 
     await logSistema(req.decoded, unidadMedida.dataValues, "busqueda");
 
-    res.json(unidadMedida);
+    if (!unidadMedida) {
+      return res.status(400).json("No hay una unidad medida asociada a este ID");
+    }
+    return res.status(200).json(unidadMedida);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -30,10 +36,13 @@ export const getUnidadMedidaUnico = async (req, res) => {
 
 export const postUnidadMedida = async (req, res) => {
   try {
+    const { id_establecimiento } = req.decoded.paramUsuario;
+
     const { descripcion_unidad_medida } = req.body;
 
     const nuevaUnidadMedida = await UnidadesMedidasModelo.create({
       descripcion_unidad_medida,
+      id_establecimiento,
     });
 
     await logSistema(req.decoded, nuevaUnidadMedida.dataValues, "creacion");

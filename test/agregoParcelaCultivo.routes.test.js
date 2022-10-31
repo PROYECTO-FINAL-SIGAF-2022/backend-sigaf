@@ -40,6 +40,7 @@ beforeAll(async () => {
         georeferencia: "[[[17.385044, 78.486671], [16.506174, 80.648015], [17.686816, 83.218482]],[[13.082680, 80.270718], [12.971599, 77.594563],[15.828126, 78.037279]]]",
         superficie: "20",
         id_usuario: 1,
+        id_establecimiento: "1",
       },
     );
 
@@ -58,9 +59,12 @@ beforeAll(async () => {
 
     await UnidadesMedidasModelo.create({
       descripcion_unidad_medida: "Tonelada/s",
+      id_establecimiento: "1",
+
     });
     await UnidadesMedidasModelo.create({
       descripcion_unidad_medida: "Metros cuadrados",
+      id_establecimiento: "1",
     });
 
     await ParcelasCultivosModelo.create({
