@@ -134,6 +134,7 @@ const seedBd = async () => {
     fecha_final: "2021/10/21",
     id_cultivo: 1,
     activo: true,
+    id_establecimiento: 1,
   });
 
   // 12

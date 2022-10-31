@@ -10,6 +10,7 @@ import {
   testFunctionGet, testFunctionPost, testFunctionPut, testFunctionDelete,
 } from "../helpers/tests/testFunctions";
 import { crearUsuarios } from "../helpers/createUser";
+import { EstablecimientosModelo } from "../models/Establecimientos.model";
 
 const API = supertest(app);
 const URL = "/api/campanias";
@@ -23,6 +24,13 @@ beforeAll(async () => {
 
     await crearUsuarios();
 
+    await EstablecimientosModelo.create({
+      descripcion_establecimiento: "Establecimiento 1",
+      georeferencia: "[[[17.385044, 78.486671], [16.506174, 80.648015], [17.686816, 83.218482]],[[13.082680, 80.270718], [12.971599, 77.594563],[15.828126, 78.037279]]]",
+      superficie: "20",
+      id_usuario: 1,
+    });
+
     await CultivosModelo.create({
       descripcion_cultivo: "tomate",
     });
@@ -32,7 +40,7 @@ beforeAll(async () => {
       fecha_inicio: "2022/09/5",
       fecha_final: "2023/04/15",
       id_cultivo: "1",
-
+      id_establecimiento: "1",
     });
 
     await CampaniasModelo.create({
@@ -40,7 +48,7 @@ beforeAll(async () => {
       fecha_inicio: "2022/09/7",
       fecha_final: "2023/04/20",
       id_cultivo: "1",
-
+      id_establecimiento: "1",
     });
   } catch (error) {
     console.log(error);
@@ -71,9 +79,15 @@ describe(`POST ${URL}`, () => {
     fecha_inicio: "2022/09/9",
     fecha_final: "2023/04/25",
     id_cultivo: "1",
+    id_establecimiento: "1",
   };
 
   testFunctionPost(URL, "Debe retornar un error al no enviar el token", sendCampania, 401, API);
+
+  const campaniaSinEstablecimiento = { ...sendCampania };
+  campaniaSinEstablecimiento.id_establecimiento = 5;
+
+  testFunctionPost(URL, "Debe Retornar un status-code 400 si no se envia un id_establecimiento valido", campaniaSinEstablecimiento, 400, API, HEADERS);
 
   testFunctionPost(URL, "Debe Retornar un OBJETO al crear una nueva Campania", sendCampania, 200, API, HEADERS);
 
@@ -86,7 +100,6 @@ describe(`PUT ${URL}:id`, () => {
     fecha_inicio: "2022/10/9",
     fecha_final: "2023/08/25",
     id_cultivo: "1",
-
   };
 
   testFunctionPut(`${URL}/1`, "Debe retornar un error al no enviar el token", sendActualizar, 401, API);

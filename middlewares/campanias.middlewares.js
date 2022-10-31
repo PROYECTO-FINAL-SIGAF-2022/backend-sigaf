@@ -4,6 +4,7 @@ import { check, param } from "express-validator";
 import { verificarCampos } from "../helpers/verificarCampos.js";
 
 import { CampaniasModelo } from "../models/Campanias.model.js";
+import { EstablecimientosModelo } from "../models/Establecimientos.model.js";
 
 const getCampaniasMidd = [verificarCampos];
 
@@ -53,7 +54,22 @@ const postCampaniasMidd = [
     .not()
     .isEmpty()
     .withMessage("El id  de cultivo es requerida"),
-
+  check("id_establecimiento")
+    .exists()
+    .not()
+    .isEmpty()
+    .withMessage("El establecimiento es requerida")
+    .custom(
+      async (id_establecimiento) => {
+        const establecimiento = await EstablecimientosModelo.count({
+          where: { id_establecimiento },
+        });
+        // console.log(establecimiento);
+        if (establecimiento === 0) {
+          return Promise.reject("El establecimiento no existe por favor verifique");
+        }
+      },
+    ),
   verificarCampos,
 ];
 const putCampaniasMidd = [

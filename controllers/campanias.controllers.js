@@ -1,12 +1,15 @@
 import { CampaniasModelo } from "../models/Campanias.model.js";
 import { logSistema } from "../helpers/createLog.js";
 
-// Devuelve todos los Campanias de la colección
 export const getCampanias = async (req, res) => {
   try {
-    const campania = await CampaniasModelo.findAll({ where: { activo: true } }); // consulta para todos los documentos
-    // Respuesta del servidor
-    res.json(campania);
+    const { id_establecimiento } = req.decoded.paramUsuario;
+
+    const campania = await CampaniasModelo.findAll({ where: { id_establecimiento, activo: true } });
+    if (campania.length === 0) {
+      return res.status(400).json("No hay campañas asociadas a este establecimiento");
+    }
+    return res.status(200).json(campania[0].dataValues);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -18,11 +21,14 @@ export const getCampaniaUnico = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const campania = await CampaniasModelo.findByPk(id); // consulta para todos los documentos
+    const campania = await CampaniasModelo.findByPk(id);
 
     await logSistema(req.decoded, campania.dataValues, "busqueda");
 
-    res.status(200).json(campania);
+    if (!campania) {
+      return res.status(400).json("No hay una campania asociada a este ID");
+    }
+    return res.status(200).json(campania);
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -34,7 +40,7 @@ export const getCampaniaUnico = async (req, res) => {
 export const postCampania = async (req, res) => {
   try {
     const {
-      descripcion_campania, fecha_inicio, fecha_final, id_cultivo,
+      descripcion_campania, fecha_inicio, fecha_final, id_cultivo, id_establecimiento,
     } = req.body;
 
     const nuevaCampania = await CampaniasModelo.create({
@@ -42,12 +48,13 @@ export const postCampania = async (req, res) => {
       fecha_inicio,
       fecha_final,
       id_cultivo,
+      id_establecimiento,
     });
 
     await logSistema(req.decoded, nuevaCampania.dataValues, "creacion");
 
-    res.json({
-      msg: "La Campania se creo Correctamente",
+    return res.json({
+      msg: "La Campaña se creo Correctamente",
       nuevaCampania,
     });
   } catch (error) {
@@ -74,8 +81,8 @@ export const updateCampania = async (req, res) => {
 
     await logSistema(req.decoded, updateCamp.dataValues, "actualizacion");
 
-    res.json({
-      msg: "La Compania se actualizo  Correctamente",
+    return res.json({
+      msg: "La campaña se actualizo  Correctamente",
       updateCamp,
     });
   } catch (error) {
@@ -99,8 +106,8 @@ export const deleteCampania = async (req, res) => {
     await eleiminarCompania.save();
 
     await logSistema(req.decoded, eleiminarCompania.dataValues, "eliminacion");
-    res.status(200).json({
-      message: `La Compania con ID  ${id} se elimino correctamente`,
+    return res.status(200).json({
+      message: "La campaña se elimino correctamente",
     });
   } catch (error) {
     return res.status(500).json({
