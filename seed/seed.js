@@ -175,6 +175,7 @@ const seedBd = async () => {
     cantidad_uso_producto: "2",
     id_producto: 1,
     activo: true,
+    id_establecimiento: "1",
   });
 
   // 16

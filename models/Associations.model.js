@@ -25,7 +25,10 @@ ActividadesModelo.hasMany(HistorialesParcelasCultivosModelo, {
 });
 
 ActividadesModelo.belongsTo(EstablecimientosModelo, {
-  foreignKey: "id_establecimiento",
+  foreignKey: {
+    name: "id_establecimiento",
+    allowNull: false,
+  },
   onDelete: "restrict",
   onUpdate: "restrict",
 });
@@ -126,47 +129,6 @@ DetalleCampanias.belongsTo(EstablecimientosModelo, {
   onUpdate: "restrict",
 });
 
-// TABLA ESTABLECIMIENTOS
-
-EstablecimientosModelo.belongsTo(UsuariosModelo, {
-  foreignKey: "id_usuario",
-  onDelete: "restrict",
-  onUpdate: "restrict",
-});
-
-EstablecimientosModelo.hasMany(ParcelasModelo, {
-  foreignKey: "id_establecimiento",
-  onDelete: "restrict",
-  onUpdate: "restrict",
-});
-
-EstablecimientosModelo.hasMany(ActividadesModelo, {
-  foreignKey: "id_establecimiento",
-  onDelete: "restrict",
-  onUpdate: "restrict",
-});
-
-EstablecimientosModelo.hasMany(AgregoParcelasCultivosModelo, {
-  foreignKey: "id_establecimiento",
-  onDelete: "restrict",
-  onUpdate: "restrict",
-});
-EstablecimientosModelo.hasMany(CampaniasModelo, {
-  foreignKey: "id_establecimiento",
-  onDelete: "restrict",
-  onUpdate: "restrict",
-});
-EstablecimientosModelo.hasMany(CultivosModelo, {
-  foreignKey: "id_establecimiento",
-  onDelete: "restrict",
-  onUpdate: "restrict",
-});
-EstablecimientosModelo.hasMany(DetalleCampanias, {
-  foreignKey: "id_establecimiento",
-  onDelete: "restrict",
-  onUpdate: "restrict",
-});
-
 // TABLA HISTORIALES_PARCELAS_CULTIVOS
 
 HistorialesParcelasCultivosModelo.belongsTo(ParcelasCultivosModelo, {
@@ -188,6 +150,14 @@ HistorialesParcelasCultivosModelo.belongsTo(UsuariosModelo, {
 
 HistorialesParcelasCultivosModelo.belongsTo(ProductosModelo, {
   foreignKey: "id_producto",
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
+HistorialesParcelasCultivosModelo.belongsTo(EstablecimientosModelo, {
+  foreignKey: {
+    name: "id_establecimiento",
+    allowNull: false,
+  },
   onDelete: "restrict",
   onUpdate: "restrict",
 });
@@ -362,6 +332,54 @@ UsuariosModelo.hasMany(EstablecimientosModelo, {
 });
 UsuariosModelo.hasMany(LogSistema, {
   foreignKey: "id_usuario",
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
+
+// TABLA ESTABLECIMIENTOS
+
+EstablecimientosModelo.belongsTo(UsuariosModelo, {
+  foreignKey: "id_usuario",
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
+
+EstablecimientosModelo.hasMany(ParcelasModelo, {
+  foreignKey: "id_establecimiento",
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
+
+EstablecimientosModelo.hasMany(ActividadesModelo, {
+  foreignKey: "id_establecimiento",
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
+
+EstablecimientosModelo.hasMany(AgregoParcelasCultivosModelo, {
+  foreignKey: "id_establecimiento",
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
+EstablecimientosModelo.hasMany(CampaniasModelo, {
+  foreignKey: "id_establecimiento",
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
+EstablecimientosModelo.hasMany(CultivosModelo, {
+  foreignKey: "id_establecimiento",
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
+
+EstablecimientosModelo.hasMany(DetalleCampanias, {
+  foreignKey: "id_establecimiento",
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
+
+EstablecimientosModelo.hasMany(HistorialesParcelasCultivosModelo, {
+  foreignKey: "id_establecimiento",
   onDelete: "restrict",
   onUpdate: "restrict",
 });

@@ -49,6 +49,7 @@ beforeAll(async () => {
 
     await CultivosModelo.create({
       descripcion_cultivo: "Tomate",
+      id_establecimiento: "1",
     });
 
     await ProveedoresModelo.create({
@@ -69,10 +70,12 @@ beforeAll(async () => {
       id_tipo_producto: 1,
       id_usuario: 1,
       id_unidad_medida: 1,
+      precio_producto: "20000",
     });
 
     await ActividadesModelo.create({
       descripcion_actividad: "Cosechar",
+      id_establecimiento: "1",
     });
 
     await CampaniasModelo.create({
@@ -80,6 +83,7 @@ beforeAll(async () => {
       fecha_inicio: "2020/10/10",
       fecha_final: "2021/10/21",
       id_cultivo: 1,
+      id_establecimiento: "1",
     });
 
     await ParcelasCultivosModelo.create({
@@ -97,6 +101,7 @@ beforeAll(async () => {
       cantidad_uso_producto: "5",
       id_producto: 1,
       activo: true,
+      id_establecimiento: "1",
     });
   } catch (error) {
     console.log(error);
@@ -129,6 +134,7 @@ describe(`POST ${URL}`, () => {
     cantidad_uso_producto: "2",
     id_producto: "1",
     activo: true,
+    id_establecimiento: "1",
   };
 
   testFunctionPost(URL, "Debe retornar un error al no enviar el token", sendHistorial, 401, API);
@@ -176,6 +182,16 @@ describe(`POST ${URL}`, () => {
     cantidad_uso_producto: "",
     id_producto: "1",
     activo: true,
+  }, 400, API, HEADERS);
+
+  testFunctionPost(URL, "Debe retornar un error al enviar un id_establecimiento no valido", {
+    id_parcela_cultivo: "1",
+    id_actividad: "1",
+    id_usuario: "1",
+    cantidad_uso_producto: "",
+    id_producto: "1",
+    activo: true,
+    id_establecimiento: "2",
   }, 400, API, HEADERS);
 
   testFunctionPost(URL, "Crear un Historial", sendHistorial, 200, API, HEADERS);

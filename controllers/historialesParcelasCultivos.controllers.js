@@ -1,14 +1,16 @@
-// Falta agregar cosas al post-put-delete
-
 import { logSistema } from "../helpers/createLog.js";
 import { HistorialesParcelasCultivosModelo } from "../models/HistorialesParcelasCultivos.model.js";
 
-// Devuelve todos los Historials de la colección
 export const getHistoriales = async (req, res) => {
   try {
-    const historial = await HistorialesParcelasCultivosModelo.findAll({ where: { activo: true } }); // consulta para todos los documentos
-    // Respuesta del servidor
-    res.json(historial);
+    const { id_establecimiento } = req.decoded.paramUsuario;
+
+    const historial = await HistorialesParcelasCultivosModelo.findAll({ where: { id_establecimiento, activo: true } });
+
+    if (historial.length === 0) {
+      return res.status(400).json("No hay historiales asociadas a este establecimiento");
+    }
+    return res.status(200).json(historial[0].dataValues);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -19,12 +21,14 @@ export const getHistoriales = async (req, res) => {
 export const getHistorialUnico = async (req, res) => {
   try {
     const { id } = req.params;
-    const historial = await HistorialesParcelasCultivosModelo.findByPk(id); // consulta para todos los documentos
+    const historial = await HistorialesParcelasCultivosModelo.findByPk(id);
 
     await logSistema(req.decoded, historial.dataValues, "busqueda");
 
-    // Respuesta del servidor
-    res.json(historial);
+    if (!historial) {
+      return res.status(400).json("No hay una historial asociado a este ID");
+    }
+    return res.status(200).json(historial);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -40,6 +44,7 @@ export const postHistorial = async (req, res) => {
       id_usuario,
       cantidad_uso_producto,
       id_producto,
+      id_establecimiento,
     } = req.body;
 
     const nuevoHistorial = await HistorialesParcelasCultivosModelo.create({
@@ -48,11 +53,12 @@ export const postHistorial = async (req, res) => {
       id_usuario,
       cantidad_uso_producto,
       id_producto,
+      id_establecimiento,
     });
 
     await logSistema(req.decoded, nuevoHistorial.dataValues, "creacion");
 
-    res.json({
+    return res.json({
       msg: "El Historial se creo Correctamente",
       nuevoHistorial,
     });
