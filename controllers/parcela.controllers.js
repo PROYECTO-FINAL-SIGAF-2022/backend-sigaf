@@ -1,12 +1,15 @@
 import { logSistema } from "../helpers/createLog.js";
 import { ParcelasModelo } from "../models/Parcelas.model.js";
 
-// Devuelve todos los Parcelas de la colección
 export const getParcelas = async (req, res) => {
   try {
-    const parcelas = await ParcelasModelo.findAll({ where: { activo: true } }); // consulta para todos los documentos
-    // Respuesta del servidor
-    res.status(200).json(parcelas);
+    const { id_establecimiento } = req.decoded.paramUsuario;
+    const parcelas = await ParcelasModelo.findAll({ where: { id_establecimiento, activo: true } });
+
+    if (parcelas.length === 0) {
+      return res.status(400).json("No hay parcelas asociadas a este establecimiento");
+    }
+    return res.status(200).json(parcelas[0].dataValues);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -17,13 +20,14 @@ export const getParcelas = async (req, res) => {
 export const getParcelaUnico = async (req, res) => {
   try {
     const { id } = req.params;
-    const parcela = await ParcelasModelo.findByPk(id); // consulta para todos los documentos
-
+    const parcela = await ParcelasModelo.findByPk(id);
 
     await logSistema(req.decoded, parcela.dataValues, "busqueda");
 
-    // Respuesta del servidor
-    res.status(200).json(parcela);
+    if (!parcela) {
+      return res.status(400).json("No hay una parcela asociada a este ID");
+    }
+    return res.status(200).json(parcela);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -58,8 +62,6 @@ export const updateParcela = async (req, res) => {
   try {
     const { id } = req.params;
     const { georeferencia, superficie, id_establecimiento } = req.body;
-
-    // console.log(id);
 
     const updateParc = await ParcelasModelo.findOne({
       where: { id_parcela: id },
