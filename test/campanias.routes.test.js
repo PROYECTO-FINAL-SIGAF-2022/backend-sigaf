@@ -33,6 +33,7 @@ beforeAll(async () => {
 
     await CultivosModelo.create({
       descripcion_cultivo: "tomate",
+      id_establecimiento: "1",
     });
 
     await CampaniasModelo.create({
@@ -79,15 +80,9 @@ describe(`POST ${URL}`, () => {
     fecha_inicio: "2022/09/9",
     fecha_final: "2023/04/25",
     id_cultivo: "1",
-    id_establecimiento: "1",
   };
 
   testFunctionPost(URL, "Debe retornar un error al no enviar el token", sendCampania, 401, API);
-
-  const campaniaSinEstablecimiento = { ...sendCampania };
-  campaniaSinEstablecimiento.id_establecimiento = 5;
-
-  testFunctionPost(URL, "Debe Retornar un status-code 400 si no se envia un id_establecimiento valido", campaniaSinEstablecimiento, 400, API, HEADERS);
 
   testFunctionPost(URL, "Debe Retornar un OBJETO al crear una nueva Campania", sendCampania, 200, API, HEADERS);
 

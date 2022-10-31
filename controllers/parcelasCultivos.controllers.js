@@ -3,9 +3,14 @@ import { ParcelasCultivosModelo } from "../models/ParcelasCultivos.model.js";
 
 export const getParcelasCultivos = async (req, res) => {
   try {
-    const datosParcCultivo = await ParcelasCultivosModelo.findAll({ where: { activo: true } });
-    // Respuesta del servidor
-    res.json(datosParcCultivo);
+    const { id_establecimiento } = req.decoded.paramUsuario;
+
+    const datosParcCultivo = await ParcelasCultivosModelo.findAll({ where: { id_establecimiento, activo: true } });
+
+    if (datosParcCultivo.length === 0) {
+      return res.status(400).json("No hay parcelas cultivos asociados a este establecimiento");
+    }
+    return res.status(200).json(datosParcCultivo[0].dataValues);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -20,8 +25,10 @@ export const getParcelaCultivoUnico = async (req, res) => {
 
     await logSistema(req.decoded, datosParcCultivo.dataValues, "busqueda");
 
-    // Respuesta del servidor
-    res.json(datosParcCultivo);
+    if (!datosParcCultivo) {
+      return res.status(400).json("No hay una datos parcela cultivo asociada a este ID");
+    }
+    return res.status(200).json(datosParcCultivo);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -31,6 +38,8 @@ export const getParcelaCultivoUnico = async (req, res) => {
 
 export const postParcelaCultivo = async (req, res) => {
   try {
+    const { id_establecimiento } = req.decoded.paramUsuario;
+
     const {
       id_parcela, id_cultivo, id_campania, cantidad_sembrada,
     } = req.body;
@@ -40,11 +49,12 @@ export const postParcelaCultivo = async (req, res) => {
       id_cultivo,
       id_campania,
       cantidad_sembrada,
+      id_establecimiento,
     });
 
     await logSistema(req.decoded, nuevoParcelaCultivo.dataValues, "creacion");
 
-    res.json({
+    return res.json({
       msg: "La Parcela_Cultivo se creo Correctamente",
       nuevoParcelaCultivo,
     });
@@ -92,7 +102,6 @@ export const deleteParcelaCultivo = async (req, res) => {
 
     const eliminarParcelaCultivo = await ParcelasCultivosModelo.findOne(
       { where: { id_parcela_cultivo: id } },
-
     );
 
     eliminarParcelaCultivo.activo = false;

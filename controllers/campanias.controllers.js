@@ -39,8 +39,10 @@ export const getCampaniaUnico = async (req, res) => {
 
 export const postCampania = async (req, res) => {
   try {
+    const { id_establecimiento } = req.decoded.paramUsuario;
+
     const {
-      descripcion_campania, fecha_inicio, fecha_final, id_cultivo, id_establecimiento,
+      descripcion_campania, fecha_inicio, fecha_final, id_cultivo,
     } = req.body;
 
     const nuevaCampania = await CampaniasModelo.create({

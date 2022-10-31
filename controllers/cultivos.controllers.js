@@ -38,7 +38,9 @@ export const getCultivoUnico = async (req, res) => {
 
 export const postCultivo = async (req, res) => {
   try {
-    const { descripcion_cultivo, id_establecimiento } = req.body;
+    const { id_establecimiento } = req.decoded.paramUsuario;
+
+    const { descripcion_cultivo } = req.body;
 
     const nuevoCultivo = await CultivosModelo.create({ descripcion_cultivo, id_establecimiento });
 

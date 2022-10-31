@@ -39,8 +39,10 @@ export const getAggParcelaCultivoUnico = async (req, res) => {
 
 export const postAggParcelaCultivo = async (req, res) => {
   try {
+    const { id_establecimiento } = req.decoded.paramUsuario;
+
     const {
-      id_parcela_cultivo, id_unidad_medida, cantidad_agregada, id_establecimiento,
+      id_parcela_cultivo, id_unidad_medida, cantidad_agregada,
     } = req.body;
 
     const nuevaAggParcelaCultivo = await AgregoParcelasCultivosModelo.create({

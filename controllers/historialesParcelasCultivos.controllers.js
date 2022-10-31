@@ -38,13 +38,14 @@ export const getHistorialUnico = async (req, res) => {
 
 export const postHistorial = async (req, res) => {
   try {
+    const { id_establecimiento } = req.decoded.paramUsuario;
+
     const {
       id_parcela_cultivo,
       id_actividad,
       id_usuario,
       cantidad_uso_producto,
       id_producto,
-      id_establecimiento,
     } = req.body;
 
     const nuevoHistorial = await HistorialesParcelasCultivosModelo.create({

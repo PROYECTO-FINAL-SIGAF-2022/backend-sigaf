@@ -41,6 +41,7 @@ beforeAll(async () => {
 
     await CultivosModelo.create({
       descripcion_cultivo: "Tomate",
+      id_establecimiento: "1",
     });
 
     await CampaniasModelo.create({
@@ -48,6 +49,7 @@ beforeAll(async () => {
       fecha_inicio: "2020/10/10",
       fecha_final: "2021/10/21",
       id_cultivo: "1",
+      id_establecimiento: "1",
     });
 
     await UnidadesMedidasModelo.create({
@@ -60,6 +62,7 @@ beforeAll(async () => {
       id_campania: "1",
       id_unidad_medida: "1",
       cantidad_sembrada: "23131",
+      id_establecimiento: "1",
     });
   } catch (error) {
     console.log(error);
@@ -117,6 +120,14 @@ describe(`POST ${URL}`, () => {
   }, 400, API, HEADERS);
 
   testFunctionPost(URL, "Debe retornar un error si el id de unidad de medida no existe en la bd", {
+    id_parcela: "1",
+    id_cultivo: "1",
+    id_campania: "1",
+    id_unidad_medida: "12",
+    cantidad_sembrada: "1000",
+  }, 400, API, HEADERS);
+
+  testFunctionPost(URL, "Debe retornar un error si el id_establecimiento no existente en la bd", {
     id_parcela: "1",
     id_cultivo: "1",
     id_campania: "1",

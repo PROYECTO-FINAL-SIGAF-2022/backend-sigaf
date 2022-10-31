@@ -37,7 +37,9 @@ export const getParcelaUnico = async (req, res) => {
 
 export const postParcela = async (req, res) => {
   try {
-    const { georeferencia, superficie, id_establecimiento } = req.body;
+    const { id_establecimiento } = req.decoded.paramUsuario;
+
+    const { georeferencia, superficie } = req.body;
 
     const nuevaParcela = await ParcelasModelo.create({
       georeferencia,
@@ -61,14 +63,13 @@ export const postParcela = async (req, res) => {
 export const updateParcela = async (req, res) => {
   try {
     const { id } = req.params;
-    const { georeferencia, superficie, id_establecimiento } = req.body;
+    const { georeferencia, superficie } = req.body;
 
     const updateParc = await ParcelasModelo.findOne({
       where: { id_parcela: id },
     });
     updateParc.georeferencia = georeferencia;
     updateParc.superficie = superficie;
-    updateParc.id_establecimiento = id_establecimiento;
     await updateParc.save();
 
     await logSistema(req.decoded, updateParc.dataValues, "actualizacion");

@@ -81,35 +81,24 @@ describe(`POST ${URL}`, () => {
     id_campania: "1",
     id_unidad_medida: "1",
     cantidad_cosechada: "23000",
-    id_establecimiento: "1",
   }, 401, API);
 
   testFunctionPost(URL, "Debe retornar un error al enviar un id_campania no valido", {
     id_campania: "3",
     id_unidad_medida: "1",
     cantidad_cosechada: "23000",
-    id_establecimiento: "1",
   }, 400, API, HEADERS);
 
   testFunctionPost(URL, "Debe retornar un error al enviar un id_unidad_medida no valido", {
     id_campania: "1",
     id_unidad_medida: "3",
     cantidad_cosechada: "23000",
-    id_establecimiento: "1",
-  }, 400, API, HEADERS);
-
-  testFunctionPost(URL, "Debe retornar un error al enviar un id_establecimiento no valido", {
-    id_campania: "1",
-    id_unidad_medida: "1",
-    cantidad_cosechada: "23000",
-    id_establecimiento: "4",
   }, 400, API, HEADERS);
 
   testFunctionPost(URL, "Debe retornar un objeto con el detalle de campania creado", {
     id_campania: "1",
     id_unidad_medida: "1",
     cantidad_cosechada: "23000",
-    id_establecimiento: "1",
   }, 200, API, HEADERS);
 });
 

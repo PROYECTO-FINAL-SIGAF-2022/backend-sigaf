@@ -155,6 +155,7 @@ const seedBd = async () => {
     id_unidad_medida: "1",
     cantidad_sembrada: "23131",
     activo: true,
+    id_establecimiento: "1",
   });
 
   // 14

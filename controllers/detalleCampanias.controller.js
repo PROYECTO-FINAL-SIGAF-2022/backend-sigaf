@@ -36,8 +36,10 @@ export const getDetalleCampaniaUnico = async (req, res) => {
 
 export const postDetalleCampania = async (req, res) => {
   try {
+    const { id_establecimiento } = req.decoded.paramUsuario;
+
     const {
-      id_campania, id_unidad_medida, cantidad_cosechada, id_establecimiento,
+      id_campania, id_unidad_medida, cantidad_cosechada,
     } = req.body;
 
     const nuevoDetalleCampania = await DetalleCampanias.create({

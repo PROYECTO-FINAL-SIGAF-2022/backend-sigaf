@@ -1,7 +1,6 @@
 // validar datos de usuario con express-validator
 
 import { check, param } from "express-validator";
-import { Op } from "sequelize";
 import { verificarCampos } from "../helpers/verificarCampos.js";
 import { ParcelasCultivosModelo } from "../models/ParcelasCultivos.model.js";
 import { ParcelasModelo } from "../models/Parcelas.model.js";
@@ -97,7 +96,6 @@ export const postParcelaCultivosMidd = [
     .not()
     .isEmpty()
     .withMessage("El id de unidad de medida es requerido"),
-
   verificarCampos,
 ];
 

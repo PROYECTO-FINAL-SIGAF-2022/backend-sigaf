@@ -5,7 +5,6 @@ import { ActividadesModelo } from "../models/Actividades.model.js";
 import { UsuariosModelo } from "../models/Usuarios.model.js";
 import { ProductosModelo } from "../models/Productos.model.js";
 import { HistorialesParcelasCultivosModelo } from "../models/HistorialesParcelasCultivos.model.js";
-import { EstablecimientosModelo } from "../models/Establecimientos.model.js";
 
 export const getHistorialesMidd = [verificarCampos];
 
@@ -94,23 +93,6 @@ export const postHistorialMidd = [
     .not()
     .isEmpty()
     .withMessage("La cantidad de uso producto es requerida"),
-  check("id_establecimiento")
-    .exists()
-    .not()
-    .isEmpty()
-    .withMessage("El establecimiento es requerida")
-    .custom(
-      async (id_establecimiento) => {
-        const establecimiento = await EstablecimientosModelo.count({
-          where: { id_establecimiento },
-        });
-        // console.log(establecimiento);
-        if (establecimiento === 0) {
-          return Promise.reject("El establecimiento no existe por favor verifique");
-        }
-      },
-    ),
-
   verificarCampos,
 ];
 export const putHistorialMidd = [

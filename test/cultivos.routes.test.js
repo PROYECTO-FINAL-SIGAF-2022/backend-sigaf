@@ -53,21 +53,15 @@ describe(`GET ${URL}/:id`, () => {
 describe(`POST ${URL}`, () => {
   const sendCultivos = {
     descripcion_cultivo: "Tomate",
-    id_establecimiento: 1,
   };
 
   testFunctionPost(URL, "Debe retornar un error al no enviar el token", sendCultivos, 401, API);
 
-  const cultivoSinEstablecimiento = { ...sendCultivos };
-  cultivoSinEstablecimiento.id_establecimiento = 5;
-
-  testFunctionPost(URL, "Debe Retornar un status-code 400 si no se envia un id_establecimiento valido", cultivoSinEstablecimiento, 400, API, HEADERS);
-
   const cultivoConDatosDuplicados = { ...sendCultivos };
   cultivoConDatosDuplicados.descripcion_cultivo = "Soja";
 
-  testFunctionPost(URL, "Crear un cultivo con datos ya existentes", cultivoConDatosDuplicados, 400, API, HEADERS, true);
-  testFunctionPost(URL, "Crear un cultivo", sendCultivos, 201, API, HEADERS, true);
+  testFunctionPost(URL, "Crear un cultivo con datos ya existentes", cultivoConDatosDuplicados, 400, API, HEADERS);
+  testFunctionPost(URL, "Crear un cultivo", sendCultivos, 201, API, HEADERS);
 });
 
 describe(`PUT ${URL}/:id`, () => {

@@ -45,6 +45,7 @@ beforeAll(async () => {
 
     await CultivosModelo.create({
       descripcion_cultivo: "Frutilla",
+      id_establecimiento: "1",
     });
 
     await CampaniasModelo.create({
@@ -52,6 +53,7 @@ beforeAll(async () => {
       fecha_inicio: "2022/09/7",
       fecha_final: "2023/04/20",
       id_cultivo: "1",
+      id_establecimiento: "1",
     });
 
     await UnidadesMedidasModelo.create({
@@ -67,6 +69,7 @@ beforeAll(async () => {
       id_campania: "1",
       id_unidad_medida: "1",
       cantidad_sembrada: "12",
+      id_establecimiento: "1",
     });
 
     await AgregoParcelasCultivosModelo.create({
@@ -103,7 +106,6 @@ describe(`POST ${URL}`, () => {
     id_parcela_cultivo: "1",
     id_unidad_medida: "2",
     cantidad_agregada: "24",
-    id_establecimiento: "1",
   };
 
   testFunctionPost(URL, "Debe retornar un error al no enviar el token", sendCrear, 401, API);
@@ -112,26 +114,17 @@ describe(`POST ${URL}`, () => {
     id_parcela_cultivo: "1",
     id_unidad_medida: "2",
     cantidad_agregada: "",
-    id_establecimiento: "1",
   }, 400, API, HEADERS);
 
   testFunctionPost(URL, "Debe retornar un error si el id_parcela_cultivo no exite en la bd", {
     id_parcela_cultivo: "3",
     id_unidad_medida: "2",
     cantidad_agregada: "23",
-    id_establecimiento: "1",
   }, 400, API, HEADERS);
   testFunctionPost(URL, "Debe retornar un error si el id_unidad_medida no exite en la bd", {
     id_parcela_cultivo: "1",
     id_unidad_medida: "3",
     cantidad_agregada: "23",
-    id_establecimiento: "1",
-  }, 400, API, HEADERS);
-  testFunctionPost(URL, "Debe retornar un error si el id_establecimiento no exite en la bd", {
-    id_parcela_cultivo: "1",
-    id_unidad_medida: "2",
-    cantidad_agregada: "23",
-    id_establecimiento: "4",
   }, 400, API, HEADERS);
 
   testFunctionPost(URL, "Debe retornar un json con el nuevo registro ", sendCrear, 201, API, HEADERS);

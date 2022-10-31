@@ -43,7 +43,9 @@ export const getActividadUnico = async (req, res) => {
 
 export const postActividad = async (req, res) => {
   try {
-    const { descripcion_actividad, id_establecimiento } = req.body;
+    const { id_establecimiento } = req.decoded.paramUsuario;
+
+    const { descripcion_actividad } = req.body;
 
     const nuevaActividad = await ActividadesModelo.create({
       descripcion_actividad,

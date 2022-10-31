@@ -1,6 +1,5 @@
 import { check, param } from "express-validator";
 import { verificarCampos } from "../helpers/verificarCampos.js";
-import { EstablecimientosModelo } from "../models/Establecimientos.model.js";
 import { ParcelasModelo } from "../models/Parcelas.model.js";
 
 export const getParcelasMidd = [verificarCampos];
@@ -34,22 +33,6 @@ export const postParcelasMidd = [
     .not()
     .isEmpty()
     .withMessage("La superficie es requerida"),
-  check("id_establecimiento")
-    .exists()
-    .not()
-    .isEmpty()
-    .withMessage("El id del establecimient es requerido")
-    .custom(
-      async (id_establecimiento) => {
-        const establecimiento = await EstablecimientosModelo.count({
-          where: { id_establecimiento },
-        });
-
-        if (establecimiento === 0) {
-          return Promise.reject("El id del establecimiento enviado no existe en la bd");
-        }
-      },
-    ),
   verificarCampos,
 ];
 
@@ -75,22 +58,6 @@ export const putParcelasMidd = [
     .not()
     .isEmpty()
     .withMessage("La superficie es requerida"),
-  check("id_establecimiento")
-    .exists()
-    .not()
-    .isEmpty()
-    .withMessage("El id del establecimient es requerido")
-    .custom(
-      async (id_establecimiento) => {
-        const establecimiento = await EstablecimientosModelo.count({
-          where: { id_establecimiento },
-        });
-
-        if (establecimiento === 0) {
-          return Promise.reject("El id del establecimiento enviado no existe en la bd");
-        }
-      },
-    ),
   verificarCampos,
 ];
 

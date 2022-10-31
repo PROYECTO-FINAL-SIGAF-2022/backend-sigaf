@@ -63,25 +63,16 @@ describe(`POST ${URL}`, () => {
   testFunctionPost(URL, "Crear una parcela", {
     georeferencia: "[[[20.385011, 78.186671], [16.506171, 80.618015], [17.686816, 83.218182]]]]",
     superficie: "50",
-    id_establecimiento: 1,
   }, 201, API, HEADERS);
 
   testFunctionPost(URL, "Crear una parcela con una georeferencia vacia", {
     georeferencia: "",
     superficie: "30",
-    id_establecimiento: 1,
   }, 400, API, HEADERS);
 
   testFunctionPost(URL, "Crear una parcela con una superficie vacia", {
     georeferencia: "[[[17.385044, 78.486671], [16.506174, 80.648015], [17.686816, 83.218482]]]]",
     superficie: "",
-    id_establecimiento: 1,
-  }, 400, API, HEADERS);
-
-  testFunctionPost(URL, "Crear una parcela con un ID de establecimiento inexistente", {
-    georeferencia: "[[[17.385044, 78.486671], [16.506174, 80.648015], [17.686816, 83.218482]]]]",
-    superficie: "30",
-    id_establecimiento: "",
   }, 400, API, HEADERS);
 });
 
@@ -89,25 +80,16 @@ describe(`PUT ${URL}/:id`, () => {
   testFunctionPut(`${URL}/1`, "Debe retornar un error al no enviar el token", {
     georeferencia: "[[[17.385044, 78.486671], [16.506174, 80.648015], [17.686816, 83.218482]]]]",
     superficie: "32",
-    id_establecimiento: "1",
   }, 401, API);
 
   testFunctionPut(`${URL}/1`, "Actualizar una parcela", {
     georeferencia: "[[[17.385044, 78.486671], [16.506174, 80.648015], [17.686816, 83.218482]]]]",
     superficie: "33",
-    id_establecimiento: "1",
   }, 200, API, HEADERS);
 
   testFunctionPut(`${URL}/5`, "Actualizar una parcela con un id inexistente", {
     georeferencia: "[[[17.385044, 78.486671], [16.506174, 80.648015], [17.686816, 83.218482]]]]",
     superficie: "33",
-    id_establecimiento: "1",
-  }, 400, API, HEADERS);
-
-  testFunctionPut(`${URL}/5`, "Actualizar una parcela con un id de establecimiento que no existe", {
-    georeferencia: "[[[17.385044, 78.486671], [16.506174, 80.648015], [17.686816, 83.218482]]]]",
-    superficie: "34",
-    id_establecimiento: "4",
   }, 400, API, HEADERS);
 });
 

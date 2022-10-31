@@ -1,7 +1,6 @@
 import { check, param } from "express-validator";
 import { verificarCampos } from "../helpers/verificarCampos.js";
 import { AgregoParcelasCultivosModelo } from "../models/AgregoParcelasCultivos.model.js";
-import { EstablecimientosModelo } from "../models/Establecimientos.model.js";
 import { ParcelasCultivosModelo } from "../models/ParcelasCultivos.model.js";
 import { UnidadesMedidasModelo } from "../models/UnidadesMedidas.model.js";
 
@@ -30,11 +29,10 @@ export const postAgregoParCultivoMidd = [
           where: { id_parcela_cultivo },
         });
 
-        if (parCult <= 0) {
+        if (parCult === 0) {
           return Promise.reject("El id ingresado de parcela cultivo no se encuentra en la bd");
         }
       },
-
     )
     .not()
     .isEmpty(),
@@ -44,11 +42,10 @@ export const postAgregoParCultivoMidd = [
         const uniMedida = await UnidadesMedidasModelo.count({
           where: { id_unidad_medida },
         });
-        if (uniMedida <= 0) {
+        if (uniMedida === 0) {
           return Promise.reject("El id ingresado de unidad de medida no se encuentra en la bd");
         }
       },
-
     )
     .not()
     .isEmpty(),
@@ -56,22 +53,6 @@ export const postAgregoParCultivoMidd = [
     .not()
     .isEmpty()
     .withMessage("La cantidad es requerida"),
-  check("id_establecimiento")
-    .exists()
-    .not()
-    .isEmpty()
-    .withMessage("El establecimiento es requerida")
-    .custom(
-      async (id_establecimiento) => {
-        const establecimiento = await EstablecimientosModelo.count({
-          where: { id_establecimiento },
-        });
-        // console.log(establecimiento);
-        if (establecimiento === 0) {
-          return Promise.reject("El establecimiento no existe por favor verifique");
-        }
-      },
-    ),
   verificarCampos,
 ];
 
@@ -119,7 +100,6 @@ export const putAgregoParCultivoMidd = [
     .not()
     .isEmpty()
     .withMessage("La cantidad es requerida"),
-
   verificarCampos,
 ];
 

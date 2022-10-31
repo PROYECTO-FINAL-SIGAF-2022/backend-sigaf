@@ -54,27 +54,18 @@ describe(`GET ${URL}/:id`, () => {
 describe(`POST ${URL}`, () => {
   testFunctionPost(URL, "Debe retornar un error al no enviar el token", {
     descripcion_actividad: "Plantar",
-    id_establecimiento: 1,
   }, 401, API);
 
   testFunctionPost(URL, "Debe retornar un error al crear una actividad con una descripcion existente en la bd", {
     descripcion_actividad: "Cultivar",
-    id_establecimiento: 1,
   }, 400, API, HEADERS);
 
   testFunctionPost(URL, "Debe retornar un error al crear una actividad con la descripcion vacia", {
     descripcion_actividad: "",
-    id_establecimiento: 1,
-  }, 400, API, HEADERS);
-
-  testFunctionPost(URL, "Debe retornar un error al crear una actividad con el id de establecimiento inexistente", {
-    descripcion_actividad: "dassd",
-    id_establecimiento: 4,
   }, 400, API, HEADERS);
 
   testFunctionPost(URL, "Crear una actividad", {
     descripcion_actividad: "Plantarassa",
-    id_establecimiento: 1,
   }, 201, API, HEADERS);
 });
 
