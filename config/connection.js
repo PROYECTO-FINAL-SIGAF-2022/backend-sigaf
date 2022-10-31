@@ -7,6 +7,7 @@ dotenv.config();
 const { database, username, password } = getConnectionData();
 
 // ! borrar al lanzar a producccion
+//  !npm run seed bd=dev server=local
 const args = process.argv;
 
 // console.log(args);
@@ -22,16 +23,15 @@ if (args.length > 0 && resultArgBd) {
   nombreBD = database;
 }
 
-// console.log(nombreBD);
+const resultArgServerLocal = args.find((arg) => arg.includes("server=local"));
 
-export const connection = new Sequelize(nombreBD, username, password, {
-  host: process.env.HOSTNAME,
+export const connection = new Sequelize(!resultArgServerLocal ? nombreBD : "sigaf_test", !resultArgServerLocal ? username : "root", !resultArgServerLocal ? password : "", {
+  host: !resultArgServerLocal ? process.env.HOSTNAME : "localhost",
   dialect: "mariadb",
-  port: process.env.DATABSEPORT,
+  port: !resultArgServerLocal ? process.env.DATABSEPORT : "3306",
   ssl: false,
   logging: false,
 });
-
 /* export const connection = new Sequelize(
    'test',
    'root',

@@ -36,10 +36,11 @@ export const getActividadUnico = async (req, res) => {
 
 export const postActividad = async (req, res) => {
   try {
-    const { descripcion_actividad } = req.body;
+    const { descripcion_actividad, id_establecimiento } = req.body;
 
     const nuevaActividad = await ActividadesModelo.create({
       descripcion_actividad,
+      id_establecimiento,
     });
 
     await logSistema(req.decoded, nuevaActividad.dataValues, "creacion");
@@ -70,6 +71,7 @@ export const updateActividad = async (req, res) => {
 
     // console.log(descripcion_actividad);
     updateActiv.descripcion_actividad = descripcion_actividad;
+    // updateActiv.id_establecimiento = id_establecimiento;
     await updateActiv.save();
 
     await logSistema(req.decoded, updateActiv.dataValues, "actualizacion");

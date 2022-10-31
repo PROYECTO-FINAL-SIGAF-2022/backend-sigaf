@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { jest } from "@jest/globals";
 import supertest from "supertest";
 import { vaciarTablas } from "../helpers/vaciarTablas";
 import { app, server } from "../index";
@@ -21,6 +23,7 @@ const HEADERS = {
 
 beforeAll(async () => {
   try {
+    jest.setTimeout(10000);
     await vaciarTablas();
     await crearUsuarios();
 
@@ -146,6 +149,7 @@ describe(`DELETE ${URL}/1`, () => {
 });
 
 afterAll(async () => {
-  await vaciarTablas();
+  // jest.setTimeout(10000);
+// await vaciarTablas();
   await server.close();
 });

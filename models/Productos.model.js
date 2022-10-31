@@ -22,6 +22,10 @@ export const ProductosModelo = connection.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    precio_producto: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     activo: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,

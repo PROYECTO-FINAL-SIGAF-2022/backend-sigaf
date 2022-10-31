@@ -4,6 +4,7 @@ import {
   getEstablecimientos,
   getEstablecimientosUsuario,
   getEstablecimientoUnico,
+  getEstablecimientoUsuario,
   getTokenEstablecimientoUsuario,
   getVerificarTokenEstablecimientoUsuario,
   postEstablecimiento,
@@ -19,6 +20,7 @@ import validateToken from "../middlewares/validateToken.middleware.js";
 const router = Router();
 
 router.get("/establecimientos", validateToken, validarAccesoRutas, getEstablecimientosMidd, getEstablecimientos);
+router.get("/establecimiento-usuario", validateToken, validarAccesoRutas, getEstablecimientosMidd, getEstablecimientoUsuario);
 
 router.get("/establecimientos-usuarios", validateToken, validarAccesoRutas, getEstablecimientosMidd, getEstablecimientosUsuario);
 

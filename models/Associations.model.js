@@ -24,6 +24,12 @@ ActividadesModelo.hasMany(HistorialesParcelasCultivosModelo, {
   onUpdate: "restrict",
 });
 
+ActividadesModelo.belongsTo(EstablecimientosModelo, {
+  foreignKey: "id_establecimiento",
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
+
 // TABLA AGREGO_PARCELAS_CULTIVOS
 
 AgregoParcelasCultivosModelo.belongsTo(ParcelasCultivosModelo, {
@@ -93,6 +99,12 @@ EstablecimientosModelo.belongsTo(UsuariosModelo, {
 });
 
 EstablecimientosModelo.hasMany(ParcelasModelo, {
+  foreignKey: "id_establecimiento",
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
+
+EstablecimientosModelo.hasMany(ActividadesModelo, {
   foreignKey: "id_establecimiento",
   onDelete: "restrict",
   onUpdate: "restrict",

@@ -34,6 +34,7 @@ export const postProducto = async (req, res) => {
       descripcion_producto,
       fecha_vencimiento_producto,
       cantidad_producto,
+      precio_producto,
       id_proveedor,
       id_tipo_producto,
       id_usuario,
@@ -44,6 +45,7 @@ export const postProducto = async (req, res) => {
       descripcion_producto,
       fecha_vencimiento_producto,
       cantidad_producto,
+      precio_producto,
       id_proveedor,
       id_tipo_producto,
       id_usuario,
@@ -71,6 +73,7 @@ export const updateProducto = async (req, res) => {
       descripcion_producto,
       fecha_vencimiento_producto,
       cantidad_producto,
+      precio_producto,
       id_proveedor,
       id_tipo_producto,
       id_usuario,
@@ -84,6 +87,7 @@ export const updateProducto = async (req, res) => {
     updateProduc.descripcion_producto = descripcion_producto;
     updateProduc.fecha_vencimiento_producto = fecha_vencimiento_producto;
     updateProduc.cantidad_producto = cantidad_producto;
+    updateProduc.precio_producto = precio_producto;
     updateProduc.id_proveedor = id_proveedor;
     updateProduc.id_tipo_producto = id_tipo_producto;
     updateProduc.id_usuario = id_usuario;

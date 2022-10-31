@@ -126,6 +126,23 @@ export const getEstablecimientosUsuario = async (req, res) => {
   }
 };
 
+export const getEstablecimientoUsuario = async (req, res) => {
+  try {
+    const { id_usuario } = req.decoded.paramUsuario;
+    const establecimientoUsuario = await EstablecimientosModelo.findByPk({
+      where: {
+        id_usuario,
+      },
+    });
+
+    res.status(200).json(establecimientoUsuario);
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
 export const getTokenEstablecimientoUsuario = async (req, res) => {
   try {
     const { id_usuario } = req.decoded.paramUsuario;

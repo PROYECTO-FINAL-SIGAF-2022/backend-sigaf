@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { jest } from "@jest/globals";
 import supertest from "supertest";
 import { UnidadesMedidasModelo } from "../models/UnidadesMedidas.model.js";
 import { vaciarTablas } from "../helpers/vaciarTablas.js";
@@ -14,6 +16,7 @@ const HEADERS = getTokenTest();
 
 beforeAll(async () => {
   try {
+    jest.setTimeout(10000);
     await vaciarTablas();
     await crearUsuarios();
 
@@ -88,6 +91,7 @@ describe(`DELETE ${URL}/:id`, () => {
 
 afterAll(async () => {
   try {
+    // jest.setTimeout(10000);
     await vaciarTablas();
     await server.close();
   } catch (error) {

@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { jest } from "@jest/globals";
 import supertest from "supertest";
 import { vaciarTablas } from "../helpers/vaciarTablas.js";
 import { crearUsuarios } from "../helpers/createUser.js";
@@ -24,6 +26,7 @@ const HEADERS = getTokenTest();
 
 beforeAll(async () => {
   try {
+    jest.setTimeout(10000);
     await vaciarTablas();
     await crearUsuarios();
 
@@ -254,6 +257,7 @@ describe(`${URL}/:id`, () => {
 });
 
 afterAll(async () => {
-  await vaciarTablas();
+  // jest.setTimeout(10000);
+// await vaciarTablas();
   await server.close();
 });

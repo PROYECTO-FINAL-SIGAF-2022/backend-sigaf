@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { jest } from "@jest/globals";
 import supertest from "supertest";
 import { getTokenTest } from "../helpers/getToken.js";
 import { vaciarTablas } from "../helpers/vaciarTablas.js";
@@ -8,18 +10,15 @@ import {
 } from "../helpers/tests/testFunctions";
 import { ParcelasModelo } from "../models/Parcelas.model.js";
 import { EstablecimientosModelo } from "../models/Establecimientos.model.js";
-import {crearUsuarios} from "../helpers/createUser";
-
-
+import { crearUsuarios } from "../helpers/createUser";
 
 const API = supertest(app);
 const URL = "/api/parcelas";
 
 const HEADERS = getTokenTest();
 
-
-
 beforeAll(async () => {
+  jest.setTimeout(10000);
   await vaciarTablas();
 
   await crearUsuarios();
@@ -118,6 +117,7 @@ describe(`DELETE ${URL}/:id`, () => {
 });
 
 afterAll(async () => {
-  await vaciarTablas();
-  server.close();
+  // jest.setTimeout(10000);
+// await vaciarTablas();
+  await server.close();
 });

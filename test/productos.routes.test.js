@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { jest } from "@jest/globals";
 import supertest from "supertest";
 import { getTokenTest } from "../helpers/getToken.js";
 import { vaciarTablas } from "../helpers/vaciarTablas.js";
@@ -19,6 +21,7 @@ const HEADERS = getTokenTest();
 
 beforeAll(async () => {
   try {
+    jest.setTimeout(10000);
     await vaciarTablas();
 
     await crearUsuarios();
@@ -42,6 +45,7 @@ beforeAll(async () => {
       descripcion_producto: "Producto 1",
       fecha_vencimiento_producto: "2022/09/18",
       cantidad_producto: 20,
+      precio_producto: 50,
       id_proveedor: 1,
       id_tipo_producto: 1,
       id_usuario: 1,
@@ -53,6 +57,7 @@ beforeAll(async () => {
       descripcion_producto: "Producto 2",
       fecha_vencimiento_producto: "2021/09/18",
       cantidad_producto: 21,
+      precio_producto: 70,
       id_proveedor: 1,
       id_tipo_producto: 1,
       id_usuario: 1,
@@ -86,6 +91,7 @@ describe(`POST ${URL}`, () => {
     descripcion_producto: "Producto 1",
     fecha_vencimiento_producto: "2022/09/18",
     cantidad_producto: 20,
+    precio_producto: 10000,
     id_proveedor: 1,
     id_tipo_producto: 1,
     id_usuario: 1,
@@ -142,6 +148,7 @@ describe(`PUT ${URL}/:id`, () => {
     descripcion_producto: "Producto 1",
     fecha_vencimiento_producto: "2022/09/18",
     cantidad_producto: 20,
+    precio_producto: 20000,
     id_proveedor: 1,
     id_tipo_producto: 1,
     id_usuario: 1,
@@ -203,6 +210,7 @@ describe(`DELETE ${URL}/:id`, () => {
 });
 
 afterAll(async () => {
-  await vaciarTablas();
-  server.close();
+  // jest.setTimeout(10000);
+// await vaciarTablas();
+  await server.close();
 });

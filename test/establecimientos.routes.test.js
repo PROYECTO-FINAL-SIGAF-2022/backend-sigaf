@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { jest } from "@jest/globals";
 import supertest from "supertest";
 import { app, server } from "../index.js";
 import { vaciarTablas } from "../helpers/vaciarTablas.js";
@@ -14,6 +16,7 @@ const HEADERS = getTokenTest();
 const URL = "/api/establecimientos";
 
 beforeAll(async () => {
+  jest.setTimeout(10000);
   await vaciarTablas();
 
   await crearUsuarios();
@@ -150,6 +153,7 @@ describe(`DELETE ${URL}/:id`, () => {
   testFunctionDelete(`${URL}/1`, "Debe retornar un status-code 200 al eliminar", 200, API, HEADERS);
 });
 afterAll(async () => {
-  await vaciarTablas();
-  server.close();
+  // jest.setTimeout(10000);
+// await vaciarTablas();
+  await server.close();
 });

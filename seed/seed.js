@@ -42,7 +42,7 @@ const seedBd = async () => {
   // 1
   await TiposUsuariosModelo.create({
     descripcion_tipo_usuario: "Administrador",
-    rutas_usuario: ["usuarios", "establecimientos", "actividades", "campanias", "cultivos", "historiales", "parcelas", "parcelas-cultivos", "tipos-usuarios", "detalle-campanias", "tipo-productos", "agregar-parcela-cultivos", "proveedores", "unidades-medidas", "productos", "perdidas-parcelas-cultivos", "establecimientos-usuarios", "verificar-token-establecimiento-usuario"],
+    rutas_usuario: ["usuarios", "establecimientos", "actividades", "campanias", "cultivos", "historiales", "parcelas", "parcelas-cultivos", "tipos-usuarios", "detalle-campanias", "tipo-productos", "agregar-parcela-cultivos", "proveedores", "unidades-medidas", "productos", "perdidas-parcelas-cultivos", "establecimientos-usuarios", "verificar-token-establecimiento-usuario", "establecimiento-usuario"],
     activo: true,
   });
 
@@ -65,64 +65,66 @@ const seedBd = async () => {
   });
 
   // 3
-
-  await CultivosModelo.create({
-    descripcion_cultivo: "Maiz",
-    activo: true,
-  });
-
-  // 4
-
-  await TiposProductosModelo.create({
-    descripcion_tipo_producto: "Estiercol",
-  });
-
-  // 5
-  await ProveedoresModelo.create({
-    nombre_proveedor: "proveedor 1",
-    telefono_proveedor: "3704981212",
-    direccion_proveedor: "Avenida siempre viva",
-  });
-
-  // 6
-
-  await UnidadesMedidasModelo.create({
-    descripcion_unidad_medida: "Kilogramos",
-  });
-
-  // 7
-
-  await ActividadesModelo.create({
-    descripcion_actividad: "Cosechar",
-  });
-
-  // 8
-
-  await ProductosModelo.create({
-    descripcion_producto: "Fertilizante",
-    fecha_vencimiento_producto: "2020/10/10",
-    cantidad_producto: "10",
-    id_proveedor: 1,
-    id_tipo_producto: 1,
-    id_usuario: 1,
-    id_unidad_medida: 1,
-  });
-
-  // 9
-
-  await LogSistema.create({
-    descripcion_log: "Se cargo el producto fertilizante",
-    fecha_hora: "2020/10/10",
-    id_usuario: 1,
-  });
-
-  // 10
   await EstablecimientosModelo.create({
     descripcion_establecimiento: "Establecimiento 1",
     georeferencia: "-34.6037,-58.3816",
     superficie: " 100",
     id_usuario: 1,
     activo: true,
+  });
+
+  // 4
+
+  await CultivosModelo.create({
+    descripcion_cultivo: "Maiz",
+    activo: true,
+  });
+
+  // 5
+
+  await TiposProductosModelo.create({
+    descripcion_tipo_producto: "Estiercol",
+  });
+
+  // 6
+  await ProveedoresModelo.create({
+    nombre_proveedor: "proveedor 1",
+    telefono_proveedor: "3704981212",
+    direccion_proveedor: "Avenida siempre viva",
+  });
+
+  // 7
+
+  await UnidadesMedidasModelo.create({
+    descripcion_unidad_medida: "Kilogramos",
+  });
+
+  // 8
+
+  await ActividadesModelo.create({
+    descripcion_actividad: "Cosechar",
+    id_establecimiento: 1,
+  });
+
+  // 9
+
+  await ProductosModelo.create({
+    descripcion_producto: "Fertilizante",
+    fecha_vencimiento_producto: "2020/10/10",
+    cantidad_producto: "10",
+    precio_producto: 1000,
+    id_proveedor: 1,
+    id_tipo_producto: 1,
+    id_usuario: 1,
+    id_unidad_medida: 1,
+  });
+
+  // 10
+
+  await LogSistema.create({
+    descripcion_log: "Se cargo el producto fertilizante",
+    fecha_hora: "2020/10/10",
+    id_usuario: 1,
   });
 
   // 11
