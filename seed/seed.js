@@ -163,6 +163,7 @@ const seedBd = async () => {
     id_campania: "1",
     id_unidad_medida: "1",
     cantidad_cosechada: "2000",
+    id_establecimiento: "1",
   });
 
   // 15

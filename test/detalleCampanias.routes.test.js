@@ -12,6 +12,7 @@ import { crearUsuarios } from "../helpers/createUser";
 import {
   testFunctionGet, testFunctionPost, testFunctionPut, testFunctionDelete,
 } from "../helpers/tests/testFunctions.js";
+import { EstablecimientosModelo } from "../models/Establecimientos.model";
 
 const API = SuperTest(app);
 const URL = "/api/detalle-campanias";
@@ -23,12 +24,20 @@ beforeAll(async () => {
     await vaciarTablas();
     await crearUsuarios();
 
+    await EstablecimientosModelo.create({
+      descripcion_establecimiento: "Establecimiento 1",
+      georeferencia: "[[[17.385044, 78.486671], [16.506174, 80.648015], [17.686816, 83.218482]],[[13.082680, 80.270718], [12.971599, 77.594563],[15.828126, 78.037279]]]",
+      superficie: "20",
+      id_usuario: 1,
+    });
+
     await UnidadesMedidasModelo.create({
       descripcion_unidad_medida: "Tonelada/s",
     });
 
     await CultivosModelo.create({
       descripcion_cultivo: "Naranja",
+      id_establecimiento: "1",
     });
 
     await CampaniasModelo.create({
@@ -36,13 +45,14 @@ beforeAll(async () => {
       fecha_inicio: "2022/09/08",
       fecha_final: "2023/04/21",
       id_cultivo: "1",
+      id_establecimiento: "1",
     });
 
     await DetalleCampanias.create({
       id_campania: "1",
       id_unidad_medida: "1",
       cantidad_cosechada: "12000",
-
+      id_establecimiento: "1",
     });
   } catch (error) {
     console.log(error);
@@ -71,12 +81,35 @@ describe(`POST ${URL}`, () => {
     id_campania: "1",
     id_unidad_medida: "1",
     cantidad_cosechada: "23000",
+    id_establecimiento: "1",
   }, 401, API);
+
+  testFunctionPost(URL, "Debe retornar un error al enviar un id_campania no valido", {
+    id_campania: "3",
+    id_unidad_medida: "1",
+    cantidad_cosechada: "23000",
+    id_establecimiento: "1",
+  }, 400, API, HEADERS);
+
+  testFunctionPost(URL, "Debe retornar un error al enviar un id_unidad_medida no valido", {
+    id_campania: "1",
+    id_unidad_medida: "3",
+    cantidad_cosechada: "23000",
+    id_establecimiento: "1",
+  }, 400, API, HEADERS);
+
+  testFunctionPost(URL, "Debe retornar un error al enviar un id_establecimiento no valido", {
+    id_campania: "1",
+    id_unidad_medida: "1",
+    cantidad_cosechada: "23000",
+    id_establecimiento: "4",
+  }, 400, API, HEADERS);
 
   testFunctionPost(URL, "Debe retornar un objeto con el detalle de campania creado", {
     id_campania: "1",
     id_unidad_medida: "1",
     cantidad_cosechada: "23000",
+    id_establecimiento: "1",
   }, 200, API, HEADERS);
 });
 

@@ -117,6 +117,15 @@ DetalleCampanias.belongsTo(UnidadesMedidasModelo, {
   onUpdate: "restrict",
 });
 
+DetalleCampanias.belongsTo(EstablecimientosModelo, {
+  foreignKey: {
+    name: "id_establecimiento",
+    allowNull: false,
+  },
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
+
 // TABLA ESTABLECIMIENTOS
 
 EstablecimientosModelo.belongsTo(UsuariosModelo, {
@@ -148,6 +157,11 @@ EstablecimientosModelo.hasMany(CampaniasModelo, {
   onUpdate: "restrict",
 });
 EstablecimientosModelo.hasMany(CultivosModelo, {
+  foreignKey: "id_establecimiento",
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
+EstablecimientosModelo.hasMany(DetalleCampanias, {
   foreignKey: "id_establecimiento",
   onDelete: "restrict",
   onUpdate: "restrict",

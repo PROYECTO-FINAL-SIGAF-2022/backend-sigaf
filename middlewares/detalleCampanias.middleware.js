@@ -6,6 +6,7 @@ import { verificarCampos } from "../helpers/verificarCampos.js";
 import { DetalleCampanias } from "../models/DetalleCampanias.model.js";
 import { CampaniasModelo } from "../models/Campanias.model.js";
 import { UnidadesMedidasModelo } from "../models/UnidadesMedidas.model.js";
+import { EstablecimientosModelo } from "../models/Establecimientos.model.js";
 
 const getDetalleCampaniasMidd = [verificarCampos];
 
@@ -37,7 +38,7 @@ const postDetalleCampaniasMidd = [
           where: { id_campania },
         });
         // console.log(actividad);
-        if (campania <= 0) {
+        if (campania === 0) {
           return Promise.reject("La campania ingresada no se encuentra en la bd");
         }
       },
@@ -53,7 +54,7 @@ const postDetalleCampaniasMidd = [
           where: { id_unidad_medida },
         });
         // console.log(actividad);
-        if (campania <= 0) {
+        if (campania === 0) {
           return Promise.reject("La Unidad de medida ingresada no se encuentra en la bd");
         }
       },
@@ -64,6 +65,23 @@ const postDetalleCampaniasMidd = [
     .not()
     .isEmpty()
     .withMessage("La cantidad cosechada  es requerida"),
+  check("id_establecimiento")
+    .exists()
+    .not()
+    .isEmpty()
+    .withMessage("El establecimiento es requerida")
+    .custom(
+      async (id_establecimiento) => {
+        const establecimiento = await EstablecimientosModelo.count({
+          where: { id_establecimiento },
+        });
+        // console.log(establecimiento);
+        if (establecimiento === 0) {
+          return Promise.reject("El establecimiento no existe por favor verifique");
+        }
+      },
+    ),
+
   verificarCampos,
 ];
 
@@ -92,7 +110,7 @@ const putDetalleCampaniasMidd = [
           where: { id_campania },
         });
         // console.log(actividad);
-        if (campania <= 0) {
+        if (campania === 0) {
           return Promise.reject("La campania ingresada no se encuentra en la bd");
         }
       },
@@ -108,7 +126,7 @@ const putDetalleCampaniasMidd = [
           where: { id_unidad_medida },
         });
         // console.log(actividad);
-        if (campania <= 0) {
+        if (campania === 0) {
           return Promise.reject("La Unidad de medida ingresada no se encuentra en la bd");
         }
       },
@@ -128,7 +146,7 @@ const deleteCampaniasMidd = [
         where: { id_detalle_campania },
       });
       // console.log(actividad);
-      if (campania <= 0) {
+      if (campania === 0) {
         return Promise.reject("La campania ingresada no se encuentra en la bd");
       }
     },

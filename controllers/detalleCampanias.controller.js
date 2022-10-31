@@ -1,12 +1,14 @@
 import { logSistema } from "../helpers/createLog.js";
 import { DetalleCampanias } from "../models/DetalleCampanias.model.js";
 
-// Devuelve todos los Campanias de la colección
 export const getDetalleCampanias = async (req, res) => {
   try {
-    const detalleCampania = await DetalleCampanias.findAll(); // consulta para todos los documentos
-    // Respuesta del servidor
-    res.json(detalleCampania);
+    const { id_establecimiento } = req.decoded.paramUsuario;
+    const detalleCampania = await DetalleCampanias.findAll({ where: { id_establecimiento } });
+    if (detalleCampania.length === 0) {
+      return res.status(400).json("No hay un detalle de campaña asociado a este establecimiento");
+    }
+    return res.status(200).json(detalleCampania[0].dataValues);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -17,15 +19,14 @@ export const getDetalleCampanias = async (req, res) => {
 export const getDetalleCampaniaUnico = async (req, res) => {
   try {
     const { id } = req.params;
-    const detalleCampania = await DetalleCampanias.findByPk(id); // consulta para todos los documentos
+    const detalleCampania = await DetalleCampanias.findByPk(id);
 
-
-    
     await logSistema(req.decoded, detalleCampania.dataValues, "busqueda");
 
-
-    // Respuesta del servidor
-    res.json(detalleCampania);
+    if (!detalleCampania) {
+      return res.status(400).json("No hay un detalle de campaña asociada a este ID");
+    }
+    return res.status(200).json(detalleCampania);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -36,20 +37,20 @@ export const getDetalleCampaniaUnico = async (req, res) => {
 export const postDetalleCampania = async (req, res) => {
   try {
     const {
-      id_campania, id_unidad_medida, cantidad_cosechada,
+      id_campania, id_unidad_medida, cantidad_cosechada, id_establecimiento,
     } = req.body;
 
     const nuevoDetalleCampania = await DetalleCampanias.create({
       id_campania,
       id_unidad_medida,
       cantidad_cosechada,
-
+      id_establecimiento,
     });
 
     await logSistema(req.decoded, nuevoDetalleCampania.dataValues, "creacion");
 
     res.json({
-      msg: "El detalle de Campania se creo Correctamente",
+      msg: "El detalle de campania se creo correctamente",
       nuevoDetalleCampania,
     });
   } catch (error) {
