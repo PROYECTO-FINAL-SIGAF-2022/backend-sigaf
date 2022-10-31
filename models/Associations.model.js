@@ -170,7 +170,10 @@ LogSistema.belongsTo(UsuariosModelo, {
 
 // TABLA PARCELAS
 ParcelasModelo.belongsTo(EstablecimientosModelo, {
-  foreignKey: "id_establecimiento",
+  foreignKey: {
+    name: "id_establecimiento",
+    allowNull: false,
+  },
   onDelete: "restrict",
   onUpdate: "restrict",
 });
@@ -235,6 +238,15 @@ PerdidasParcelasCultivosModelo.belongsTo(ParcelasCultivosModelo, {
 
 PerdidasParcelasCultivosModelo.belongsTo(UnidadesMedidasModelo, {
   foreignKey: "id_unidad_medida",
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
+
+PerdidasParcelasCultivosModelo.belongsTo(EstablecimientosModelo, {
+  foreignKey: {
+    name: "id_establecimiento",
+    allowNull: false,
+  },
   onDelete: "restrict",
   onUpdate: "restrict",
 });

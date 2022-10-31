@@ -1,11 +1,15 @@
 import { logSistema } from "../helpers/createLog.js";
 import { PerdidasParcelasCultivosModelo } from "../models/PerdidasParcelasCultivos.model.js";
 
-// TODO: falta agregar el activo en el modelo y controlador
 export const getPerdidasParcelasCultivos = async (req, res) => {
   try {
-    const perdidaParCult = await PerdidasParcelasCultivosModelo.findAll();
-    res.status(200).json(perdidaParCult);
+    const { id_establecimiento } = req.decoded.paramUsuario;
+
+    const perdidaParCult = await PerdidasParcelasCultivosModelo.findAll({ where: { id_establecimiento } });
+    if (perdidaParCult.length === 0) {
+      return res.status(400).json("No hay registros de peridades asociadas a este establecimiento");
+    }
+    return res.status(200).json(perdidaParCult[0].dataValues);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -20,7 +24,10 @@ export const getPerdidaParcelaCultivoUnico = async (req, res) => {
 
     await logSistema(req.decoded, perdidaParCult.dataValues, "busqueda");
 
-    res.status(200).json(perdidaParCult);
+    if (!perdidaParCult) {
+      return res.status(400).json("No hay una perdidas asociada a este ID");
+    }
+    return res.status(200).json(perdidaParCult);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -30,17 +37,20 @@ export const getPerdidaParcelaCultivoUnico = async (req, res) => {
 
 export const postPerdidaParcelaCultivo = async (req, res) => {
   try {
+    const { id_establecimiento } = req.decoded.paramUsuario;
+
     const { id_parcela_cultivo, cantidad_perdida, id_unidad_medida } = req.body;
 
     const nuevaPerdidaParcelaCultivo = await PerdidasParcelasCultivosModelo.create({
       id_parcela_cultivo,
       id_unidad_medida,
       cantidad_perdida,
+      id_establecimiento,
     });
 
     await logSistema(req.decoded, nuevaPerdidaParcelaCultivo.dataValues, "creacion");
 
-    res.status(201).json({
+    return res.status(201).json({
       msg: "La perdida parcela-cultivo se creo correctamente",
       nuevaPerdidaParcelaCultivo,
     });

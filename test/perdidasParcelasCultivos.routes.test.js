@@ -13,13 +13,13 @@ import {
   testFunctionGet, testFunctionPost, testFunctionPut, testFunctionDelete,
 } from "../helpers/tests/testFunctions";
 import { crearUsuarios } from "../helpers/createUser";
+import { getTokenTest } from "../helpers/getToken";
+import { EstablecimientosModelo } from "../models/Establecimientos.model";
 
 const API = supertest(app);
 const URL = "/api/perdidas-parcelas-cultivos";
 
-const HEADERS = {
-  Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbVVzdWFyaW8iOnsiaWRfdXN1YXJpbyI6MX0sImlhdCI6MTY2MjMyNjcwNn0.5UXnRCxAz1AiTDQ3gvHOF4XahMw20Dn2gEDTsKhsd1U",
-};
+const HEADERS = getTokenTest();
 
 beforeAll(async () => {
   try {
@@ -27,17 +27,26 @@ beforeAll(async () => {
     await vaciarTablas();
     await crearUsuarios();
 
+    await EstablecimientosModelo.create({
+      descripcion_establecimiento: "Establecimiento 1",
+      georeferencia: "[[[17.385044, 78.486671], [16.506174, 80.648015], [17.686816, 83.218482]],[[13.082680, 80.270718], [12.971599, 77.594563],[15.828126, 78.037279]]]",
+      superficie: "20",
+      id_usuario: 1,
+    });
+
     await ParcelasModelo.create(
       {
         descripcion_establecimiento: "Establecimiento 1",
         georeferencia: "[[[17.385044, 78.486671], [16.506174, 80.648015], [17.686816, 83.218482]],[[13.082680, 80.270718], [12.971599, 77.594563],[15.828126, 78.037279]]]",
         superficie: "20",
         id_usuario: 1,
+        id_establecimiento: 1,
       },
     );
 
     await CultivosModelo.create({
       descripcion_cultivo: "Frutilla",
+      id_establecimiento: "1",
     });
 
     await CampaniasModelo.create({
@@ -45,6 +54,7 @@ beforeAll(async () => {
       fecha_inicio: "2022/09/7",
       fecha_final: "2023/04/20",
       id_cultivo: "1",
+      id_establecimiento: "1",
     });
 
     await UnidadesMedidasModelo.create({
@@ -60,12 +70,14 @@ beforeAll(async () => {
       id_campania: "1",
       id_unidad_medida: "1",
       cantidad_sembrada: "12",
+      id_establecimiento: "1",
     });
 
     await PerdidasParcelasCultivosModelo.create({
       id_parcela_cultivo: "1",
       id_unidad_medida: "1",
       cantidad_perdida: "20",
+      id_establecimiento: "1",
     });
   } catch (error) {
     console.log(error);

@@ -193,6 +193,7 @@ const seedBd = async () => {
     id_parcela_cultivo: "1",
     id_unidad_medida: "1",
     cantidad_perdida: "10",
+    id_establecimiento: "1",
   });
 
   await connection.query("SET GLOBAL FOREIGN_KEY_CHECKS = 1;");
