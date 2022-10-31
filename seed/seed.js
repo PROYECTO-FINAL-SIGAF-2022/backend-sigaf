@@ -77,6 +77,7 @@ const seedBd = async () => {
 
   await CultivosModelo.create({
     descripcion_cultivo: "Maiz",
+    id_establecimiento: "1",
     activo: true,
   });
 

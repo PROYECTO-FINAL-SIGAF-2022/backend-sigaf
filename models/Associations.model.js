@@ -95,6 +95,15 @@ CultivosModelo.hasMany(ParcelasCultivosModelo, {
   onUpdate: "restrict",
 });
 
+CultivosModelo.belongsTo(EstablecimientosModelo, {
+  foreignKey: {
+    name: "id_establecimiento",
+    allowNull: false,
+  },
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
+
 // TABLA DETALLE CAMPAÑAS
 DetalleCampanias.belongsTo(CampaniasModelo, {
   foreignKey: "id_campania",
@@ -134,6 +143,11 @@ EstablecimientosModelo.hasMany(AgregoParcelasCultivosModelo, {
   onUpdate: "restrict",
 });
 EstablecimientosModelo.hasMany(CampaniasModelo, {
+  foreignKey: "id_establecimiento",
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
+EstablecimientosModelo.hasMany(CultivosModelo, {
   foreignKey: "id_establecimiento",
   onDelete: "restrict",
   onUpdate: "restrict",

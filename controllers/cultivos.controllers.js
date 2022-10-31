@@ -1,11 +1,14 @@
 import { logSistema } from "../helpers/createLog.js";
 import { CultivosModelo } from "../models/Cultivos.model.js";
 
-// Devuelve todos los Cultivos de la colección
 export const getCultivos = async (req, res) => {
   try {
-    const cultivos = await CultivosModelo.findAll({ where: { activo: true } });
-    res.status(200).json(cultivos);
+    const { id_establecimiento } = req.decoded.paramUsuario;
+    const cultivos = await CultivosModelo.findAll({ where: { id_establecimiento, activo: true } });
+    if (cultivos.length === 0) {
+      return res.status(400).json("No hay cultivos asociadas a este establecimiento");
+    }
+    return res.status(200).json(cultivos[0].dataValues);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -20,7 +23,10 @@ export const getCultivoUnico = async (req, res) => {
 
     await logSistema(req.decoded, cultivos.dataValues, "busqueda");
 
-    res.status(200).json(cultivos);
+    if (!cultivos) {
+      return res.status(400).json("No hay una cultivos asociada a este ID");
+    }
+    return res.status(200).json(cultivos);
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -32,9 +38,9 @@ export const getCultivoUnico = async (req, res) => {
 
 export const postCultivo = async (req, res) => {
   try {
-    const { descripcion_cultivo } = req.body;
+    const { descripcion_cultivo, id_establecimiento } = req.body;
 
-    const nuevoCultivo = await CultivosModelo.create({ descripcion_cultivo });
+    const nuevoCultivo = await CultivosModelo.create({ descripcion_cultivo, id_establecimiento });
 
     await logSistema(req.decoded, nuevoCultivo.dataValues, "creacion");
 
