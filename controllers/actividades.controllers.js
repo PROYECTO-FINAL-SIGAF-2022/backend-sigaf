@@ -4,10 +4,15 @@ import { logSistema } from "../helpers/createLog.js";
 // Devuelve todos los actividadess de la colección
 export const getActividades = async (req, res) => {
   try {
-    const actividad = await ActividadesModelo.findAll({ where: { activo: true } }); // consulta para todos los documentos
+    const { id_establecimiento } = req.decoded.paramUsuario;
+    const actividad = await ActividadesModelo.findAll({ where: { id_establecimiento, activo: true } });
+
+    if (actividad.length === 0) {
+      return res.status(400).json("No hay actividades asociadas a este establecimiento");
+    }
+    return res.status(200).json(actividad[0].dataValues);
 
     // Respuesta del servidor
-    res.json(actividad);
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -20,12 +25,14 @@ export const getActividadUnico = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const actividad = await ActividadesModelo.findByPk(id); // consulta para todos los documentos
+    const actividad = await ActividadesModelo.findByPk(id);
 
     await logSistema(req.decoded, actividad.dataValues, "busqueda");
 
-    // Respuesta del servidor
-    res.json(actividad);
+    if (!actividad) {
+      return res.status(400).json("No hay una actividad asociada a este ID");
+    }
+    return res.status(200).json(actividad);
   } catch (error) {
     console.log(error);
     return res.status(500).json({

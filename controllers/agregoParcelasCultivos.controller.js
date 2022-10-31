@@ -1,12 +1,15 @@
 import { AgregoParcelasCultivosModelo } from "../models/AgregoParcelasCultivos.model.js";
 import { logSistema } from "../helpers/createLog.js";
 
-// Devuelve todos los datos de la colección
 export const getAggParcelasCultivos = async (req, res) => {
   try {
-    const agregoParCul = await AgregoParcelasCultivosModelo.findAll({ where: { activo: true } }); // consulta para todos los documentos
-    // Respuesta del servidor
-    res.status(200).json(agregoParCul);
+    const { id_establecimiento } = req.decoded.paramUsuario;
+    const agregoParCul = await AgregoParcelasCultivosModelo.findAll({ where: { id_establecimiento, activo: true } });
+
+    if (agregoParCul.length === 0) {
+      return res.status(400).json("No hay productos agregados asociadas a este establecimiento");
+    }
+    return res.status(200).json(agregoParCul[0].dataValues);
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -18,12 +21,14 @@ export const getAggParcelasCultivos = async (req, res) => {
 export const getAggParcelaCultivoUnico = async (req, res) => {
   try {
     const { id } = req.params;
-    const agregoParCul = await AgregoParcelasCultivosModelo.findByPk(id); // consulta para todos los documentos
+    const agregoParCul = await AgregoParcelasCultivosModelo.findByPk(id);
 
     await logSistema(req.decoded, agregoParCul.dataValues, "busqueda");
 
-    // Respuesta del servidor
-    res.status(200).json(agregoParCul);
+    if (!agregoParCul) {
+      return res.status(400).json("No hay un registro asociado a este ID");
+    }
+    return res.status(200).json(agregoParCul);
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -34,12 +39,15 @@ export const getAggParcelaCultivoUnico = async (req, res) => {
 
 export const postAggParcelaCultivo = async (req, res) => {
   try {
-    const { id_parcela_cultivo, id_unidad_medida, cantidad_agregada } = req.body;
+    const {
+      id_parcela_cultivo, id_unidad_medida, cantidad_agregada, id_establecimiento,
+    } = req.body;
 
     const nuevaAggParcelaCultivo = await AgregoParcelasCultivosModelo.create({
       id_parcela_cultivo,
       id_unidad_medida,
       cantidad_agregada,
+      id_establecimiento,
     });
 
     await logSistema(req.decoded, nuevaAggParcelaCultivo.dataValues, "creacion");

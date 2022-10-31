@@ -53,7 +53,6 @@ export const postActividadesMidd = [
           return Promise.reject("El establecimiento no existe por favor verifique");
         }
       },
-
     ),
   verificarCampos,
 ];

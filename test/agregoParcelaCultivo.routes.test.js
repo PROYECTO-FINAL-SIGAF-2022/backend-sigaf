@@ -13,19 +13,26 @@ import {
   testFunctionGet, testFunctionPost, testFunctionPut, testFunctionDelete,
 } from "../helpers/tests/testFunctions";
 import { crearUsuarios } from "../helpers/createUser";
+import { getTokenTest } from "../helpers/getToken";
+import { EstablecimientosModelo } from "../models/Establecimientos.model";
 
 const API = supertest(app);
 const URL = "/api/agregar-parcela-cultivos";
 
-const HEADERS = {
-  Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJhbVVzdWFyaW8iOnsiaWRfdXN1YXJpbyI6MX0sImlhdCI6MTY2MjMyNjcwNn0.5UXnRCxAz1AiTDQ3gvHOF4XahMw20Dn2gEDTsKhsd1U",
-};
+const HEADERS = getTokenTest();
 
 beforeAll(async () => {
   try {
     jest.setTimeout(10000);
     await vaciarTablas();
     await crearUsuarios();
+
+    await EstablecimientosModelo.create({
+      descripcion_establecimiento: "Establecimiento 1",
+      georeferencia: "[[[17.385044, 78.486671], [16.506174, 80.648015], [17.686816, 83.218482]],[[13.082680, 80.270718], [12.971599, 77.594563],[15.828126, 78.037279]]]",
+      superficie: "20",
+      id_usuario: 1,
+    });
 
     await ParcelasModelo.create(
       {
@@ -66,6 +73,7 @@ beforeAll(async () => {
       id_parcela_cultivo: "1",
       id_unidad_medida: "2",
       cantidad_agregada: "23",
+      id_establecimiento: "1",
     });
   } catch (error) {
     console.log(error);
@@ -95,7 +103,7 @@ describe(`POST ${URL}`, () => {
     id_parcela_cultivo: "1",
     id_unidad_medida: "2",
     cantidad_agregada: "24",
-
+    id_establecimiento: "1",
   };
 
   testFunctionPost(URL, "Debe retornar un error al no enviar el token", sendCrear, 401, API);
@@ -104,23 +112,32 @@ describe(`POST ${URL}`, () => {
     id_parcela_cultivo: "1",
     id_unidad_medida: "2",
     cantidad_agregada: "",
+    id_establecimiento: "1",
   }, 400, API, HEADERS);
 
   testFunctionPost(URL, "Debe retornar un error si el id_parcela_cultivo no exite en la bd", {
     id_parcela_cultivo: "3",
     id_unidad_medida: "2",
     cantidad_agregada: "23",
+    id_establecimiento: "1",
   }, 400, API, HEADERS);
   testFunctionPost(URL, "Debe retornar un error si el id_unidad_medida no exite en la bd", {
     id_parcela_cultivo: "1",
     id_unidad_medida: "3",
     cantidad_agregada: "23",
+    id_establecimiento: "1",
+  }, 400, API, HEADERS);
+  testFunctionPost(URL, "Debe retornar un error si el id_establecimiento no exite en la bd", {
+    id_parcela_cultivo: "1",
+    id_unidad_medida: "2",
+    cantidad_agregada: "23",
+    id_establecimiento: "4",
   }, 400, API, HEADERS);
 
   testFunctionPost(URL, "Debe retornar un json con el nuevo registro ", sendCrear, 201, API, HEADERS);
 });
 
-describe(` PUT ${URL}/1`, () => {
+describe(`PUT ${URL}/1`, () => {
   const sendActualizar = {
     id_parcela_cultivo: "1",
     id_unidad_medida: "2",
@@ -138,6 +155,11 @@ describe(` PUT ${URL}/1`, () => {
   }, 400, API, HEADERS);
 
   testFunctionPut(`${URL}/1`, "Debe retornar un error si el id_unidad_medida no existe en la bd ", {
+    id_parcela_cultivo: "1",
+    id_unidad_medida: "4",
+    cantidad_agregada: "230",
+  }, 400, API, HEADERS);
+  testFunctionPut(`${URL}/1`, "Debe retornar un error si el id_establecimiento no existe en la bd ", {
     id_parcela_cultivo: "1",
     id_unidad_medida: "4",
     cantidad_agregada: "230",

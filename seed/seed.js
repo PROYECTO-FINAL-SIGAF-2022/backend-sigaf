@@ -180,6 +180,7 @@ const seedBd = async () => {
     id_parcela_cultivo: "1",
     id_unidad_medida: "1",
     cantidad_agregada: "20",
+    id_establecimiento: "1",
   });
 
   // 17
