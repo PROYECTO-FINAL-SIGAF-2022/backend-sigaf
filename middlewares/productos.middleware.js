@@ -105,7 +105,6 @@ export const postProductoMidd = [
         }
       },
     ),
-
   check("id_usuario")
     .exists()
     .not()
@@ -296,7 +295,6 @@ export const deleteCultivoMidd = [
         return Promise.reject("El id enviado no se coincide con ningun registro de la base de datos");
       }
     },
-
   ),
   verificarCampos,
 ];

@@ -118,6 +118,7 @@ const seedBd = async () => {
     id_tipo_producto: 1,
     id_usuario: 1,
     id_unidad_medida: 1,
+    id_establecimiento: 1,
   });
 
   // 10

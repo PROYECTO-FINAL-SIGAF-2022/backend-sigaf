@@ -3,9 +3,14 @@ import { ProductosModelo } from "../models/Productos.model.js";
 
 export const getProductos = async (req, res) => {
   try {
-    const productos = await ProductosModelo.findAll({ where: { activo: true } });
+    const { id_establecimiento } = req.decoded.paramUsuario;
 
-    res.status(200).json(productos);
+    const productos = await ProductosModelo.findAll({ where: { id_establecimiento, activo: true } });
+
+    if (productos.length === 0) {
+      return res.status(400).json("No hay productos asociadas a este establecimiento");
+    }
+    return res.status(200).json(productos[0].dataValues);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -20,7 +25,10 @@ export const getProductoUnico = async (req, res) => {
 
     await logSistema(req.decoded, producto.dataValues, "busqueda");
 
-    res.status(200).json(producto);
+    if (!producto) {
+      return res.status(400).json("No hay un producto asociad a este ID");
+    }
+    return res.status(200).json(producto);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -30,6 +38,8 @@ export const getProductoUnico = async (req, res) => {
 
 export const postProducto = async (req, res) => {
   try {
+    const { id_establecimiento } = req.decoded.paramUsuario;
+
     const {
       descripcion_producto,
       fecha_vencimiento_producto,
@@ -50,6 +60,7 @@ export const postProducto = async (req, res) => {
       id_tipo_producto,
       id_usuario,
       id_unidad_medida,
+      id_establecimiento,
     });
 
     await logSistema(req.decoded, nuevoProducto.dataValues, "creacion");

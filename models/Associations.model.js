@@ -274,6 +274,14 @@ ProductosModelo.belongsTo(UnidadesMedidasModelo, {
   onDelete: "restrict",
   onUpdate: "restrict",
 });
+ProductosModelo.belongsTo(EstablecimientosModelo, {
+  foreignKey: {
+    name: "id_establecimiento",
+    allowNull: false,
+  },
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
 
 ProductosModelo.hasMany(HistorialesParcelasCultivosModelo, {
   foreignKey: "id_producto",
@@ -405,6 +413,17 @@ EstablecimientosModelo.hasMany(HistorialesParcelasCultivosModelo, {
 });
 
 EstablecimientosModelo.hasMany(ParcelasCultivosModelo, {
+  foreignKey: "id_establecimiento",
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
+
+EstablecimientosModelo.hasMany(PerdidasParcelasCultivosModelo, {
+  foreignKey: "id_establecimiento",
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
+EstablecimientosModelo.hasMany(ProductosModelo, {
   foreignKey: "id_establecimiento",
   onDelete: "restrict",
   onUpdate: "restrict",

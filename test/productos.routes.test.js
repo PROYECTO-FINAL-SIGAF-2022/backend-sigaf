@@ -13,6 +13,7 @@ import { ProductosModelo } from "../models/Productos.model.js";
 import { ProveedoresModelo } from "../models/Proveedores.model.js";
 import { TiposProductosModelo } from "../models/TiposProductos.model.js";
 import { UnidadesMedidasModelo } from "../models/UnidadesMedidas.model.js";
+import { EstablecimientosModelo } from "../models/Establecimientos.model.js";
 
 const API = supertest(app);
 const URL = "/api/productos";
@@ -25,6 +26,13 @@ beforeAll(async () => {
     await vaciarTablas();
 
     await crearUsuarios();
+
+    await EstablecimientosModelo.create({
+      descripcion_establecimiento: "Establecimiento 1",
+      georeferencia: "[[[17.385044, 78.486671], [16.506174, 80.648015], [17.686816, 83.218482]],[[13.082680, 80.270718], [12.971599, 77.594563],[15.828126, 78.037279]]]",
+      superficie: "20",
+      id_usuario: 1,
+    });
 
     await ProveedoresModelo.create({
       nombre_proveedor: "Proveedor 1",
@@ -50,6 +58,7 @@ beforeAll(async () => {
       id_tipo_producto: 1,
       id_usuario: 1,
       id_unidad_medida: 1,
+      id_establecimiento: 1,
     });
 
     await ProductosModelo.create({
@@ -62,6 +71,7 @@ beforeAll(async () => {
       id_tipo_producto: 1,
       id_usuario: 1,
       id_unidad_medida: 1,
+      id_establecimiento: 1,
     });
   } catch (error) {
     console.log(error);
