@@ -113,6 +113,7 @@ export const deleteEstablecimiento = async (req, res) => {
 export const getEstablecimientosUsuario = async (req, res) => {
   try {
     const { id_usuario } = req.decoded.paramUsuario;
+    // console.log(id_usuario);
     const establecimientosUsuarios = await EstablecimientosModelo.findAll({
       where: {
         id_usuario,
@@ -129,12 +130,9 @@ export const getEstablecimientosUsuario = async (req, res) => {
 
 export const getEstablecimientoUsuario = async (req, res) => {
   try {
-    const { id_usuario } = req.decoded.paramUsuario;
-    const establecimientoUsuario = await EstablecimientosModelo.findByPk({
-      where: {
-        id_usuario,
-      },
-    });
+    const { id_establecimiento } = req.decoded.paramUsuario;
+    // console.log(id_usuario);
+    const establecimientoUsuario = await EstablecimientosModelo.findByPk(id_establecimiento);
 
     res.status(200).json(establecimientoUsuario);
   } catch (error) {

@@ -144,7 +144,7 @@ const seedBd = async () => {
   // 12
 
   await ParcelasModelo.create({
-    georeferencia: " -34.6037,-58.3816",
+    georeferencia: "[[-26.08751198261958,-58.28023733874861],[-26.077031648644507,-58.28023733874861],[-26.077031648644507,-58.26745416627038],[-26.08751198261958,-58.26745416627038]]",
     superficie: " 70",
     id_establecimiento: "1",
     activo: true,
