@@ -41,6 +41,7 @@ export const postEstablecimiento = async (req, res) => {
     } = req.body;
 
     const { id_usuario } = req.decoded.paramUsuario;
+    console.log(id_usuario);
     const nuevoEstablecimiento = await EstablecimientosModelo.create({
       descripcion_establecimiento,
       georeferencia,

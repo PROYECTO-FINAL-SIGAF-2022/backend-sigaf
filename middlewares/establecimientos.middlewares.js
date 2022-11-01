@@ -50,22 +50,22 @@ export const postEstablecimientoMidd = [
     .escape()
     .isEmpty()
     .withMessage("La superficie del establecimiento es requerido"),
-  check("id_usuario")
-    .exists()
-    .not()
-    .isEmpty()
-    .withMessage("El id usuario no puede estar vacio")
-    .custom(
-      async (id_usuario) => {
-        const usuario = await UsuariosModelo.count({
-          where: { id_usuario },
-        });
+  // check("id_usuario")
+  //   .exists()
+  //   .not()
+  //   .isEmpty()
+  //   .withMessage("El id usuario no puede estar vacio")
+  //   .custom(
+  //     async (id_usuario) => {
+  //       const usuario = await UsuariosModelo.count({
+  //         where: { id_usuario },
+  //       });
 
-        if (usuario === 0) {
-          return Promise.reject("El id de usuario enviado no se encuentra en la bd");
-        }
-      },
-    ),
+  //       if (usuario === 0) {
+  //         return Promise.reject("El id de usuario enviado no se encuentra en la bd");
+  //       }
+  //     },
+  //   ),
   verificarCampos,
 ];
 
