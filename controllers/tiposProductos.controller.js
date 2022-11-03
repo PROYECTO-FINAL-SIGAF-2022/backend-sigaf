@@ -4,12 +4,12 @@ import { TiposProductosModelo } from "../models/TiposProductos.model.js";
 export const getTiposProductos = async (req, res) => {
   try {
     const { id_establecimiento } = req.decoded.paramUsuario;
-    const tiposProductos = await TiposProductosModelo.findAll({ where: { id_establecimiento, activo: true } });
+    const tiposProductos = await TiposProductosModelo.findAll({ raw: true, where: { id_establecimiento, activo: true } });
 
     if (tiposProductos.length === 0) {
       return res.status(400).json("No hay tipos productos asociadas a este establecimiento");
     }
-    return res.status(200).json(tiposProductos[0].dataValues);
+    return res.status(200).json(tiposProductos);
   } catch (error) {
     return res.status(500).json({
       message: error.message,

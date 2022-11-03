@@ -4,12 +4,12 @@ import { logSistema } from "../helpers/createLog.js";
 export const getAggParcelasCultivos = async (req, res) => {
   try {
     const { id_establecimiento } = req.decoded.paramUsuario;
-    const agregoParCul = await AgregoParcelasCultivosModelo.findAll({ where: { id_establecimiento, activo: true } });
+    const agregoParCul = await AgregoParcelasCultivosModelo.findAll({ raw: true, where: { id_establecimiento, activo: true } });
 
     if (agregoParCul.length === 0) {
       return res.status(400).json("No hay productos agregados asociadas a este establecimiento");
     }
-    return res.status(200).json(agregoParCul[0].dataValues);
+    return res.status(200).json(agregoParCul);
   } catch (error) {
     console.log(error);
     return res.status(500).json({

@@ -10,7 +10,7 @@ export const ParcelasModelo = connection.define(
       autoIncrement: true,
     },
     georeferencia: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
     },
     superficie: {
       type: DataTypes.STRING,

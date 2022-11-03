@@ -4,12 +4,13 @@ import { ParcelasModelo } from "../models/Parcelas.model.js";
 export const getParcelas = async (req, res) => {
   try {
     const { id_establecimiento } = req.decoded.paramUsuario;
-    const parcelas = await ParcelasModelo.findAll({ where: { id_establecimiento, activo: true } });
+    const parcelas = await ParcelasModelo.findAll({ raw: true, where: { id_establecimiento, activo: true } });
 
     if (parcelas.length === 0) {
       return res.status(400).json("No hay parcelas asociadas a este establecimiento");
     }
-    return res.status(200).json(parcelas[0].dataValues);
+    // console.log(parcelas);
+    return res.status(200).json(parcelas);
   } catch (error) {
     return res.status(500).json({
       message: error.message,

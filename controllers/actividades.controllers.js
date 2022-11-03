@@ -5,12 +5,12 @@ import { logSistema } from "../helpers/createLog.js";
 export const getActividades = async (req, res) => {
   try {
     const { id_establecimiento } = req.decoded.paramUsuario;
-    const actividad = await ActividadesModelo.findAll({ where: { id_establecimiento, activo: true } });
+    const actividades = await ActividadesModelo.findAll({ raw: true, where: { id_establecimiento, activo: true } });
 
-    if (actividad.length === 0) {
+    if (actividades.length === 0) {
       return res.status(400).json("No hay actividades asociadas a este establecimiento");
     }
-    return res.status(200).json(actividad[0].dataValues);
+    return res.status(200).json(actividades);
 
     // Respuesta del servidor
   } catch (error) {

@@ -5,11 +5,11 @@ export const getCampanias = async (req, res) => {
   try {
     const { id_establecimiento } = req.decoded.paramUsuario;
 
-    const campania = await CampaniasModelo.findAll({ where: { id_establecimiento, activo: true } });
+    const campania = await CampaniasModelo.findAll({ raw: true, where: { id_establecimiento, activo: true } });
     if (campania.length === 0) {
       return res.status(400).json("No hay campañas asociadas a este establecimiento");
     }
-    return res.status(200).json(campania[0].dataValues);
+    return res.status(200).json(campania);
   } catch (error) {
     return res.status(500).json({
       message: error.message,

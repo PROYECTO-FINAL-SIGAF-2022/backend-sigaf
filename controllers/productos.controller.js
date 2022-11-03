@@ -5,12 +5,12 @@ export const getProductos = async (req, res) => {
   try {
     const { id_establecimiento } = req.decoded.paramUsuario;
 
-    const productos = await ProductosModelo.findAll({ where: { id_establecimiento, activo: true } });
+    const productos = await ProductosModelo.findAll({ raw: true, where: { id_establecimiento, activo: true } });
 
     if (productos.length === 0) {
       return res.status(400).json("No hay productos asociadas a este establecimiento");
     }
-    return res.status(200).json(productos[0].dataValues);
+    return res.status(200).json(productos);
   } catch (error) {
     return res.status(500).json({
       message: error.message,

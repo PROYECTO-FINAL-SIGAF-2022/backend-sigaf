@@ -4,11 +4,11 @@ import { CultivosModelo } from "../models/Cultivos.model.js";
 export const getCultivos = async (req, res) => {
   try {
     const { id_establecimiento } = req.decoded.paramUsuario;
-    const cultivos = await CultivosModelo.findAll({ where: { id_establecimiento, activo: true } });
+    const cultivos = await CultivosModelo.findAll({ raw: true, where: { id_establecimiento, activo: true } });
     if (cultivos.length === 0) {
       return res.status(400).json("No hay cultivos asociadas a este establecimiento");
     }
-    return res.status(200).json(cultivos[0].dataValues);
+    return res.status(200).json(cultivos);
   } catch (error) {
     return res.status(500).json({
       message: error.message,

@@ -3,7 +3,7 @@ import { TiposUsuariosModelo } from "../models/TiposUsuarios.model.js";
 
 export const getTiposUsuarios = async (req, res) => {
   try {
-    const tipoUsuarios = await TiposUsuariosModelo.findAll({ where: { activo: true } });
+    const tipoUsuarios = await TiposUsuariosModelo.findAll({ raw: true, where: { activo: true } });
     res.status(200).json(tipoUsuarios);
   } catch (error) {
     return res.status(500).json({

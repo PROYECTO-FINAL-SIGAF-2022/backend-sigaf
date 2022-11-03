@@ -4,12 +4,12 @@ import { ProveedoresModelo } from "../models/Proveedores.model.js";
 export const getProveedores = async (req, res) => {
   try {
     const { id_establecimiento } = req.decoded.paramUsuario;
-    const proveedores = await ProveedoresModelo.findAll({ where: { id_establecimiento, activo: true } });
+    const proveedores = await ProveedoresModelo.findAll({ raw: true, where: { id_establecimiento, activo: true } });
 
     if (proveedores.length === 0) {
       return res.status(400).json("No hay proveedores asociadas a este establecimiento");
     }
-    return res.status(200).json(proveedores[0].dataValues);
+    return res.status(200).json(proveedores);
   } catch (error) {
     return res.status(500).json({
       message: error.message,

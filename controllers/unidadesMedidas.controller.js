@@ -4,11 +4,11 @@ import { UnidadesMedidasModelo } from "../models/UnidadesMedidas.model.js";
 export const getUnidadesMedidas = async (req, res) => {
   try {
     const { id_establecimiento } = req.decoded.paramUsuario;
-    const unidadMedida = await UnidadesMedidasModelo.findAll({ where: { id_establecimiento, activo: true } });
+    const unidadMedida = await UnidadesMedidasModelo.findAll({ raw: true, where: { id_establecimiento, activo: true } });
     if (unidadMedida.length === 0) {
       return res.status(400).json("No hay unidad medidas asociadas a este establecimiento");
     }
-    return res.status(200).json(unidadMedida[0].dataValues);
+    return res.status(200).json(unidadMedida);
   } catch (error) {
     return res.status(500).json({
       message: error.message,

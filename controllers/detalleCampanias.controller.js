@@ -4,11 +4,11 @@ import { DetalleCampanias } from "../models/DetalleCampanias.model.js";
 export const getDetalleCampanias = async (req, res) => {
   try {
     const { id_establecimiento } = req.decoded.paramUsuario;
-    const detalleCampania = await DetalleCampanias.findAll({ where: { id_establecimiento } });
+    const detalleCampania = await DetalleCampanias.findAll({ raw: true, where: { id_establecimiento } });
     if (detalleCampania.length === 0) {
       return res.status(400).json("No hay un detalle de campaña asociado a este establecimiento");
     }
-    return res.status(200).json(detalleCampania[0].dataValues);
+    return res.status(200).json(detalleCampania);
   } catch (error) {
     return res.status(500).json({
       message: error.message,

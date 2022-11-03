@@ -5,11 +5,11 @@ export const getPerdidasParcelasCultivos = async (req, res) => {
   try {
     const { id_establecimiento } = req.decoded.paramUsuario;
 
-    const perdidaParCult = await PerdidasParcelasCultivosModelo.findAll({ where: { id_establecimiento } });
+    const perdidaParCult = await PerdidasParcelasCultivosModelo.findAll({ raw: true, where: { id_establecimiento } });
     if (perdidaParCult.length === 0) {
       return res.status(400).json("No hay registros de peridades asociadas a este establecimiento");
     }
-    return res.status(200).json(perdidaParCult[0].dataValues);
+    return res.status(200).json(perdidaParCult);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
