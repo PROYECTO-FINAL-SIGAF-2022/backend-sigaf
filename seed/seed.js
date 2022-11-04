@@ -22,6 +22,12 @@ import { UnidadesMedidasModelo } from "../models/UnidadesMedidas.model.js";
 import { UsuariosModelo } from "../models/Usuarios.model.js";
 
 import "../models/Associations.model.js";
+import { AlmacenesModelo } from "../models/Almacenes.model.js";
+import { EmpleadosParcelasCultivosModelo } from "../models/EmpleadosParcelasCultivos.model.js";
+import { MaquinasModelo } from "../models/Maquinas.model.js";
+import { MaquinasParcelasCultivosModelo } from "../models/MaquinasParcelasCultivos.model.js";
+import { CosechasModelo } from "../models/Cosechas.model.js";
+import { ContabilidadModelo } from "../models/Contabilidad.model.js";
 
 // ! resetar bd => npm run dev bd=dev o bd=test
 
@@ -109,18 +115,28 @@ const seedBd = async () => {
     id_establecimiento: 1,
   });
 
+  // 8.1
+
+  await AlmacenesModelo.create({
+    descripcion_almacen: "Almacen 1",
+    tipo_adquisicion: "compra",
+    precio_adquisicion: "20000",
+    id_establecimiento: "1",
+  });
+
   // 9
 
   await ProductosModelo.create({
     descripcion_producto: "Fertilizante",
     fecha_vencimiento_producto: "2020/10/10",
     cantidad_producto: "10",
-    precio_producto: 1000,
+    precio_total_producto: 1000,
     id_proveedor: 1,
     id_tipo_producto: 1,
     id_usuario: 1,
     id_unidad_medida: 1,
     id_establecimiento: 1,
+    id_almacen: 1,
   });
 
   // 10
@@ -179,7 +195,7 @@ const seedBd = async () => {
     cantidad_uso_producto: "2",
     id_producto: 1,
     activo: true,
-    id_establecimiento: "1",
+    id_establecimiento: 1,
   });
 
   // 16
@@ -196,6 +212,40 @@ const seedBd = async () => {
     id_parcela_cultivo: "1",
     id_unidad_medida: "1",
     cantidad_perdida: "10",
+    id_establecimiento: "1",
+  });
+
+  await EmpleadosParcelasCultivosModelo.create({
+    id_parcela_cultivo: "1",
+    id_establecimiento: "1",
+    id_usuario: "1",
+  });
+
+  await MaquinasModelo.create({
+    descripcion_maquina: "Super Tractor",
+    tipo_adquisicion_maquina: "compra",
+    precio_adquisicion_maquina: "1000000",
+    id_establecimiento: "1",
+  });
+
+  await MaquinasParcelasCultivosModelo.create({
+    id_maquina: "1",
+    id_establecimiento: "1",
+  });
+
+  await CosechasModelo.create({
+    cantidad_total_cosechada: "3000",
+    id_establecimiento: "1",
+    id_parcela_cultivo: "1",
+    id_unidad_medida: "1",
+  });
+
+  await ContabilidadModelo.create({
+    descripcion_contabilidad: "Se pago el sueldo al empleado dany",
+    observacion_contabilidad: "pago mensual",
+    monto_contabilidad: "-30000",
+    tipo_contabilidad: "egreso",
+    id_parcela_cultivo: "1",
     id_establecimiento: "1",
   });
 

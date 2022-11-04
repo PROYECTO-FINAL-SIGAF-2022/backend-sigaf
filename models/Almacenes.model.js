@@ -1,36 +1,42 @@
 import { DataTypes, Sequelize } from "sequelize";
 import { connection } from "../config/connection.js";
-// Falta completar
 
-export const ProductosModelo = connection.define(
-  "productos",
+export const AlmacenesModelo = connection.define(
+  "almacenes",
   {
-    id_producto: {
+    id_almacen: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    descripcion_producto: {
+    descripcion_almacen: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
-    fecha_vencimiento_producto: {
-      type: DataTypes.DATE,
-      allowNull: false,
+
+    tipo_adquisicion: {
+      type: Sequelize.ENUM("alquiler", "compra"),
     },
-    cantidad_producto: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+
+    precio_adquisicion: {
+      type: DataTypes.STRING,
     },
-    precio_total_producto: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    fecha_compra: {
+
+    fecha_adquisicion: {
       type: "TIMESTAMP",
       defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       allowNull: false,
     },
+
+    precio_venta: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+
+    fecha_venta: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+
     activo: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,

@@ -44,23 +44,25 @@ export const postProducto = async (req, res) => {
       descripcion_producto,
       fecha_vencimiento_producto,
       cantidad_producto,
-      precio_producto,
+      precio_total_producto,
       id_proveedor,
       id_tipo_producto,
       id_usuario,
       id_unidad_medida,
+      id_almacen,
     } = req.body;
 
     const nuevoProducto = await ProductosModelo.create({
       descripcion_producto,
       fecha_vencimiento_producto,
       cantidad_producto,
-      precio_producto,
+      precio_total_producto,
       id_proveedor,
       id_tipo_producto,
       id_usuario,
       id_unidad_medida,
       id_establecimiento,
+      id_almacen,
     });
 
     await logSistema(req.decoded, nuevoProducto.dataValues, "creacion");
@@ -84,11 +86,12 @@ export const updateProducto = async (req, res) => {
       descripcion_producto,
       fecha_vencimiento_producto,
       cantidad_producto,
-      precio_producto,
+      precio_total_producto,
       id_proveedor,
       id_tipo_producto,
       id_usuario,
       id_unidad_medida,
+      id_almacen,
     } = req.body;
     // console.log(id);
 
@@ -98,11 +101,12 @@ export const updateProducto = async (req, res) => {
     updateProduc.descripcion_producto = descripcion_producto;
     updateProduc.fecha_vencimiento_producto = fecha_vencimiento_producto;
     updateProduc.cantidad_producto = cantidad_producto;
-    updateProduc.precio_producto = precio_producto;
+    updateProduc.precio_total_producto = precio_total_producto;
     updateProduc.id_proveedor = id_proveedor;
     updateProduc.id_tipo_producto = id_tipo_producto;
     updateProduc.id_usuario = id_usuario;
     updateProduc.id_unidad_medida = id_unidad_medida;
+    updateProduc.id_almacen = id_almacen;
     await updateProduc.save();
 
     await logSistema(req.decoded, updateProduc.dataValues, "actualizacion");

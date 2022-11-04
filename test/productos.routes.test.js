@@ -14,6 +14,7 @@ import { ProveedoresModelo } from "../models/Proveedores.model.js";
 import { TiposProductosModelo } from "../models/TiposProductos.model.js";
 import { UnidadesMedidasModelo } from "../models/UnidadesMedidas.model.js";
 import { EstablecimientosModelo } from "../models/Establecimientos.model.js";
+import { AlmacenesModelo } from "../models/Almacenes.model.js";
 
 const API = supertest(app);
 const URL = "/api/productos";
@@ -51,17 +52,25 @@ beforeAll(async () => {
       id_establecimiento: "1",
     });
 
+    await AlmacenesModelo.create({
+      descripcion_almacen: "Almacen 1",
+      tipo_adquisicion: "compra",
+      precio_adquisicion: "20000",
+      id_establecimiento: "1",
+    });
+
     await ProductosModelo.create({
 
       descripcion_producto: "Producto 1",
       fecha_vencimiento_producto: "2022/09/18",
       cantidad_producto: 20,
-      precio_producto: 50,
+      precio_total_producto: 50,
       id_proveedor: 1,
       id_tipo_producto: 1,
       id_usuario: 1,
       id_unidad_medida: 1,
       id_establecimiento: 1,
+      id_almacen: 1,
     });
 
     await ProductosModelo.create({
@@ -69,12 +78,13 @@ beforeAll(async () => {
       descripcion_producto: "Producto 2",
       fecha_vencimiento_producto: "2021/09/18",
       cantidad_producto: 21,
-      precio_producto: 70,
+      precio_total_producto: 70,
       id_proveedor: 1,
       id_tipo_producto: 1,
       id_usuario: 1,
       id_unidad_medida: 1,
       id_establecimiento: 1,
+      id_almacen: 1,
     });
   } catch (error) {
     console.log(error);
@@ -104,11 +114,12 @@ describe(`POST ${URL}`, () => {
     descripcion_producto: "Producto 1",
     fecha_vencimiento_producto: "2022/09/18",
     cantidad_producto: 20,
-    precio_producto: 10000,
+    precio_total_producto: 10000,
     id_proveedor: 1,
     id_tipo_producto: 1,
     id_usuario: 1,
     id_unidad_medida: 1,
+    id_almacen: 1,
   };
 
   testFunctionPost(URL, "Debe retornar un error al no enviar el token", productoRegistrar, 401, API);
@@ -161,11 +172,12 @@ describe(`PUT ${URL}/:id`, () => {
     descripcion_producto: "Producto 1",
     fecha_vencimiento_producto: "2022/09/18",
     cantidad_producto: 20,
-    precio_producto: 20000,
+    precio_total_producto: 20000,
     id_proveedor: 1,
     id_tipo_producto: 1,
     id_usuario: 1,
     id_unidad_medida: 1,
+    id_almacen: 1,
   };
 
   testFunctionPut(`${URL}/1`, "Debe retornar un error al no enviar el token", productoEditar, 401, API);

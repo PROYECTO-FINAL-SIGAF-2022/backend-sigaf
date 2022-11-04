@@ -73,7 +73,7 @@ beforeAll(async () => {
       id_tipo_producto: 1,
       id_usuario: 1,
       id_unidad_medida: 1,
-      precio_producto: "20000",
+      precio_total_producto: "20000",
       id_establecimiento: "1",
     });
 
