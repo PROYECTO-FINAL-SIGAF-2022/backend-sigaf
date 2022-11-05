@@ -35,6 +35,10 @@ export const MaquinasModelo = connection.define(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    activo: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
 
   },
   {

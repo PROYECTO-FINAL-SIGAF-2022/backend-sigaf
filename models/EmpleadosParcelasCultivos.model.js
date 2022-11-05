@@ -14,6 +14,11 @@ export const EmpleadosParcelasCultivosModelo = connection.define(
       defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       allowNull: false,
     },
+    activo: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
+
     // precio_sueldo: {
     //   type: DataTypes.STRING,
     // },

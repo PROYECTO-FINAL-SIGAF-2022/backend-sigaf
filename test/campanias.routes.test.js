@@ -40,7 +40,7 @@ beforeAll(async () => {
       descripcion_campania: "primer Campaña",
       fecha_inicio: "2022/09/5",
       fecha_final: "2023/04/15",
-      id_cultivo: "1",
+      // id_cultivo: "1",
       id_establecimiento: "1",
     });
 
@@ -48,7 +48,7 @@ beforeAll(async () => {
       descripcion_campania: "segunda Campaña",
       fecha_inicio: "2022/09/7",
       fecha_final: "2023/04/20",
-      id_cultivo: "1",
+      // id_cultivo: "1",
       id_establecimiento: "1",
     });
   } catch (error) {
@@ -79,7 +79,7 @@ describe(`POST ${URL}`, () => {
     descripcion_campania: "tercera Campaña",
     fecha_inicio: "2022/09/9",
     fecha_final: "2023/04/25",
-    id_cultivo: "1",
+    // id_cultivo: "1",
   };
 
   testFunctionPost(URL, "Debe retornar un error al no enviar el token", sendCampania, 401, API);
@@ -94,7 +94,7 @@ describe(`PUT ${URL}:id`, () => {
     descripcion_campania: "primeraaaa Campañaaaa",
     fecha_inicio: "2022/10/9",
     fecha_final: "2023/08/25",
-    id_cultivo: "1",
+    // id_cultivo: "1",
   };
 
   testFunctionPut(`${URL}/1`, "Debe retornar un error al no enviar el token", sendActualizar, 401, API);
@@ -105,7 +105,7 @@ describe(`PUT ${URL}:id`, () => {
     descripcion_campania: "segunda Campaña",
     fecha_inicio: "2022/10/10",
     fecha_final: "2023/08/27",
-    id_cultivo: "1",
+    // id_cultivo: "1",
   }, 400, API, HEADERS);
 });
 

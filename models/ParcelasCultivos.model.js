@@ -25,6 +25,11 @@ export const ParcelasCultivosModelo = connection.define(
       type: DataTypes.INTEGER,
     },
 
+    cantidad_total_cosechada: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+
     activo: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,

@@ -14,6 +14,10 @@ export const MaquinasParcelasCultivosModelo = connection.define(
       defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       allowNull: false,
     },
+    activo: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
   },
   {
     timestamps: false,

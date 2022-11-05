@@ -10,18 +10,18 @@ export const CosechasModelo = connection.define(
       autoIncrement: true,
     },
 
-    cantidad_total_cosechada: {
-      type: DataTypes.STRING,
-    },
+    // cantidad_total_cosechada: {
+    //   type: DataTypes.STRING,
+    // },
 
     cantidad_total_vendida: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
 
-    precio_total: {
+    precio_venta: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
 
     fecha_venta: {

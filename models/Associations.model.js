@@ -63,11 +63,11 @@ AgregoParcelasCultivosModelo.belongsTo(EstablecimientosModelo, {
 });
 
 // TABLA CAMPANIAS
-CampaniasModelo.belongsTo(CultivosModelo, {
-  foreignKey: "id_cultivo",
-  onDelete: "restrict",
-  onUpdate: "restrict",
-});
+// CampaniasModelo.belongsTo(CultivosModelo, {
+//   foreignKey: "id_cultivo",
+//   onDelete: "restrict",
+//   onUpdate: "restrict",
+// });
 
 CampaniasModelo.belongsTo(EstablecimientosModelo, {
   foreignKey: {
@@ -92,11 +92,11 @@ CampaniasModelo.hasMany(ParcelasCultivosModelo, {
 
 // TABLA CULTIVOS
 
-CultivosModelo.hasMany(CampaniasModelo, {
-  foreignKey: "id_cultivo",
-  onDelete: "restrict",
-  onUpdate: "restrict",
-});
+// CultivosModelo.hasMany(CampaniasModelo, {
+//   foreignKey: "id_cultivo",
+//   onDelete: "restrict",
+//   onUpdate: "restrict",
+// });
 
 CultivosModelo.hasMany(ParcelasCultivosModelo, {
   foreignKey: "id_cultivo",
@@ -246,6 +246,12 @@ ParcelasCultivosModelo.hasMany(EmpleadosParcelasCultivosModelo, {
 });
 
 ParcelasCultivosModelo.hasMany(CosechasModelo, {
+  foreignKey: "id_parcela_cultivo",
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
+
+ParcelasCultivosModelo.hasMany(MaquinasParcelasCultivosModelo, {
   foreignKey: "id_parcela_cultivo",
   onDelete: "restrict",
   onUpdate: "restrict",
@@ -489,6 +495,15 @@ MaquinasModelo.belongsTo(EstablecimientosModelo, {
 MaquinasParcelasCultivosModelo.belongsTo(MaquinasModelo, {
   foreignKey: {
     name: "id_maquina",
+    allowNull: false,
+  },
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
+
+MaquinasParcelasCultivosModelo.belongsTo(ParcelasCultivosModelo, {
+  foreignKey: {
+    name: "id_parcela_cultivo",
     allowNull: false,
   },
   onDelete: "restrict",

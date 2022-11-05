@@ -42,14 +42,14 @@ export const postCampania = async (req, res) => {
     const { id_establecimiento } = req.decoded.paramUsuario;
 
     const {
-      descripcion_campania, fecha_inicio, fecha_final, id_cultivo,
+      descripcion_campania, fecha_inicio, fecha_final,
     } = req.body;
 
     const nuevaCampania = await CampaniasModelo.create({
       descripcion_campania,
       fecha_inicio,
       fecha_final,
-      id_cultivo,
+      // id_cultivo,
       id_establecimiento,
     });
 
@@ -70,7 +70,7 @@ export const updateCampania = async (req, res) => {
   try {
     const { id } = req.params;
     const {
-      descripcion_campania, fecha_inicio, fecha_final, id_cultivo,
+      descripcion_campania, fecha_inicio, fecha_final,
     } = req.body;
     const updateCamp = await CampaniasModelo.findOne({
       where: { id_campania: id },
@@ -78,7 +78,7 @@ export const updateCampania = async (req, res) => {
     updateCamp.descripcion_campania = descripcion_campania;
     updateCamp.fecha_inicio = fecha_inicio;
     updateCamp.fecha_final = fecha_final;
-    updateCamp.id_cultivo = id_cultivo;
+    // updateCamp.id_cultivo = id_cultivo;
     await updateCamp.save();
 
     await logSistema(req.decoded, updateCamp.dataValues, "actualizacion");

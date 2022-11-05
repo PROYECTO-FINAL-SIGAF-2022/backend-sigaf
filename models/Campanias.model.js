@@ -18,9 +18,9 @@ export const CampaniasModelo = connection.define(
     fecha_final: {
       type: DataTypes.STRING,
     },
-    id_cultivo: {
-      type: DataTypes.INTEGER,
-    },
+    // id_cultivo: {
+    //   type: DataTypes.INTEGER,
+    // },
     activo: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,

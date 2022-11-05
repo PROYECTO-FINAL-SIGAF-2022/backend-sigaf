@@ -48,11 +48,11 @@ const postCampaniasMidd = [
     .not()
     .isEmpty()
     .withMessage("La fecha final  es requerida"),
-  check("id_cultivo")
-    .exists()
-    .not()
-    .isEmpty()
-    .withMessage("El id  de cultivo es requerida"),
+  // check("id_cultivo")
+  //   .exists()
+  //   .not()
+  //   .isEmpty()
+  //   .withMessage("El id  de cultivo es requerida"),
   verificarCampos,
 ];
 const putCampaniasMidd = [
@@ -93,11 +93,11 @@ const putCampaniasMidd = [
     .not()
     .isEmpty()
     .withMessage("La fecha final  es requerida"),
-  check("id_cultivo")
-    .exists()
-    .not()
-    .isEmpty()
-    .withMessage("El id  de cultivo es requerida"),
+  // check("id_cultivo")
+  //   .exists()
+  //   .not()
+  //   .isEmpty()
+  //   .withMessage("El id  de cultivo es requerida"),
 
   verificarCampos,
 ];

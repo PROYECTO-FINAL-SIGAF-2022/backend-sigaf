@@ -14,7 +14,7 @@ export const ContabilidadModelo = connection.define(
     },
 
     observacion_contabilidad: {
-      type: Sequelize.ENUM("pago mensual", "pago por dia", ""),
+      type: Sequelize.ENUM("pago mensual", "pago por dia", "-"),
     },
 
     monto_contabilidad: {
@@ -22,7 +22,7 @@ export const ContabilidadModelo = connection.define(
     },
 
     tipo_contabilidad: {
-      type: Sequelize.ENUM("egreso", "ingreso", ""),
+      type: Sequelize.ENUM("egreso", "ingreso"),
     },
     fecha_contabilidad: {
       type: "TIMESTAMP",

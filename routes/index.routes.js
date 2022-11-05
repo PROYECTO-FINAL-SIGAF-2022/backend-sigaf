@@ -20,6 +20,12 @@ import perdidaParcelasCultivosRutas from "./perdidasParcelasCultivos.routes.js";
 import proveedoresRutas from "./proveedores.routes.js";
 import unidadesMedidasRutas from "./unidadesMedidas.routes.js";
 import productosRutas from "./productos.routes.js";
+import almacenesRutas from "./almacenes.routes.js";
+import maquinasRutas from "./maquinas.routes.js";
+import empleadoParcelasCultivosRutas from "./empleadosParcelasCultivos.routes.js";
+import maquinaParcelasCultivosRutas from "./maquinasParcelasCultivos.routes.js";
+import cosechasRutas from "./cosechas.routes.js";
+import contabilidadesRutas from "./contabilidades.routes.js";
 // const app = express();
 
 export const rutas = () => [
@@ -40,6 +46,12 @@ export const rutas = () => [
   unidadesMedidasRutas,
   productosRutas,
   perdidaParcelasCultivosRutas,
+  almacenesRutas,
+  maquinasRutas,
+  empleadoParcelasCultivosRutas,
+  maquinaParcelasCultivosRutas,
+  cosechasRutas,
+  contabilidadesRutas,
 ];
 
 // app.use("/api", usuariosRutas);
