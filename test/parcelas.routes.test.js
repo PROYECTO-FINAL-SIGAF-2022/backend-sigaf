@@ -61,16 +61,19 @@ describe(`POST ${URL}`, () => {
   }, 401, API);
 
   testFunctionPost(URL, "Crear una parcela", {
+    descripcion_parcela: "Parcela 1",
     georeferencia: "[[[20.385011, 78.186671], [16.506171, 80.618015], [17.686816, 83.218182]]]]",
     superficie: "50",
   }, 201, API, HEADERS);
 
   testFunctionPost(URL, "Crear una parcela con una georeferencia vacia", {
+    descripcion_parcela: "Parcela 1",
     georeferencia: "",
     superficie: "30",
   }, 400, API, HEADERS);
 
   testFunctionPost(URL, "Crear una parcela con una superficie vacia", {
+    descripcion_parcela: "Parcela 1",
     georeferencia: "[[[17.385044, 78.486671], [16.506174, 80.648015], [17.686816, 83.218482]]]]",
     superficie: "",
   }, 400, API, HEADERS);

@@ -1,4 +1,5 @@
 import { logSistema } from "../helpers/createLog.js";
+import { randomLetters } from "../helpers/randomLetters.js";
 import { ParcelasModelo } from "../models/Parcelas.model.js";
 
 export const getParcelas = async (req, res) => {
@@ -42,9 +43,12 @@ export const postParcela = async (req, res) => {
 
     const { georeferencia, superficie } = req.body;
 
+    const descripcion_parcela = randomLetters(10);
+
     const nuevaParcela = await ParcelasModelo.create({
       georeferencia,
       superficie,
+      descripcion_parcela,
       id_establecimiento,
     });
 
@@ -64,13 +68,14 @@ export const postParcela = async (req, res) => {
 export const updateParcela = async (req, res) => {
   try {
     const { id } = req.params;
-    const { georeferencia, superficie } = req.body;
+    const { georeferencia, superficie, descripcion_parcela } = req.body;
 
     const updateParc = await ParcelasModelo.findOne({
       where: { id_parcela: id },
     });
     updateParc.georeferencia = georeferencia;
     updateParc.superficie = superficie;
+    updateParc.descripcion_parcela = descripcion_parcela;
     await updateParc.save();
 
     await logSistema(req.decoded, updateParc.dataValues, "actualizacion");

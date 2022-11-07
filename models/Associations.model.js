@@ -290,11 +290,11 @@ AlmacenesModelo.belongsTo(EstablecimientosModelo, {
   onUpdate: "restrict",
 });
 
-AlmacenesModelo.hasMany(EstablecimientosModelo, {
-  foreignKey: "id_almacen",
-  onDelete: "restrict",
-  onUpdate: "restrict",
-});
+// AlmacenesModelo.hasMany(EstablecimientosModelo, {
+//   foreignKey: "id_almacen",
+//   onDelete: "restrict",
+//   onUpdate: "restrict",
+// });
 
 // TABLA PRODUCTOS
 ProductosModelo.belongsTo(ProveedoresModelo, {

@@ -9,6 +9,10 @@ export const ParcelasModelo = connection.define(
       primaryKey: true,
       autoIncrement: true,
     },
+    descripcion_parcela: {
+      type: DataTypes.STRING,
+      defaultValue: "Sin descripción",
+    },
     georeferencia: {
       type: DataTypes.TEXT,
     },
