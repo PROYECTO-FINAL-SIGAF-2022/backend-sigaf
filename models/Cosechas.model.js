@@ -2,7 +2,7 @@ import { DataTypes, Sequelize } from "sequelize";
 import { connection } from "../config/connection.js";
 
 export const CosechasModelo = connection.define(
-  "cosechas",
+  "ventas_cosechas",
   {
     id_cosecha: {
       type: DataTypes.INTEGER,

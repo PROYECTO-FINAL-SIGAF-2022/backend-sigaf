@@ -209,7 +209,7 @@ ParcelasCultivosModelo.belongsTo(UnidadesMedidasModelo, {
   onUpdate: "restrict",
 });
 
-ParcelasCultivosModelo.belongsTo(CampaniasModelo, {
+ParcelasCultivosModelo.belongsTo(EstablecimientosModelo, {
   foreignKey: {
     name: "id_establecimiento",
     allowNull: false,

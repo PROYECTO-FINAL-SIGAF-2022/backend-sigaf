@@ -1,10 +1,11 @@
 import { Router } from "express";
 import {
   deleteContabilidad,
-  getContabilidad, getContabilidadUnico, postContabilidad, putContabilidad,
+  getContabilidad, getContabilidadCampania, getContabilidadUnico, postContabilidad, putContabilidad,
 } from "../controllers/contabilidades.controller.js";
 import {
   deleteContabilidadMidd,
+  getContabilidadCampaniaMidd,
   getContabilidadesMidd, getContabilidadMidd, postContabilidadMidd, putContabilidadMidd,
 } from "../middlewares/contabilidades.middlewares.js";
 
@@ -23,6 +24,9 @@ router.put("/contabilidad/:id", validateToken, validarAccesoRutas, putContabilid
 
 router.delete("/contabilidad/:id", validateToken, validarAccesoRutas, deleteContabilidadMidd, deleteContabilidad);
 
+// INGRESOS
+
+router.get("/contabilidad-ingresos/:idCampania", validateToken, validarAccesoRutas, getContabilidadCampaniaMidd, getContabilidadCampania);
 // router.put("/contabilidad/:id", validateToken, validarAccesoRutas, putMaquinasVenderMidd, putVenderMaquina);
 
 export default router;

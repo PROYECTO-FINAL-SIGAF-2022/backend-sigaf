@@ -1,6 +1,7 @@
 import { check, param } from "express-validator";
 // import { Op } from "sequelize";
 import { verificarCampos } from "../helpers/verificarCampos.js";
+import { CampaniasModelo } from "../models/Campanias.model.js";
 import { ContabilidadModelo } from "../models/Contabilidad.model.js";
 import { ParcelasCultivosModelo } from "../models/ParcelasCultivos.model.js";
 
@@ -14,6 +15,21 @@ export const getContabilidadMidd = [
       });
 
       if (contabilidad === 0) {
+        return Promise.reject("El id enviado no se coincide con ningun registro de la base de datos");
+      }
+    },
+  ),
+  verificarCampos,
+];
+
+export const getContabilidadCampaniaMidd = [
+  param("idCampania").custom(
+    async (id_campania) => {
+      const campania = await CampaniasModelo.count({
+        where: { id_campania },
+      });
+
+      if (campania === 0) {
         return Promise.reject("El id enviado no se coincide con ningun registro de la base de datos");
       }
     },

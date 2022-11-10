@@ -2,6 +2,9 @@
 
 import { logSistema } from "../helpers/createLog.js";
 import { ContabilidadModelo } from "../models/Contabilidad.model.js";
+import { CultivosModelo } from "../models/Cultivos.model.js";
+import { ParcelasModelo } from "../models/Parcelas.model.js";
+import { ParcelasCultivosModelo } from "../models/ParcelasCultivos.model.js";
 
 export const getContabilidad = async (req, res) => {
   try {
@@ -32,6 +35,43 @@ export const getContabilidadUnico = async (req, res) => {
       return res.status(400).json("No hay registros de contabilidad asociados a esta parcela con este ID");
     }
     return res.status(200).json(contabilidadUnico);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+export const getContabilidadCampania = async (req, res) => {
+  try {
+    const { idCampania } = req.params;
+    const { id_establecimiento } = req.decoded.paramUsuario;
+
+    const parcelasCultivosByCampania = await ParcelasCultivosModelo.findAll({
+      raw: true,
+      nest: true,
+      where: { id_campania: idCampania, id_establecimiento },
+      include: [
+        {
+          model: CultivosModelo,
+          as: "cultivo",
+        },
+        {
+          model: ParcelasModelo,
+          as: "parcela",
+        },
+      ],
+      attributes: ["id_parcela_cultivo", "cantidad_total_cosechada", "activo"],
+    });
+
+    console.log(parcelasCultivosByCampania);
+    // await logSistema(req.decoded, parcelasCultivosByCampania.dataValues, "busqueda");
+
+    if (!parcelasCultivosByCampania) {
+      return res.status(400).json("No hay registros de parcelas cultivos asociados a esta campania");
+    }
+    return res.status(200).json(parcelasCultivosByCampania);
   } catch (error) {
     console.log(error);
     return res.status(500).json({
