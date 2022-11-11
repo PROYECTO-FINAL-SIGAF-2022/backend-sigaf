@@ -87,6 +87,11 @@ export const getContabilidadCampania = async (req, res) => {
       raw: true,
       nest: true,
       where: { id_parcela_cultivo: parcelasCultivosByCampania[0].id_parcela_cultivo },
+      include: [
+        {
+          model: UnidadesMedidasModelo,
+        },
+      ],
     });
 
     console.log(totalVendidoParcelaCultivo);

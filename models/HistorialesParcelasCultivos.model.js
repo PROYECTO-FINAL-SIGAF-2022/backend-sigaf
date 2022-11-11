@@ -24,6 +24,10 @@ export const HistorialesParcelasCultivosModelo = connection.define(
     id_producto: {
       type: DataTypes.INTEGER,
     },
+    fecha_historial: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     activo: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,

@@ -159,6 +159,11 @@ HistorialesParcelasCultivosModelo.belongsTo(ProductosModelo, {
   onDelete: "restrict",
   onUpdate: "restrict",
 });
+HistorialesParcelasCultivosModelo.belongsTo(MaquinasModelo, {
+  foreignKey: "id_maquina",
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
 HistorialesParcelasCultivosModelo.belongsTo(EstablecimientosModelo, {
   foreignKey: {
     name: "id_establecimiento",

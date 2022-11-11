@@ -214,6 +214,8 @@ const seedBd = async () => {
     activo: true,
     id_establecimiento: "1",
     unidad_medida_total_cosechada: "1",
+    fecha_inicio: "2022/02/01",
+    fecha_final: "2022/10/01",
   });
 
   await ParcelasCultivosModelo.create({
@@ -226,6 +228,8 @@ const seedBd = async () => {
     id_establecimiento: "1",
     cantidad_total_cosechada: "10000",
     unidad_medida_total_cosechada: "2",
+    fecha_inicio: "2022/02/01",
+    fecha_final: "2022/12/01",
   });
 
   // 14
@@ -238,16 +242,6 @@ const seedBd = async () => {
   });
 
   // 15
-
-  await HistorialesParcelasCultivosModelo.create({
-    id_parcela_cultivo: "1",
-    id_actividad: "1",
-    id_usuario: "1",
-    cantidad_uso_producto: "2",
-    id_producto: 1,
-    activo: true,
-    id_establecimiento: 1,
-  });
 
   // 16
 
@@ -301,6 +295,18 @@ const seedBd = async () => {
     tipo_contabilidad: "egreso",
     id_parcela_cultivo: "1",
     id_establecimiento: "1",
+  });
+
+  await HistorialesParcelasCultivosModelo.create({
+    id_parcela_cultivo: "1",
+    id_actividad: "1",
+    id_usuario: "1",
+    cantidad_uso_producto: "2",
+    id_producto: 1,
+    activo: true,
+    fecha_historial: "2022/11/11",
+    id_maquina: "1",
+    id_establecimiento: 1,
   });
 
   await connection.query("SET GLOBAL FOREIGN_KEY_CHECKS = 1;");
