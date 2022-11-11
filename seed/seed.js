@@ -61,7 +61,7 @@ const seedBd = async () => {
     nombre_persona: "Marcos",
     apellido_persona: "Franco",
     dni_persona: 43711821,
-    fecha_nac_persona: "1996/10/10",
+    fecha_nac_persona: "1996-10-10",
     telefono_persona: 3704981,
     email_persona: "correo@gmail.com",
     username_usuario: "usuariodev",
@@ -149,7 +149,7 @@ const seedBd = async () => {
 
   await ProductosModelo.create({
     descripcion_producto: "Fertilizante",
-    fecha_vencimiento_producto: "2020/10/10",
+    fecha_vencimiento_producto: "2020-10-10",
     cantidad_producto: "10",
     precio_total_producto: 1000,
     id_proveedor: 1,
@@ -172,16 +172,16 @@ const seedBd = async () => {
 
   await CampaniasModelo.create({
     descripcion_campania: "2021",
-    fecha_inicio: "2021/01/31",
-    fecha_final: "2021/12/01",
+    fecha_inicio: "2021-01-31",
+    fecha_final: "2021-12-01",
     activo: false,
     id_establecimiento: 1,
   });
 
   await CampaniasModelo.create({
     descripcion_campania: "2022",
-    fecha_inicio: "2022/01/31",
-    fecha_final: "2022/12/01",
+    fecha_inicio: "2022-01-31",
+    fecha_final: "2022-12-01",
     activo: true,
     id_establecimiento: 1,
   });
@@ -214,8 +214,8 @@ const seedBd = async () => {
     activo: true,
     id_establecimiento: "1",
     unidad_medida_total_cosechada: "1",
-    fecha_inicio: "2022/02/01",
-    fecha_final: "2022/10/01",
+    fecha_inicio: "2022-02-01",
+    fecha_final: "2022-10-01",
   });
 
   await ParcelasCultivosModelo.create({
@@ -228,8 +228,8 @@ const seedBd = async () => {
     id_establecimiento: "1",
     cantidad_total_cosechada: "10000",
     unidad_medida_total_cosechada: "2",
-    fecha_inicio: "2022/02/01",
-    fecha_final: "2022/12/01",
+    fecha_inicio: "2022-02-01",
+    fecha_final: "2022-12-01",
   });
 
   // 14
@@ -304,7 +304,7 @@ const seedBd = async () => {
     cantidad_uso_producto: "2",
     id_producto: 1,
     activo: true,
-    fecha_historial: "2022/11/11",
+    fecha_historial: "2022-11-11",
     id_maquina: "1",
     id_establecimiento: 1,
   });
