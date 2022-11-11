@@ -18,9 +18,9 @@ export const ParcelasCultivosModelo = connection.define(
     id_campania: {
       type: DataTypes.INTEGER,
     },
-    id_unidad_medida: {
-      type: DataTypes.INTEGER,
-    },
+    // id_unidad_medida: {
+    //   type: DataTypes.INTEGER,
+    // },
     cantidad_sembrada: {
       type: DataTypes.INTEGER,
     },

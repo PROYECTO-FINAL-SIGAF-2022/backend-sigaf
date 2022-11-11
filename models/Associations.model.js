@@ -204,7 +204,17 @@ ParcelasCultivosModelo.belongsTo(CultivosModelo, {
 });
 
 ParcelasCultivosModelo.belongsTo(UnidadesMedidasModelo, {
-  foreignKey: "id_unidad_medida",
+  as: "unidadMedidaTotalSembrada",
+  foreignKey: "unidad_medida_total_sembrada",
+  targetKey: "id_unidad_medida",
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
+
+ParcelasCultivosModelo.belongsTo(UnidadesMedidasModelo, {
+  as: "unidadMedidaTotalCosechada",
+  foreignKey: "unidad_medida_total_cosechada",
+  targetKey: "id_unidad_medida",
   onDelete: "restrict",
   onUpdate: "restrict",
 });
@@ -395,6 +405,21 @@ UnidadesMedidasModelo.hasMany(DetalleCampanias, {
 
 UnidadesMedidasModelo.hasMany(CosechasModelo, {
   foreignKey: "id_unidad_medida",
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
+UnidadesMedidasModelo.hasMany(ParcelasCultivosModelo, {
+  as: "unidadMedidaTotalSembrada",
+  foreignKey: "unidad_medida_total_sembrada",
+  sourceKey: "id_unidad_medida",
+  onDelete: "restrict",
+  onUpdate: "restrict",
+});
+
+UnidadesMedidasModelo.hasMany(ParcelasCultivosModelo, {
+  as: "unidadMedidaTotalCosechada",
+  foreignKey: "unidad_medida_total_cosechada",
+  sourceKey: "id_unidad_medida",
   onDelete: "restrict",
   onUpdate: "restrict",
 });

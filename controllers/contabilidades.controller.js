@@ -2,9 +2,11 @@
 
 import { logSistema } from "../helpers/createLog.js";
 import { ContabilidadModelo } from "../models/Contabilidad.model.js";
+import { CosechasModelo } from "../models/Cosechas.model.js";
 import { CultivosModelo } from "../models/Cultivos.model.js";
 import { ParcelasModelo } from "../models/Parcelas.model.js";
 import { ParcelasCultivosModelo } from "../models/ParcelasCultivos.model.js";
+import { UnidadesMedidasModelo } from "../models/UnidadesMedidas.model.js";
 
 export const getContabilidad = async (req, res) => {
   try {
@@ -61,16 +63,34 @@ export const getContabilidadCampania = async (req, res) => {
           model: ParcelasModelo,
           as: "parcela",
         },
+        {
+          model: UnidadesMedidasModelo,
+          // foreignKey: "id_unidad_medida",
+          as: "unidadMedidaTotalSembrada",
+        },
+        {
+          model: UnidadesMedidasModelo,
+          // foreignKey: "id_unidad_medida",
+          as: "unidadMedidaTotalCosechada",
+        },
       ],
-      attributes: ["id_parcela_cultivo", "cantidad_total_cosechada", "activo"],
+      attributes: ["id_parcela_cultivo", "cantidad_total_cosechada", "activo", "unidad_medida_total_cosechada", "cantidad_sembrada"],
     });
 
     console.log(parcelasCultivosByCampania);
     // await logSistema(req.decoded, parcelasCultivosByCampania.dataValues, "busqueda");
 
-    if (!parcelasCultivosByCampania) {
+    if (parcelasCultivosByCampania.length === 0) {
       return res.status(400).json("No hay registros de parcelas cultivos asociados a esta campania");
     }
+    const totalVendidoParcelaCultivo = await CosechasModelo.findAll({
+      raw: true,
+      nest: true,
+      where: { id_parcela_cultivo: parcelasCultivosByCampania[0].id_parcela_cultivo },
+    });
+
+    console.log(totalVendidoParcelaCultivo);
+
     return res.status(200).json(parcelasCultivosByCampania);
   } catch (error) {
     console.log(error);

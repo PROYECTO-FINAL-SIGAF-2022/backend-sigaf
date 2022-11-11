@@ -87,10 +87,26 @@ const seedBd = async () => {
     activo: true,
   });
 
+  await CultivosModelo.create({
+    descripcion_cultivo: "Soja",
+    id_establecimiento: "1",
+    activo: true,
+  });
+
   // 5
 
   await UnidadesMedidasModelo.create({
+    descripcion_unidad_medida: "Sin unidad medida",
+    id_establecimiento: "1",
+  });
+
+  await UnidadesMedidasModelo.create({
     descripcion_unidad_medida: "Kilogramos",
+    id_establecimiento: "1",
+  });
+
+  await UnidadesMedidasModelo.create({
+    descripcion_unidad_medida: "bolsas",
     id_establecimiento: "1",
   });
 
@@ -112,6 +128,11 @@ const seedBd = async () => {
 
   await ActividadesModelo.create({
     descripcion_actividad: "Cosechar",
+    id_establecimiento: 1,
+  });
+
+  await ActividadesModelo.create({
+    descripcion_actividad: "Sembrar",
     id_establecimiento: 1,
   });
 
@@ -148,11 +169,19 @@ const seedBd = async () => {
   });
 
   // 11
+
   await CampaniasModelo.create({
-    descripcion_campania: "La super campaña de maiz",
-    fecha_inicio: "2020/10/10",
-    fecha_final: "2021/10/21",
-    // id_cultivo: 1,
+    descripcion_campania: "2021",
+    fecha_inicio: "2021/01/31",
+    fecha_final: "2021/12/01",
+    activo: false,
+    id_establecimiento: 1,
+  });
+
+  await CampaniasModelo.create({
+    descripcion_campania: "2022",
+    fecha_inicio: "2022/01/31",
+    fecha_final: "2022/12/01",
     activo: true,
     id_establecimiento: 1,
   });
@@ -160,6 +189,7 @@ const seedBd = async () => {
   // 12
 
   await ParcelasModelo.create({
+    descripcion_parcela: "Parcela 1",
     georeferencia: "[[-26.171365596687888,-58.18443426262314],[-26.169786315079378,-58.18443426262314],[-26.169786315079378,-58.18376947893593],[-26.171365596687888,-58.18376947893593]]",
     superficie: " 70",
     id_establecimiento: "1",
@@ -167,6 +197,7 @@ const seedBd = async () => {
   });
 
   await ParcelasModelo.create({
+    descripcion_parcela: "Parcela 2",
     georeferencia: "[[-26.171423379657448,-58.18299667681346],[-26.16978631985923,-58.18299667681346],[-26.16978631985923,-58.18233189312623],[-26.171423379657448,-58.18233189312623]]",
     superficie: "100",
     id_establecimiento: "1",
@@ -175,13 +206,26 @@ const seedBd = async () => {
 
   // 13
   await ParcelasCultivosModelo.create({
-    id_parcela: 1,
+    id_parcela: "1",
     id_cultivo: "1",
-    id_campania: "1",
-    id_unidad_medida: "1",
-    cantidad_sembrada: "23131",
+    id_campania: "2",
+    unidad_medida_total_sembrada: "3",
+    cantidad_sembrada: "2",
     activo: true,
     id_establecimiento: "1",
+    unidad_medida_total_cosechada: "1",
+  });
+
+  await ParcelasCultivosModelo.create({
+    id_parcela: "2",
+    id_cultivo: "2",
+    id_campania: "2",
+    unidad_medida_total_sembrada: "3",
+    cantidad_sembrada: "3",
+    activo: false,
+    id_establecimiento: "1",
+    cantidad_total_cosechada: "10000",
+    unidad_medida_total_cosechada: "2",
   });
 
   // 14
