@@ -1,5 +1,6 @@
 // import { logSistema } from "../helpers/createLog.js";
 
+import sequelize from "sequelize";
 import { logSistema } from "../helpers/createLog.js";
 import { ContabilidadModelo } from "../models/Contabilidad.model.js";
 import { CosechasModelo } from "../models/Cosechas.model.js";
@@ -77,24 +78,41 @@ export const getContabilidadCampania = async (req, res) => {
       attributes: ["id_parcela_cultivo", "cantidad_total_cosechada", "activo", "unidad_medida_total_cosechada", "cantidad_sembrada"],
     });
 
-    console.log(parcelasCultivosByCampania);
+    // console.log(parcelasCultivosByCampania);
     // await logSistema(req.decoded, parcelasCultivosByCampania.dataValues, "busqueda");
 
     if (parcelasCultivosByCampania.length === 0) {
       return res.status(400).json("No hay registros de parcelas cultivos asociados a esta campania");
     }
-    const totalVendidoParcelaCultivo = await CosechasModelo.findAll({
-      raw: true,
-      nest: true,
-      where: { id_parcela_cultivo: parcelasCultivosByCampania[0].id_parcela_cultivo },
-      include: [
-        {
-          model: UnidadesMedidasModelo,
-        },
-      ],
-    });
 
-    console.log(totalVendidoParcelaCultivo);
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < parcelasCultivosByCampania.length; i++) {
+      // console.log(parcelasCultivosByCampania[i].id_parcela_cultivo);
+
+      if (!parcelasCultivosByCampania[i].cantidad_total_cosechada) {
+        parcelasCultivosByCampania[i].cantidad_total_cosechada = 0;
+      }
+
+      // eslint-disable-next-line no-await-in-loop
+      const totalVendidoParcelaCultivo = await CosechasModelo.findAll({
+        raw: true,
+        nest: true,
+        where: { id_parcela_cultivo: parcelasCultivosByCampania[i].id_parcela_cultivo },
+        attributes: [[sequelize.fn("sum", sequelize.col("cantidad_total_vendida")), "sumaTotalCantidadVendida"]],
+      });
+      if (!totalVendidoParcelaCultivo[0].sumaTotalCantidadVendida) {
+        totalVendidoParcelaCultivo[0].sumaTotalCantidadVendida = 0;
+      }
+      console.log(totalVendidoParcelaCultivo);
+    }
+
+    // parcelasCultivosByCampaniaAndSumaTotal = parcelasCultivosByCampania.map((parcelaCultivo) => {
+    //   if (parcelaCultivo.id_parcela_cultivo === id_parcela_cultivo) {
+
+    //   }
+    // });
+    console.log(parcelasCultivosByCampania);
+    // console.log(totalVendidoParcelaCultivo);
 
     return res.status(200).json(parcelasCultivosByCampania);
   } catch (error) {
