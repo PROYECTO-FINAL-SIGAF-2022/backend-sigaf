@@ -1,7 +1,8 @@
 import { Router } from "express";
 import {
+  deleteAlamacenesVendidas,
   deleteAlmacen,
-  getAlmacenes, getAlmacenUnico, postAlmacenes, putAlmacen, putVenderAlmacen,
+  getAlmacenes, getAlmacenesVendidos, getAlmacenUnico, postAlmacenes, putAlmacen, putVenderAlmacen,
 } from "../controllers/almacenes.controller.js";
 import {
   deleteAlmacenMidd,
@@ -22,6 +23,8 @@ router.put("/almacenes/:id", validateToken, validarAccesoRutas, putAlmacenesMidd
 
 router.delete("/almacenes/:id", validateToken, validarAccesoRutas, deleteAlmacenMidd, deleteAlmacen);
 
+router.get("/almacenes-vender", validateToken, validarAccesoRutas, getAlmacenesVendidos);
 router.put("/almacenes-vender/:id", validateToken, validarAccesoRutas, putAlmacenesVenderMidd, putVenderAlmacen);
+router.delete("/almacenes-vender/:fecha", validateToken, validarAccesoRutas, deleteAlamacenesVendidas);
 
 export default router;
