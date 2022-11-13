@@ -129,6 +129,43 @@ export const getCosechasCampaniaParcela = async (req, res) => {
       return res.status(200).json(cosecha);
     }
 
+    if (idCampania === "0" && idParcela !== "0") {
+      // console.log("por campania");
+      const cosecha = await CosechasModelo.findAll({
+        raw: true,
+        nest: true,
+        attributes: ["id_cosecha", "cantidad_total_vendida", "precio_venta", [sequelize.fn("DATE_FORMAT", sequelize.col("fecha_venta"), "%Y-%m-%d %H:%i:%s"), "fecha_venta"]],
+        where: { id_establecimiento },
+        include: [
+          {
+            model: ParcelasCultivosModelo,
+            nest: true,
+            attributes: ["id_parcela_cultivo"],
+            where: { id_parcela: idParcela, id_establecimiento },
+            include: [
+              {
+                model: CultivosModelo,
+                attributes: ["descripcion_cultivo"],
+              },
+              {
+                model: ParcelasModelo,
+                attributes: ["descripcion_parcela"],
+              },
+            ],
+          },
+          {
+            model: UnidadesMedidasModelo,
+            nest: true,
+            attributes: ["descripcion_unidad_medida"],
+          },
+        ],
+      });
+      if (!cosecha) {
+        return res.status(400).json("No hay cosechas asociadas a este ID");
+      }
+      return res.status(200).json(cosecha);
+    }
+
     if (idCampania !== "0" && idParcela !== "0") {
       // console.log("por campania y parcela");
       const cosecha = await CosechasModelo.findAll({
