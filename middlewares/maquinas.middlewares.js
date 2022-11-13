@@ -141,10 +141,10 @@ export const putMaquinasVenderMidd = [
     .not()
     .isEmpty()
     .withMessage("El precio de venta es requerida"),
-  check("fecha_venta_maquina")
-    .exists()
-    .not()
-    .isEmpty()
-    .withMessage("La fecha de venta es requerida"),
+  // check("fecha_venta_maquina")
+  //   .exists()
+  //   .not()
+  //   .isEmpty()
+  //   .withMessage("La fecha de venta es requerida"),
   verificarCampos,
 ];

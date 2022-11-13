@@ -1,7 +1,8 @@
 import { Router } from "express";
 import {
   deleteMaquina,
-  getMaquinas, getMaquinaUnico, postMaquina, putMaquina, putVenderMaquina,
+  deleteMaquinasVendidas,
+  getMaquinas, getMaquinasVendidas, getMaquinaUnico, postMaquina, putMaquina, putVenderMaquina,
 } from "../controllers/maquinas.controller.js";
 import {
   deleteMaquinaMidd,
@@ -23,5 +24,8 @@ router.put("/maquinas/:id", validateToken, validarAccesoRutas, putMaquinasMidd, 
 router.delete("/maquinas/:id", validateToken, validarAccesoRutas, deleteMaquinaMidd, deleteMaquina);
 
 router.put("/maquinas-vender/:id", validateToken, validarAccesoRutas, putMaquinasVenderMidd, putVenderMaquina);
+
+router.get("/maquinas-vendidas", validateToken, validarAccesoRutas, getMaquinasVendidas);
+router.delete("/maquinas-vendidas/:fecha", validateToken, validarAccesoRutas, deleteMaquinasVendidas);
 
 export default router;

@@ -1,6 +1,8 @@
 // import { logSistema } from "../helpers/createLog.js";
 
+import { Sequelize } from "sequelize";
 import { logSistema } from "../helpers/createLog.js";
+import { ContabilidadModelo } from "../models/Contabilidad.model.js";
 import { MaquinasModelo } from "../models/Maquinas.model.js";
 
 export const getMaquinas = async (req, res) => {
@@ -132,14 +134,13 @@ export const putVenderMaquina = async (req, res) => {
 
     const {
       precio_venta_maquina,
-      fecha_venta_maquina,
     } = req.body;
     const venderMaquina = await MaquinasModelo.findOne({
       where: { id_maquina: id },
     });
 
     venderMaquina.precio_venta_maquina = precio_venta_maquina;
-    venderMaquina.fecha_venta_maquina = fecha_venta_maquina;
+    venderMaquina.fecha_venta_maquina = Sequelize.literal("CURRENT_TIMESTAMP");
     venderMaquina.activo = "0";
     await venderMaquina.save();
 
@@ -149,6 +150,58 @@ export const putVenderMaquina = async (req, res) => {
       msg: "La maquina se actualizo Correctamente",
       venderMaquina,
     });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+export const getMaquinasVendidas = async (req, res) => {
+  try {
+    const { id_establecimiento } = req.decoded.paramUsuario;
+
+    const maquina = await MaquinasModelo.findAll({
+      where: { activo: 0, id_establecimiento },
+    });
+
+    if (!maquina) {
+      return res.status(400).json("No hay una maquina asociada a este ID");
+    }
+
+    // await logSistema(req.decoded, maquina.dataValues, "busqueda");
+    return res.status(200).json(maquina);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+export const deleteMaquinasVendidas = async (req, res) => {
+  try {
+    const { fecha } = req.params;
+    const { id_establecimiento } = req.decoded.paramUsuario;
+
+    const maquina = await MaquinasModelo.findOne({
+      // raw: true,
+      where: { fecha_venta_maquina: fecha, id_establecimiento },
+    });
+
+    console.log(maquina);
+    maquina.precio_venta_maquina = null;
+    maquina.fecha_venta_maquina = null;
+    maquina.activo = 1;
+
+    await maquina.save();
+    await ContabilidadModelo.destroy({
+      where: { fecha_contabilidad: fecha },
+    });
+
+    // await logSistema(req.decoded, maquina.dataValues, "busqueda");
+    return res.status(200).json(maquina);
   } catch (error) {
     console.log(error);
     return res.status(500).json({

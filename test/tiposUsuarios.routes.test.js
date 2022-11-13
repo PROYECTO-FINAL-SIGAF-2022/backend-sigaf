@@ -24,7 +24,7 @@ beforeAll(async () => {
 
   await TiposUsuariosModelo.create({
     descripcion_tipo_usuario: "Administrador",
-    rutas_usuario: ["usuarios", "establecimientos", "actividades", "campanias", "cultivos", "historiales", "parcelas", "parcelas-cultivos", "tipos-usuarios", "detalle-campanias", "tipo-productos", "agregar-parcela-cultivos", "proveedores", "unidades-medidas", "productos", "perdidas-parcelas-cultivos", "almacenes", "almacenes-vender", "maquinas", "maquinas-vender", "empleados-parcelas-cultivos", "maquinas-parcelas-cultivos", "cosechas", "contabilidad", "contabilidad-ingresos", "cosechas-campania-parcelas", "contabilidad-cosechas"],
+    rutas_usuario: ["usuarios", "establecimientos", "actividades", "campanias", "cultivos", "historiales", "parcelas", "parcelas-cultivos", "tipos-usuarios", "detalle-campanias", "tipo-productos", "agregar-parcela-cultivos", "proveedores", "unidades-medidas", "productos", "perdidas-parcelas-cultivos", "almacenes", "almacenes-vender", "maquinas", "maquinas-vender", "empleados-parcelas-cultivos", "maquinas-parcelas-cultivos", "cosechas", "contabilidad", "contabilidad-ingresos", "cosechas-campania-parcelas", "contabilidad-cosechas", "maquinas-vendidas"],
   });
 });
 
