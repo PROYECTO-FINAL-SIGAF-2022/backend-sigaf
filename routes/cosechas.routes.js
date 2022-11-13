@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {
   deleteCosecha,
-  getCosecha, getCosechas, postCosecha, putCosecha,
+  getCosecha, getCosechas, getCosechasCampaniaParcela, postCosecha, putCosecha,
 } from "../controllers/cosechas.controller.js";
 import {
   deleteCosechaMidd,
@@ -13,6 +13,7 @@ import validateToken from "../middlewares/validateToken.middleware.js";
 const router = Router();
 
 router.get("/cosechas", validateToken, validarAccesoRutas, getCosechasMidd, getCosechas);
+router.get("/cosechas-campania-parcelas/:idCampania/:idParcela", validateToken, validarAccesoRutas, getCosechasCampaniaParcela);
 
 router.get("/cosechas/:id", validateToken, validarAccesoRutas, getCosechaMidd, getCosecha);
 

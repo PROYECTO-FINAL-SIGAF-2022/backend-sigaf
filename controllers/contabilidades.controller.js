@@ -58,24 +58,26 @@ export const getContabilidadCampania = async (req, res) => {
       include: [
         {
           model: CultivosModelo,
+          attributes: ["id_cultivo", "descripcion_cultivo"],
           as: "cultivo",
         },
         {
           model: ParcelasModelo,
+          attributes: ["id_parcela", "descripcion_parcela", "activo"],
           as: "parcela",
         },
         {
           model: UnidadesMedidasModelo,
-          // foreignKey: "id_unidad_medida",
+          attributes: ["descripcion_unidad_medida"],
           as: "unidadMedidaTotalSembrada",
         },
         {
           model: UnidadesMedidasModelo,
-          // foreignKey: "id_unidad_medida",
+          attributes: ["descripcion_unidad_medida", "id_unidad_medida"],
           as: "unidadMedidaTotalCosechada",
         },
       ],
-      attributes: ["id_parcela_cultivo", "cantidad_total_cosechada", "activo", "unidad_medida_total_cosechada", "cantidad_sembrada"],
+      attributes: ["id_parcela_cultivo", "cantidad_total_cosechada", "activo", "cantidad_sembrada"],
     });
 
     // console.log(parcelasCultivosByCampania);
@@ -87,23 +89,35 @@ export const getContabilidadCampania = async (req, res) => {
 
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < parcelasCultivosByCampania.length; i++) {
-      // console.log(parcelasCultivosByCampania[i].id_parcela_cultivo);
-
-      if (!parcelasCultivosByCampania[i].cantidad_total_cosechada) {
-        parcelasCultivosByCampania[i].cantidad_total_cosechada = 0;
-      }
-
       // eslint-disable-next-line no-await-in-loop
       const totalVendidoParcelaCultivo = await CosechasModelo.findAll({
         raw: true,
         nest: true,
         where: { id_parcela_cultivo: parcelasCultivosByCampania[i].id_parcela_cultivo },
         attributes: [[sequelize.fn("sum", sequelize.col("cantidad_total_vendida")), "sumaTotalCantidadVendida"]],
+        include: [
+          {
+            model: UnidadesMedidasModelo,
+            attributes: ["descripcion_unidad_medida"],
+          },
+        ],
       });
-      if (!totalVendidoParcelaCultivo[0].sumaTotalCantidadVendida) {
-        totalVendidoParcelaCultivo[0].sumaTotalCantidadVendida = 0;
+
+      // * PARA OBTENER LA CANTIDAD VENDIDA DE UNA PARCELA CULTIVO
+      if (!totalVendidoParcelaCultivo[0].sumaTotalCantidadVendida && !totalVendidoParcelaCultivo[0].unidades_medida.descripcion_unidad_medida) {
+        parcelasCultivosByCampania[i].sumaTotalCantidadVendida = "Aun no sea a realizado una venta";
+
+        parcelasCultivosByCampania[i].sumaTotalCantidadStock = `${parcelasCultivosByCampania[i].cantidad_total_cosechada}-${parcelasCultivosByCampania[i].unidadMedidaTotalCosechada.descripcion_unidad_medida}`;
+      } else {
+        parcelasCultivosByCampania[i].sumaTotalCantidadVendida = `${totalVendidoParcelaCultivo[0].sumaTotalCantidadVendida}-${totalVendidoParcelaCultivo[0].unidades_medida.descripcion_unidad_medida}`;
+
+        parcelasCultivosByCampania[i].sumaTotalCantidadStock = `${parcelasCultivosByCampania[i].cantidad_total_cosechada - totalVendidoParcelaCultivo[0].sumaTotalCantidadVendida}-${parcelasCultivosByCampania[i].unidadMedidaTotalCosechada.descripcion_unidad_medida}`;
       }
-      console.log(totalVendidoParcelaCultivo);
+      // console.log(totalVendidoParcelaCultivo);
+
+      // if (!totalVendidoParcelaCultivo[0].sumaTotalCantidadVendida) {
+      // }
+      // console.log(totalVendidoParcelaCultivo);
     }
 
     // parcelasCultivosByCampaniaAndSumaTotal = parcelasCultivosByCampania.map((parcelaCultivo) => {
@@ -111,7 +125,7 @@ export const getContabilidadCampania = async (req, res) => {
 
     //   }
     // });
-    console.log(parcelasCultivosByCampania);
+    // console.log(parcelasCultivosByCampania);
     // console.log(totalVendidoParcelaCultivo);
 
     return res.status(200).json(parcelasCultivosByCampania);
@@ -130,6 +144,7 @@ export const postContabilidad = async (req, res) => {
     const {
       descripcion_contabilidad,
       observacion_contabilidad,
+      tipo_contabilidad,
       monto_contabilidad,
       id_parcela_cultivo,
     } = req.body;
@@ -137,6 +152,7 @@ export const postContabilidad = async (req, res) => {
     const contabilidadAgregada = await ContabilidadModelo.create({
       descripcion_contabilidad,
       observacion_contabilidad,
+      tipo_contabilidad,
       monto_contabilidad,
       id_parcela_cultivo,
       id_establecimiento,
@@ -207,6 +223,30 @@ export const deleteContabilidad = async (req, res) => {
 
     res.status(200).json({
       message: `Se elimino el registro de contabilidad con ID: ${id_contabilidad}`,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+export const deleteContabilidadCosecha = async (req, res) => {
+  try {
+    const { fecha } = req.params;
+    // console.log(fecha);
+    await ContabilidadModelo.destroy({
+      where: { fecha_contabilidad: fecha },
+    });
+    await CosechasModelo.destroy({
+      where: { fecha_venta: fecha },
+    });
+
+    // await logSistema(req.decoded, delContabilidad.dataValues, "eliminacion");
+
+    res.status(200).json({
+      message: `Se elimino el registro de cosecha y contabilidad con la fecha: ${fecha}`,
     });
   } catch (error) {
     console.log(error);

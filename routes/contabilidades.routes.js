@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   deleteContabilidad,
+  deleteContabilidadCosecha,
   getContabilidad, getContabilidadCampania, getContabilidadUnico, postContabilidad, putContabilidad,
 } from "../controllers/contabilidades.controller.js";
 import {
@@ -23,6 +24,8 @@ router.post("/contabilidad", validateToken, validarAccesoRutas, postContabilidad
 router.put("/contabilidad/:id", validateToken, validarAccesoRutas, putContabilidadMidd, putContabilidad);
 
 router.delete("/contabilidad/:id", validateToken, validarAccesoRutas, deleteContabilidadMidd, deleteContabilidad);
+
+router.delete("/contabilidad-cosechas/:fecha", validateToken, validarAccesoRutas, deleteContabilidadCosecha);
 
 // INGRESOS
 

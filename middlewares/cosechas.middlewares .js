@@ -1,5 +1,6 @@
 import { check, param } from "express-validator";
 import { verificarCampos } from "../helpers/verificarCampos.js";
+import { CampaniasModelo } from "../models/Campanias.model.js";
 import { CosechasModelo } from "../models/Cosechas.model.js";
 import { ParcelasCultivosModelo } from "../models/ParcelasCultivos.model.js";
 import { UnidadesMedidasModelo } from "../models/UnidadesMedidas.model.js";
@@ -14,6 +15,21 @@ export const getCosechaMidd = [
       });
 
       if (cosecha === 0) {
+        return Promise.reject("El id enviado no se coincide con ningun registro de la base de datos");
+      }
+    },
+  ),
+  verificarCampos,
+];
+
+export const getCosechaCampaniaParcelasMidd = [
+  param("idCampania").custom(
+    async (id_campania) => {
+      const campania = await CampaniasModelo.count({
+        where: { id_campania },
+      });
+
+      if (campania === 0) {
         return Promise.reject("El id enviado no se coincide con ningun registro de la base de datos");
       }
     },

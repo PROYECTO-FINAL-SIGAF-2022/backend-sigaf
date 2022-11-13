@@ -31,6 +31,7 @@ export const connection = new Sequelize(!resultArgServerLocal ? nombreBD : "siga
   port: !resultArgServerLocal ? process.env.DATABSEPORT : "3306",
   ssl: false,
   logging: false,
+  timezone: "-03:00",
 });
 /* export const connection = new Sequelize(
    'test',
