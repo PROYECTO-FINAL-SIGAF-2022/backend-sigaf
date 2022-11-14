@@ -105,28 +105,6 @@ export const postProductoMidd = [
         }
       },
     ),
-  check("id_usuario")
-    .exists()
-    .not()
-    .isEmpty()
-    .withMessage("El id del usuario es requerido")
-    .custom(
-      async (id_usuario) => {
-        try {
-          const usuario = await UsuariosModelo.count({
-            where: { id_usuario },
-          });
-          // console.log(usuario);
-          if (usuario === 0) {
-            return Promise.reject("El id de usuario ingresado no se encuentra en la bd");
-          }
-          // console.log("paso");
-        } catch (error) {
-          console.log(error);
-          return Promise.reject(error);
-        }
-      },
-    ),
 
   check("id_unidad_medida")
     .exists()
@@ -232,27 +210,6 @@ export const putProductoMidd = [
           });
           if (tipoProducto === 0) {
             return Promise.reject("El id de tipo_producto ingresado no se encuentra en la bd");
-          }
-        } catch (error) {
-          console.log(error);
-          return Promise.reject(error);
-        }
-      },
-    ),
-
-  check("id_usuario")
-    .exists()
-    .not()
-    .isEmpty()
-    .withMessage("El id del usuario es requerido")
-    .custom(
-      async (id_usuario) => {
-        try {
-          const usuario = await UsuariosModelo.count({
-            where: { id_usuario },
-          });
-          if (usuario === 0) {
-            return Promise.reject("El id de usuario ingresado no se encuentra en la bd");
           }
         } catch (error) {
           console.log(error);

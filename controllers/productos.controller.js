@@ -39,7 +39,7 @@ export const getProductoUnico = async (req, res) => {
 export const postProducto = async (req, res) => {
   try {
     const { id_establecimiento } = req.decoded.paramUsuario;
-
+    const { id_usuario } = req.decoded.paramUsuario;
     const {
       descripcion_producto,
       fecha_vencimiento_producto,
@@ -47,7 +47,6 @@ export const postProducto = async (req, res) => {
       precio_total_producto,
       id_proveedor,
       id_tipo_producto,
-      id_usuario,
       id_unidad_medida,
       id_almacen,
     } = req.body;
@@ -82,6 +81,7 @@ export const postProducto = async (req, res) => {
 export const updateProducto = async (req, res) => {
   try {
     const { id } = req.params;
+    const { id_usuario } = req.decoded.paramUsuario;
     const {
       descripcion_producto,
       fecha_vencimiento_producto,
@@ -89,7 +89,6 @@ export const updateProducto = async (req, res) => {
       precio_total_producto,
       id_proveedor,
       id_tipo_producto,
-      id_usuario,
       id_unidad_medida,
       id_almacen,
     } = req.body;
