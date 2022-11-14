@@ -35,7 +35,7 @@ export const ParcelasCultivosModelo = connection.define(
     },
     fecha_final: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
 
     activo: {

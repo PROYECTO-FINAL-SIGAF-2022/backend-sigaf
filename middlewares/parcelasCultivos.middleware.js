@@ -40,6 +40,13 @@ export const postParcelaCultivosMidd = [
         if (parcela === 0) {
           return Promise.reject("El id enviado no se coincide con ningun registro de la base de datos");
         }
+
+        const parcelaCultivos = await ParcelasCultivosModelo.count({
+          where: { id_parcela, activo: 1 },
+        });
+        if (parcelaCultivos > 0) {
+          return Promise.reject("La parcela ya posee un cultivo activo");
+        }
       },
     ),
 
@@ -75,7 +82,7 @@ export const postParcelaCultivosMidd = [
         }
       },
     ),
-  check("id_unidad_medida")
+  check("unidad_medida_total_sembrada")
     .exists()
     .not()
     .isEmpty()
@@ -95,7 +102,7 @@ export const postParcelaCultivosMidd = [
     .exists()
     .not()
     .isEmpty()
-    .withMessage("El id de unidad de medida es requerido"),
+    .withMessage("La cantidad sembrada es requerida"),
   verificarCampos,
 ];
 
@@ -182,6 +189,55 @@ export const updateParcelaCultivosMidd = [
     .isEmpty()
     .withMessage("El id de unidad de medida es requerido"),
 
+  verificarCampos,
+];
+
+export const patchParcelaCultivosMidd = [
+  param("id").custom(
+    async (id_parcela_cultivo) => {
+      const parcelaCultivo = await ParcelasCultivosModelo.count({
+        where: { id_parcela_cultivo },
+      });
+
+      if (parcelaCultivo === 0) {
+        return Promise.reject("El id enviado no se coincide con ningun registro de la base de datos");
+      }
+
+      const parcelaCultivoActivo = await ParcelasCultivosModelo.count({
+        where: { id_parcela_cultivo, activo: 1 },
+      });
+      // console.log(id_parcela_cultivo);
+      if (parcelaCultivoActivo === 0) {
+        return Promise.reject("El id enviado ya posee el cultivo inactivo");
+      }
+    },
+  ),
+  check("unidad_medida_total_cosechada")
+    .exists()
+    .not()
+    .isEmpty()
+    .withMessage("El id de unidad de medida es requerido")
+    .custom(
+      async (id_unidad_medida) => {
+        const UniMedida = await UnidadesMedidasModelo.count({
+          where: { id_unidad_medida },
+        });
+
+        if (UniMedida === 0) {
+          return Promise.reject("El id enviado no se coincide con ningun registro de la base de datos");
+        }
+      },
+    ),
+  check("cantidad_total_cosechada")
+    .exists()
+    .not()
+    .isEmpty()
+    .withMessage("El id de unidad de medida es requerido"),
+  check("fecha_final")
+    .exists()
+    .not()
+    .isEmpty()
+    .withMessage("La fecha final es requerido"),
   verificarCampos,
 ];
 
