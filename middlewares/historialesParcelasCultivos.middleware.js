@@ -5,6 +5,7 @@ import { ActividadesModelo } from "../models/Actividades.model.js";
 import { UsuariosModelo } from "../models/Usuarios.model.js";
 import { ProductosModelo } from "../models/Productos.model.js";
 import { HistorialesParcelasCultivosModelo } from "../models/HistorialesParcelasCultivos.model.js";
+import { ParcelasModelo } from "../models/Parcelas.model.js";
 
 export const getHistorialesMidd = [verificarCampos];
 
@@ -23,23 +24,50 @@ export const getHistorialMidd = [
   verificarCampos,
 ];
 
+export const getHistorialParcelasCultivosMidd = [
+  param("id").custom(
+    async (id_parcela) => {
+      const historial = await ParcelasCultivosModelo.count({
+        where: { id_parcela, activo: 1 },
+      });
+
+      // console.log(historial);
+      if (historial === 0) {
+        return Promise.reject("No hay ninguna parcela con cultivo activo");
+      }
+    },
+  ),
+  verificarCampos,
+];
+
 export const postHistorialMidd = [
-  check("id_parcela_cultivo")
-    .exists()
-    .not()
-    .isEmpty()
-    .withMessage("El id de parcela cultivo es requirido")
-    .custom(
-      async (id_parcela_cultivo) => {
-        const historial = await ParcelasCultivosModelo.count({
-          where: { id_parcela_cultivo },
-        });
-        // console.log(actividad);
-        if (historial === 0) {
-          return Promise.reject("El id de parcela cultivo no se encuentra en la bd");
-        }
-      },
-    ),
+  // check("id_parcela_cultivo")
+  //   .exists()
+  //   .not()
+  //   .isEmpty()
+  //   .withMessage("El id de parcela cultivo es requirido")
+  //   .custom(
+  //     async (id_parcela_cultivo) => {
+  //       const historial = await ParcelasCultivosModelo.count({
+  //         where: { id_parcela_cultivo },
+  //       });
+  //       // console.log(actividad);
+  //       if (historial === 0) {
+  //         return Promise.reject("El id de parcela cultivo no se encuentra en la bd");
+  //       }
+  //     },
+  //   ),
+  param("id").custom(
+    async (id_parcela) => {
+      const parcela = await ParcelasModelo.count({
+        where: { id_parcela, activo: 1 },
+      });
+
+      if (parcela === 0) {
+        return Promise.reject("El id enviado no se coincide con ningun registro de la base de datos");
+      }
+    },
+  ),
   check("id_actividad")
     .exists()
     .not()
@@ -93,6 +121,11 @@ export const postHistorialMidd = [
     .not()
     .isEmpty()
     .withMessage("La cantidad de uso producto es requerida"),
+  check("fecha_historial")
+    .exists()
+    .not()
+    .isEmpty()
+    .withMessage("Lafecha de la actividad es requerida"),
   verificarCampos,
 ];
 export const putHistorialMidd = [

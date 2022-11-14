@@ -26,7 +26,7 @@ export const HistorialesParcelasCultivosModelo = connection.define(
     },
     fecha_historial: {
       type: DataTypes.STRING,
-      allowNull: false,
+      // allowNull: false,
     },
     activo: {
       type: DataTypes.BOOLEAN,
