@@ -197,6 +197,28 @@ export const deleteContabilidad = async (req, res) => {
     });
   }
 };
+
+
+export const deleteRegistroContabilidad = async (req, res) => {
+  try {
+    const { id } = req.params;
+    // console.log(fecha);
+    await ContabilidadModelo.destroy({
+      where: { id_contabilidad: id },
+    });
+
+    // await logSistema(req.decoded, delContabilidad.dataValues, "eliminacion");
+
+    res.status(200).json({
+      message: `Se elimino correctamente el registro`,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+};
 // export const putVenderMaquina = async (req, res) => {
 //   try {
 //     const { id } = req.params;

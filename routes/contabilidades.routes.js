@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {
   deleteContabilidad,
-  getContabilidad, getContabilidadCampania, getContabilidadUnico, postContabilidad, putContabilidad,
+  getContabilidad, getContabilidadCampania, getContabilidadUnico, postContabilidad, putContabilidad,deleteRegistroContabilidad,
 } from "../controllers/contabilidades.controller.js";
 import {
   deleteContabilidadMidd,
@@ -23,6 +23,8 @@ router.post("/contabilidad", validateToken, validarAccesoRutas, postContabilidad
 router.put("/contabilidad/:id", validateToken, validarAccesoRutas, putContabilidadMidd, putContabilidad);
 
 router.delete("/contabilidad/:id", validateToken, validarAccesoRutas, deleteContabilidadMidd, deleteContabilidad);
+
+router.delete("/contabilidad-del/:id", validateToken, /* validarAccesoRutas, */ deleteContabilidadMidd, deleteRegistroContabilidad);
 
 // INGRESOS
 
