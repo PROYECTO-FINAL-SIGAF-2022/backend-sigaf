@@ -7,6 +7,7 @@ import {
   deleteParcelaCultivo,
   getParcelaCultivoByParcela,
   patchParcelaCultivo,
+  getParcelasCultivosActivosInactivos
 } from "../controllers/parcelasCultivos.controllers.js";
 import {
   getParcelaCultivoMidd, getParcelaCultivosMidd, postParcelaCultivosMidd, updateParcelaCultivosMidd, deleteParcelaCultivosMidd, patchParcelaCultivosMidd,
@@ -18,6 +19,8 @@ const router = Router();
 
 router.get("/parcelas-cultivos", validateToken, validarAccesoRutas, getParcelaCultivosMidd, getParcelasCultivos);
 
+router.get("/parcelas-cultivos-todos", validateToken, getParcelaCultivosMidd, getParcelasCultivosActivosInactivos);
+
 router.get("/parcelas-cultivos/:id", validateToken, validarAccesoRutas, getParcelaCultivoMidd, getParcelaCultivoUnico);
 
 router.get("/parcelas-cultivos-by-parcela/:idCampania/:idParcela", validateToken, validarAccesoRutas, getParcelaCultivoByParcela);
@@ -25,6 +28,7 @@ router.get("/parcelas-cultivos-by-parcela/:idCampania/:idParcela", validateToken
 router.post("/parcelas-cultivos", validateToken, validarAccesoRutas, postParcelaCultivosMidd, postParcelaCultivo);
 
 router.put("/parcelas-cultivos/:id", validateToken, validarAccesoRutas, updateParcelaCultivosMidd, updateParcelaCultivo);
+
 router.patch("/parcelas-cultivos/:id", validateToken, validarAccesoRutas, patchParcelaCultivosMidd, patchParcelaCultivo);
 
 router.delete("/parcelas-cultivos/:id", validateToken, validarAccesoRutas, deleteParcelaCultivosMidd, deleteParcelaCultivo);

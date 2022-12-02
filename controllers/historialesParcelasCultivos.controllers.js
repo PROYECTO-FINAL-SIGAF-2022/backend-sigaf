@@ -23,6 +23,26 @@ export const getHistoriales = async (req, res) => {
   }
 };
 
+
+export const getHistorialesActivosInactivos = async (req, res) => {
+  try {
+    const { id_establecimiento } = req.decoded.paramUsuario;
+
+    const historial = await HistorialesParcelasCultivosModelo.findAll({ raw: true, where: { id_establecimiento } });
+
+    if (historial.length === 0) {
+      return res.status(400).json("No hay historiales asociadas a este establecimiento");
+    }
+    return res.status(200).json(historial);
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+
+
 export const getHistorialUnico = async (req, res) => {
   try {
     const { id } = req.params;
@@ -46,14 +66,15 @@ export const getHistorialParcelaCultivo = async (req, res) => {
     const { id } = req.params;
     const { id_establecimiento } = req.decoded.paramUsuario;
 
-    const { id_parcela_cultivo } = await ParcelasCultivosModelo.findOne({
+  /*   const { id_parcela_cultivo } = await ParcelasCultivosModelo.findOne({
       raw: true,
       where: { id_parcela: id, activo: 1 },
-    });
+    }); */
+    
     const historial = await HistorialesParcelasCultivosModelo.findAll({
       raw: true,
       nest: true,
-      where: { id_parcela_cultivo, id_establecimiento },
+      where: { id_parcela_cultivo : id, id_establecimiento },
       attributes: ["id_historial_parcelas_cultivos", "activo", "cantidad_uso_producto", "fecha_historial"],
       include: [
         {
