@@ -20,6 +20,23 @@ export const getParcelasCultivos = async (req, res) => {
   }
 };
 
+export const getParcelasCultivosActivosInactivos = async (req, res) => {
+  try {
+    const { id_establecimiento } = req.decoded.paramUsuario;
+
+    const datosParcCultivo = await ParcelasCultivosModelo.findAll({ raw: true, where: { id_establecimiento} });
+
+    if (datosParcCultivo.length === 0) {
+      return res.status(400).json("No hay parcelas cultivos asociados a este establecimiento");
+    }
+    return res.status(200).json(datosParcCultivo);
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
 export const getParcelaCultivoUnico = async (req, res) => {
   try {
     const { id } = req.params;

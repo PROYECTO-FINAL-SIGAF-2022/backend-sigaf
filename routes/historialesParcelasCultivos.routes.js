@@ -6,6 +6,7 @@ import {
   getHistorialUnico,
   postHistorial,
   updateHistorial,
+  getHistorialesActivosInactivos
 } from "../controllers/historialesParcelasCultivos.controllers.js";
 import validateToken from "../middlewares/validateToken.middleware.js";
 import {
@@ -16,6 +17,8 @@ import { validarAccesoRutas } from "../middlewares/validarAccesoRutas.middleware
 const router = Router();
 
 router.get("/historiales", validateToken, validarAccesoRutas, getHistorialesMidd, getHistoriales);
+
+router.get("/historiales-todos", validateToken, validarAccesoRutas, getHistorialesMidd, getHistorialesActivosInactivos);
 
 router.get("/historiales/:id", validateToken, validarAccesoRutas, getHistorialMidd, getHistorialUnico);
 router.get("/historiales-parcelas-cultivos/:id", validateToken, validarAccesoRutas, getHistorialParcelasCultivosMidd, getHistorialParcelaCultivo);
